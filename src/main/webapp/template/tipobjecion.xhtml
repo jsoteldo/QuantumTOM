@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:j="http://xmlns.jcp.org/jsf">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Quantum - Flamencos</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="../resources/lib/notifyMessage/css/notifyMessage.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+
+    </head>
+
+    <body>
+
+        <ui:composition template="./plantilla.xhtml">
+
+            <ui:define name="content">
+                <f:event type="preRenderView" listener="#{objecionesBean.listar()}"/>
+
+
+                <div class="container-fluid">
+                    <div class="alertas" style="position: fixed; top: 100px; right: 10px; width: 250px; z-index: 9999;"></div>
+                    <h:panelGroup id="script">
+                        <h:outputScript rendered="#{not empty objecionesBean.script}">#{objecionesBean.script}</h:outputScript>
+                    </h:panelGroup>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px;">
+                            <div class="card" >
+                                <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
+                                    <div class="media">
+                                        <i class="mdi mdi-comment-alert-outline icon-md text-primary d-flex align-self-start mr-2"></i>
+                                        <div class="media-body">
+                                            <p class="card-text"><h3 class="card-title">Registro de Tipos de Objeciones</h3></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 grid-margin">
+                            <div class="card" >
+                                <div class="card-body">
+                                    <form j:id="formtipo1"  method="post" class="forms-sample">
+                                        <div class="form-group">
+                                            <label for="codigo">Codigo del Tipo de Objeción</label>
+                                            <input type="text" class="form-control" j:id="codigo" placeholder="Codigo" maxlength="5" j:value="#{objecionesBean.tipobjecion.codigo}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="objecion">Nombre del Tipo de Objeción</label>
+                                            <input type="text" class="form-control" j:id="objecion" placeholder="Descripción" j:value="#{objecionesBean.tipobjecion.tipo}"/>
+                                        </div>
+                                        
+                                        <div class="template-demo">
+                                            <h:commandButton id="btopera" class="btn btn-success mr-2 dispara" value=" #{objecionesBean.boton}" > 
+                                                <f:ajax  execute="@form" listener="#{objecionesBean.operartipo()}" render=":formtipo2 codigo objecion mensaje btopera :script" />   
+                                            </h:commandButton>
+                                            <button type="reset" class="btn btn-light">Cancel</button>
+                                        </div>
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive-sm table-responsive-md table-responsive-lg" >
+                                        <h:form id="formtipo2" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                            <table id="table" class="table table-striped dataTable table-sm" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Codigo</th>
+                                                        <th>Tipo</th>
+                                                        <th>Editar</th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Codigo</th>
+                                                        <th>Tipo</th>
+                                                        <th>Editar</th>
+
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                    <ui:repeat value="#{objecionesBean.lstTipobjecion}" var="tipo">
+                                                        <tr>
+                                                            <td>#{tipo.codigo}</td>
+                                                            <td>#{tipo.tipo}</td>
+                                                            <td>
+                                                                <div class="form-group row" style="margin-bottom: 0 !important; ">
+                                                                    <h:commandLink id="leer" class="col-sm-4 nav-link dispara" style="cursor: pointer; color:#007bff;" > 
+                                                                        <f:ajax event="click" listener="#{objecionesBean.leerID(tipo,session)}" render="formtipo1" execute="@this"/>
+                                                                        <i class="mdi mdi-account-edit mdi-18px"></i>
+                                                                    </h:commandLink>
+
+                                                                    <h:commandLink id="idBorrar" class="nav-link col-sm-4 dispara" style="cursor: pointer; color:#007bff;" >
+                                                                        <f:ajax event="click" listener="#{objecionesBean.borrar(tipo)}" render="formtipo1 formtipo2 :script" execute="@this"/>
+                                                                        <i class="mdi mdi-delete-empty mdi-18px"></i>
+                                                                    </h:commandLink>
+
+                                                                </div>    
+                                                            </td>
+                                                        </tr>
+                                                    </ui:repeat>
+                                                </tbody>
+                                            </table>
+
+
+                                        </h:form> 
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> 
+
+
+
+                </div>
+
+                <script src="../resources/js/jquery-3.3.1.min.js"></script>
+                <script type="text/javascript" src="../resources/lib/notifyMessage/js/notifyMessage.js"></script>
+
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

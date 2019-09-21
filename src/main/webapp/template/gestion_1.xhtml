@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:j="http://xmlns.jcp.org/jsf"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Quantum - Flamencos</title>
+        <link rel="stylesheet" href="../resources/css/normalize.min.css"/>
+        <link rel='stylesheet' href='../resources/css/bootstrap.min.css'/>
+        <link rel='stylesheet' href='../resources/css/animate.min.css'/>
+    </head>
+
+    <body>
+        <ui:composition template="./plantilla.xhtml">
+            <ui:define name="content">
+                <f:event type="preRenderView" listener="#{gestionBean.capturargestion(session)}"  />
+                <c:set var = "tlf" value = "#{gestionBean.gestion.telefono1}"/>
+                <c:set var = "lgtlf" value = "${fn:length(tlf)}" />
+                <c:set var = "subtlf" value = "${fn:substring(tlf, 1, lgtlf)}" />
+                <div class="row">
+                    <form  method="post" j:id="formGestion" style="display: contents;">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin" style="margin-bottom: 10px;">
+                            <div class="card">
+                                <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
+                                    <div class="media">
+                                        <i class="mdi mdi-phone icon-md text-primary d-flex align-self-start mr-2"></i>
+                                        <div class="media-body">
+                                            <p class="card-text"><h3 class="card-title">Registro de Gestion</h3></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="mensaje" style="display: #{gestionBean.message.display}" class="alert alert-#{gestionBean.message.clase} form-row">
+                                <div class="col-3">
+                                    <i class="mdi #{gestionBean.message.ico} text-#{gestionBean.message.clase} icon-md "></i>
+                                </div>
+                                <div class="col-8">
+                                    <span class="font-weight-medium text-right">#{gestionBean.message.mensaje}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-description">
+                                        <h6 class="display-5">Datos del Prospecto</h6>
+                                    </p>
+                                    <div class="form-group row">
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <label for="fecingre">Fecha de Ingreso</label>
+                                            <input type="date" disabled="true" class="form-control" j:id="fecingre" placeholder="Fecha de Ingreso del Prospecto" j:value="#{gestionBean.gestion.fecha_prospecto}" />
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <label for="fecreg">Fecha de Registro</label>
+                                            <input type="date" disabled="true" class="form-control" j:id="fecreg" placeholder="Fecha de Registro del Prospecto" j:value="#{gestionBean.gestion.fecha_ingreso}"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 col-xl-12">
+                                            <label for="nombreapellido">Nombres y Apellidos</label>
+                                            <input type="text" disabled="true" class="form-control" j:id="nombreapellido" placeholder="Nombres y Apellidos" j:value="#{gestionBean.gestion.nombreapellido}"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <label for="email">Email</label>
+                                            <input type="email" disabled="true" class="form-control" id="email" placeholder="Email del Prospecto" j:value="#{gestionBean.gestion.correo}"/>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <label for="cargo">Derivado de</label>
+                                            <h:selectOneMenu disabled="true" class="form-control" value="#{gestionBean.gestion.origen}">
+                                                <f:selectItem itemLabel="Seleccione un Origen" itemValue="" />
+                                                <f:selectItems value="#{gestionBean.lstorigenes}" var="origenes" itemLabel="#{origenes.origen}" itemValue="#{origenes.codigo}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <label for="telefono1">Telefono Principal</label>
+                                            <input type="text" disabled="true" j:id="telefono1" class="form-control bfh-phone" data-format="+dd (ddd) ddd-ddd" placeholder="Telefono Principal" j:value="#{gestionBean.gestion.telefono1}" />
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <label for="telefono2">Telefono Secundario</label>
+                                            <input type="text" disabled="true" j:id="telefono2" class="form-control bfh-phone" data-format="+dd (ddd) ddd-ddd" placeholder="Telefono Sec." j:value="#{gestionBean.gestion.telefono2}"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xs-11 col-sm-11 col-md-8 col-lg-8 col-xl-8">
+                                            <label for="cargo">Ocupación</label>
+                                            <input type="text" disabled="true" class="form-control" j:id="cargo" placeholder="Ocupación" j:value="#{gestionBean.gestion.cargo}"/>
+                                        </div>
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-2 col-xl-2">
+                                            <a href="#{gestionBean.gestion.link}" target="_blank">
+                                                <i class="mdi mdi-36px mdi-facebook-box"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-2 col-xl-2">
+                                            <a href="https://wa.me/${subtlf}" target="_blank">
+
+                                                <i class="mdi mdi-36px mdi-whatsapp text-success"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-description">
+                                        <h6 class="display-5">Datos de la Llamada</h6>
+                                    </p>
+                                    <div class="form-group row">
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <label for="estatus">Estado de Llamada</label>
+                                            <h:selectOneMenu id="estatus" class="form-control" value="#{gestionBean.gestion.estado}" >
+                                                <f:selectItem itemLabel="Seleccione un Estado" itemValue="" />
+                                                <f:selectItems value="#{gestionBean.lstestados}" var="estado" itemLabel="#{estado.estado}" itemValue="#{estado.codigo}"/>
+                                                <f:ajax event="change" listener="#{gestionBean.muestraestados}" render="motivo permitemotivo permitellamar permitelote parcela permitefpago permitecasa checkSlide" execute="@this" />
+                                            </h:selectOneMenu>
+                                        </div>
+
+                                        <h:panelGroup class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" id="permitemotivo">
+                                            <ui:fragment rendered="#{gestionBean.muestramotivos}">
+                                                <label for="motivo">Motivo del Estado</label>
+                                                <h:selectOneMenu id="motivo" class="form-control" value="#{gestionBean.gestion.motivo}" required="true">
+                                                    <f:selectItem itemLabel="Seleccione un Motivo" itemValue="" />
+                                                    <f:selectItems value="#{gestionBean.lstmotivos}" var="motiv" itemLabel="#{motiv.motivo}" itemValue="#{motiv.codmot}"/>
+                                                    <f:ajax event="change" listener="#{gestionBean.muestrafechas}" render="permitellamar permitereunion permitelote parcela checkSlide" execute="@this" />
+                                                </h:selectOneMenu>
+                                            </ui:fragment>
+                                        </h:panelGroup>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <label for="fecultcontac">Ultimo Contacto</label>
+                                            <input type="datetime-local" class="form-control" j:id="fecultcontac" placeholder="Fecha de Ultimo Contacto" disabled="true" j:value="#{gestionBean.gestion.fecha_ultimo_contac}"/>
+                                        </div>
+                                        <h:panelGroup class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" id="permitellamar">
+                                            <ui:fragment rendered="#{gestionBean.muestravll}">
+                                                <label for="vll">Volver a llamar</label>
+                                                <input type="datetime-local" class="form-control" j:id="vll" placeholder="Fecha para llamar" j:value="#{gestionBean.gestion.fecha_contacto}"/>
+                                            </ui:fragment>
+                                        </h:panelGroup>
+                                    </div>
+
+
+                                    <h:panelGroup class="form-group row" id="permitereunion">
+                                        <ui:fragment rendered="#{gestionBean.muestravofi}">
+                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"  >
+
+                                                <label for="visiOficina">Reunion en Oficina</label>
+                                                <input type="datetime-local" class="form-control" j:id="visiOficina" placeholder="Fecha de visita" j:value="#{gestionBean.gestion.fec_visita_ofic}"/>
+                                            </div>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{gestionBean.muestravproyec}">
+                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" >
+                                                <label for="visiProyecto">Viaje al Proyecto</label>
+                                                <input type="datetime-local" class="form-control" j:id="visiProyecto" placeholder="Fecha de Viaje" j:value="#{gestionBean.gestion.fec_visita_proyec}"/>
+                                            </div> 
+                                        </ui:fragment>
+                                    </h:panelGroup>
+                                    <h:panelGroup  id="permitelote">
+                                        <ui:fragment rendered="#{gestionBean.muestralote}">
+                                            <div class="form-group row">
+                                                <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 col-xl-2">
+                                                    <label for="parcela">Parcela</label>
+                                                    <h:selectOneMenu id="parcela" class="form-control" value="#{gestionBean.gestion.parcela}" >
+                                                        <f:selectItem itemLabel="Parcela" itemValue="" />
+                                                        <f:selectItems value="#{gestionBean.lstparcelas}" var="par" itemLabel="#{par.parcela}" itemValue="#{par.parcela}"/>
+                                                        <f:ajax event="change" listener="#{gestionBean.muestralotes}" render="lote" execute="@this" />
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-4 col-lg-4 col-xl-4">
+                                                    <label for="lote">Lote</label>
+                                                    <h:selectOneMenu id="lote" class="form-control" value="#{gestionBean.gestion.lote}" >
+                                                        <f:selectItem itemLabel="N° Lote" itemValue="" />
+                                                        <f:selectItems value="#{gestionBean.lstlotes}" var="lot" itemLabel="#{lot.lote}" itemValue="#{lot.lote}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+
+                                                <div class="col-xs-3 col-sm-3 col-md-4 col-lg-4 col-xl-4">
+                                                    <label for="mes">Mes</label>
+                                                    <h:selectOneMenu id="mes" class="form-control" value="#{gestionBean.gestion.mesfpago}">
+                                                        <f:selectItem itemLabel="Seleccione un Mes " itemValue=""/>
+                                                        <f:selectItem itemLabel="Enero" itemValue="1"/>
+                                                        <f:selectItem itemLabel="Febrero" itemValue="2"/>
+                                                        <f:selectItem itemLabel="Marzo" itemValue="3"/>
+                                                        <f:selectItem itemLabel="Abril" itemValue="4"/>
+                                                        <f:selectItem itemLabel="Mayo" itemValue="5"/>
+                                                        <f:selectItem itemLabel="Junio" itemValue="6"/>
+                                                        <f:selectItem itemLabel="Julio" itemValue="7"/>
+                                                        <f:selectItem itemLabel="Agosto" itemValue="8"/>
+                                                        <f:selectItem itemLabel="Septiembre" itemValue="9"/>
+                                                        <f:selectItem itemLabel="Octubre" itemValue="10"/>
+                                                        <f:selectItem itemLabel="Noviembre" itemValue="11"/>
+                                                        <f:selectItem itemLabel="Diciembre" itemValue="12"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 col-xl-2">
+                                                    <label for="diafpago">Dia</label>
+                                                    <input type="number" id="diafpago" placeholder="Dia" class="form-control" min="1" max="30" j:value="#{gestionBean.gestion.diafpago}"/>
+
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
+                                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                    <label for="precio">Precio</label>
+                                                    <div class="input-group">
+                                                        <input id="precio" j:value="#{gestionBean.gestion.preciolote}"  type="number" min="0"  max="99999999" step="0.01" placeholder="0" class="form-control"/>
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">$</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                    <label for="fpago">Forma de Pago</label>
+                                                    <h:selectOneMenu id="fpago" onchange="muestrafpago()" class="form-control" value="#{gestionBean.gestion.condipago}">
+                                                        <f:selectItem itemLabel="Seleccione Tipo de Pago" itemValue=""/>
+                                                        <f:selectItem itemLabel="Contado" itemValue="CONT"/>
+                                                        <f:selectItem itemLabel="Financiado" itemValue="FINAN"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+
+                                            </div>
+
+                                        </ui:fragment>
+                                    </h:panelGroup>
+
+                                    <div id="datosfpago" class="form-group row" style="display:#{gestionBean.fpago};">
+                                        <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
+                                            <label for="cuota">Cuotas</label>
+                                            <input id="cuota" j:value="#{gestionBean.gestion.ncuolote}" onblur="calculaCuotasSini()" type="number" min="0" onKeyPress="if (this.value.length === 2)
+                                                        return false;" placeholder="0" class="form-control"/>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5 col-xl-5">
+                                            <label for="inicial">Inicial</label>
+                                            <div class="input-group">
+                                                <input id="inicial" j:value="#{gestionBean.gestion.montoinilote}" onblur="calculaCuotasIni()" type="number" min="0"  max="99999999" step="0.01" placeholder="0" class="form-control"/>
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">$</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
+                                            <label for="montocuota">Monto</label>
+                                            <div class="input-group">
+                                                <input id="montocuota" j:value="#{gestionBean.gestion.montocuo}" type="number" min="0"  max="99999999" step="0.01" placeholder="0" class="form-control"/>
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">$</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="comentario">Comentario</label>
+                                        <textarea class="form-control" required="true" j:id="comentario" rows="5" j:value="#{gestionBean.gestion.comentario}"></textarea>
+                                    </div>
+
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-success mr-2" j:actionListener="#{gestionBean.operar()}">#{gestionBean.boton}</button>
+                                    <button type="submit" id="nextbutton" class="btn btn-icons btn-rounded btn-outline-success float-right" title="Siguiente Prospecto" >
+                                        <i class="mdi mdi-arrow-right-bold" ></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container">
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-warning">
+                                            <h4 class="modal-title">Informe de Errores</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p id="text-error"></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </form> 
+                </div>
+                <script src="../resources/js/jquery-3.3.1.min.js"></script>
+                <script src="../resources/js/bootstrap-formhelpers.min.js"></script>
+                <script>
+                                                    $(document).ready(function () {
+                                                        setTimeout(function () {
+                                                            $("#mensaje").fadeOut(1500);
+                                                        }, 3000);
+                                                    });
+                </script>
+                <script>
+                    //<![CDATA[ 
+                    function calculaCuotasSini() {
+                        var x = $("#precio").val();
+                        var cuota = $("#cuota").val();
+                        console.log(x + " - " + cuota);
+                        if (x === '' && cuota === '') {
+                            $("#myModal").modal();
+                            $("#text-error").html("Debe Llenar los Datos de <b>Precio</b> y <b>Cuota</b> para Continuar.");
+                        } else if (x !== '' && cuota === '') {
+                            $("#myModal").modal();
+                            $("#text-error").html("Debe Llenar los Datos de <b>Cuota</b> para Continuar.");
+                        } else if (x === '' && cuota !== '') {
+                            $("#myModal").modal();
+                            $("#text-error").html("Debe Llenar los Datos de <b>Precio</b> para Continuar.");
+                        } else {
+                            var monto = x / cuota;
+                            $("#montocuota").val(monto.toFixed(2));
+                        }
+
+
+                    }
+                    //]]>
+                </script>
+                <script>
+                    //<![CDATA[ 
+                    function calculaCuotasIni() {
+                        var precio = $("#precio").val();
+                        var cuota = $("#cuota").val();
+                        var inicial = $("#inicial").val();
+                        console.log(precio + " - " + cuota + " - " + inicial);
+                        if (precio === '' && cuota === '' && inicial === '') {
+                            $("#myModal").modal();
+                            $("#text-error").html("Debe Llenar los Datos de <b>Precio</b>, <b>Inicial</b> y <b>Cuota</b> para Continuar.");
+                        } else if (precio !== '' && cuota === '' && inicial === '') {
+                            $("#myModal").modal();
+                            $("#text-error").html("Debe Llenar los Datos de <b>Inicial</b> y <b>Cuota</b> para Continuar.");
+                        } else if (precio === '' && cuota !== '' && inicial === '') {
+                            $("#myModal").modal();
+                            $("#text-error").html("Debe Llenar los Datos de <b>Precio</b> e <b>Inicial</b> para Continuar.");
+                        } else if (precio === '' && cuota === '' && inicial !== '') {
+                            $("#myModal").modal();
+                            $("#text-error").html("Debe Llenar los Datos de <b>Precio</b> y <b>Cuota</b> para Continuar.");
+                        } else if (precio === '' && cuota !== '' && inicial !== '') {
+                            $("#myModal").modal();
+                            $("#text-error").html("Debe Llenar los Datos de <b>Precio</b> para Continuar.");
+                        } else if (precio !== '' && cuota === '' && inicial !== '') {
+                            $("#myModal").modal();
+                            $("#text-error").html("Debe Llenar los Datos de <b>Cuota</b> para Continuar.");
+                        } else if (precio !== '' && cuota !== '' && inicial === '') {
+                            $("#myModal").modal();
+                            $("#text-error").html("Debe Llenar los Datos de <b>Inicial</b> para Continuar.");
+                        } else {
+                            var monto = (precio - inicial) / cuota;
+                            $("#montocuota").val(monto.toFixed(2));
+                        }
+
+
+                    }
+                    //]]>
+                </script>
+                <script>
+                    //<![CDATA[ 
+                    function muestrafpago() {
+                        var fpago = $("#formGestion\\:fpago").val();
+                        console.log(fpago);
+                        if (fpago === 'FINAN') {
+                            $("#datosfpago").css("display", "");
+                            if ($("#precio").val() !== '') {
+
+                            }
+                        } else {
+                            $("#datosfpago").css("display", "none");
+                        }
+                    }
+                    //]]>
+                </script>
+                <script>
+                    //<![CDATA[ 
+                    function diadepago() {
+                        var mespago = $("#formGestion\\:mes").val();
+
+                        if (mespago === '2') {
+                            $("#diafpago").removeAttr('max');
+                            $("#diafpago").attr('max', 28);
+                        } else {
+                            $("#diafpago").removeAttr('max');
+                            $("#diafpago").attr('max', 30);
+                        }
+                    }
+                    //]]>
+                </script>
+                <script>
+
+                    $(document).ready(function () {
+                        var comentario;
+                        var currentdate = new Date();
+
+                        $('#formGestion\\:comentario').focusin(function () {
+                            comentario = $(this).val();
+                            if (comentario.length === 0) {
+
+                            } else {
+                                $(this).val("");
+                            }
+
+                        });
+
+                        $('#formGestion\\:comentario').focusout(function () {
+                            var newcomentario = currentdate.toLocaleString() + " : " + $(this).val();
+                            if ($(this).val().length === 0) {
+                                $(this).val(comentario);
+                            } else {
+                                if (comentario.length === 0) {
+                                    $(this).val(newcomentario);
+                                } else {
+                                    $(this).val(comentario + "\n" + newcomentario);
+                                }
+                            }
+                        });
+                    });
+                </script>
+                <script>
+                    var motivo = #{gestionBean.muestramotivos};
+
+                    console.log(motivo);
+                    if (motivo === true) {
+                        $("#permitemotivo").show();
+                    } else {
+                        $("#permitemotivo").hide();
+                    }
+
+                </script>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

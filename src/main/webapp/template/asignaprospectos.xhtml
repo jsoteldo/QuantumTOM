@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:j="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../resources/css/default.css" rel="stylesheet"/>
+        <link href="../resources/css/dataTables.bootstrap4.css" rel="stylesheet"/>
+        <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="../resources/css/sb-admin.css" rel="stylesheet"/>
+        <link href="../resources/fontawesome-free/css/all.min.css" rel="stylesheet"/>
+
+        <title>Quantum - Flamencos</title>
+
+    </head>
+
+    <body>
+
+        <ui:composition template="./plantilla.xhtml">
+
+            <ui:define name="content">
+
+                <f:event type="preRenderView" listener="#{asignaprospectosBean.listar()}"/>
+                <form j:id="formasig" class="forms-sample">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin" style="margin-bottom: 10px;">
+                        <div class="card">
+                            <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
+                                <div class="media">
+                                    <i class="mdi mdi-account-multiple-plus icon-md text-primary d-flex align-self-start mr-2"></i>
+                                    <div class="media-body">
+                                        <p class="card-text"><h3 class="card-title">Asignación de Prospectos</h3></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3 col-sm-6 col-md-6 col-lg-6 col-xl-6 grid-margin stretch-card" style="margin-bottom: 10px;">
+                        <div class="card card-statistics">
+                            <div class="card-body" style="padding: 0.7rem !important;">
+                                <div class="clearfix">
+                                    <div class="float-left">
+                                        <i class="mdi mdi-arrow-down-bold-box text-danger icon-lg"></i>
+                                    </div>
+                                    <div class="float-right">
+                                        <p class="mb-0 text-right">Prospectos sin Asignar</p>
+                                        <div class="fluid-container">
+                                            <h3 class="font-weight-medium text-right mb-0"><label for="parasig"></label></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                    <div class="col-xs-3 col-sm-6 col-md-6 col-lg-6 col-xl-6 grid-margin stretch-card" style="margin-bottom: 10px;">
+                        <div class="card card-statistics">
+                            <div class="card-body"  style="padding: 0.7rem !important;">
+                                <div class="clearfix">
+                                    <div class="float-left">
+                                        <i class="mdi mdi-arrow-up-bold-box text-success icon-lg"></i>
+                                    </div>
+                                    <div class="float-right">
+                                        <p class="mb-0 text-right">Prospectos Asignados</p>
+                                        <div class="fluid-container">
+                                            <h3 class="font-weight-medium text-right mb-0"><label for="asig"></label></h3>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                        <table class="table table-striped dataTable table-sm" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Asesor</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Porcentaje</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot >
+                                                <tr>
+                                                    <th>Asesor</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Porcentaje</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                <ui:repeat value="#{asignaprospectosBean.lstDistribucion}" var="asesor">
+                                                    <tr>
+                                                        <td>#{asesor.nombre} #{asesor.apellido}</td>
+                                                        <td >
+                                                            <input type="number" class="form-control col-3 cantidad" placeholder="0" j:value="#{asesor.cantidad}" min="0" step="0.01" maxlength="5" />
+                                                        </td>
+                                                        <td class="tdporcetnaje">
+                                                            <div class="input-group col-5">
+                                                                <input type="number" class="form-control  porcentaje" placeholder="0" j:value="#{asesor.porcentaje}" min="0" step="0.01" maxlength="5" />
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">%</span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </ui:repeat>
+                                            </tbody>
+                                        </table>
+                                        <button type="submit" class="btn btn-success mr-2" j:actionListener="#{asignaprospectosBean.operar()}" > 
+                                            Asignar
+                                        </button>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+                    </form>
+                
+                <script src="../resources/js/jquery-3.3.1.min.js"></script>
+                <script src="../resources/js/jquery.min.js"></script>
+                <script src="../resources/js/datatables-demo.js"></script>
+                <script>
+                    $(function () {
+                        $('.cantidad').keypress(function (e) {
+                            if (isNaN(this.value + String.fromCharCode(e.charCode)))
+                                return false;
+                        }).on("cut copy paste", function (e) {
+                            e.preventDefault();
+                        });
+                    });
+                </script>
+                <script>
+                    $(function () {
+                        $('.porcentaje').keypress(function (e) {
+                            if (isNaN(this.value + String.fromCharCode(e.charCode)))
+                                return false;
+                        }).on("cut copy paste", function (e) {
+                            e.preventDefault();
+                        });
+                    });
+                </script>
+                <script>
+                    var disponibles = #{asignaprospectosBean.prospectospAsignar};
+                    var cantidad;
+                    var porcentaje;
+
+                    $('.porcentaje').focusin(function () {
+                        porcentaje = $(this).val();
+                    })
+                            .focusout(function () {
+                                nwporcentaje = $(this).val();
+                                cantidad = (nwporcentaje * disponibles) / 100;
+                                if (validaporcentajes() > 100) {
+                                    $(this).val(porcentaje);
+                                    console.log($(this).val());
+                                } else {
+                                    $(this).val(nwporcentaje);
+                                    console.log($(this).val());
+                                    console.log(cantidad);
+                                    $(this).closest('tr').find(".cantidad").each(function () {
+                                        $(this).val(cantidad);
+                                    });
+                                    $("label[for='asig']").html(validacantidad());
+                                    $("label[for='parasig']").html(disponibles - validacantidad());
+
+                                }
+                            });
+                    function validaporcentajes() {
+                        var totalDeuda = 0;
+                        $(".porcentaje").each(function () {
+                            totalDeuda += parseFloat($(this).val()) || 0;
+                        });
+                        console.log(totalDeuda);
+                        return totalDeuda;
+                    }
+                    function validacantidad() {
+                        var totalDeuda = 0;
+                        $(".cantidad").each(function () {
+                            totalDeuda += parseFloat($(this).val()) || 0;
+                        });
+                        return totalDeuda;
+                    }
+                </script>
+                <script>
+                    var disponibles = #{asignaprospectosBean.prospectospAsignar};
+                    var cantidad;
+                    var porcentaje;
+                    var psa = 0, pa = 0;
+
+                    $('.cantidad').focusin(function () {
+                        cantidad = $(this).val();
+                    })
+                            .focusout(function () {
+                                nwcantidad = $(this).val();
+                                porcentaje = (nwcantidad * 100) / disponibles;
+                                if (validacantidad() > disponibles) {
+                                    $(this).val(cantidad);
+                                } else {
+                                    $(this).val(nwcantidad);
+                                    $(this).closest('tr').find(".porcentaje").each(function () {
+                                        $(this).val(porcentaje.toFixed(2));
+                                    });
+                                    $("label[for='asig']").html(validacantidad());
+                                    $("label[for='parasig']").html(disponibles - validacantidad());
+                                }
+                            });
+
+                    function validacantidad() {
+                        var totalDeuda = 0;
+                        $(".cantidad").each(function () {
+                            totalDeuda += parseFloat($(this).val()) || 0;
+                        });
+                        return totalDeuda;
+                    }
+
+
+                </script>
+                <script>
+                    var disponibles = #{asignaprospectosBean.prospectospAsignar};
+                    var total = 0;
+                    $(".cantidad").each(function () {
+                        total += parseFloat($(this).val()) || 0;
+                    });
+                    $("label[for='asig']").html(total);
+                    $("label[for='parasig']").html(disponibles - total);
+
+                </script>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

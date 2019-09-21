@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:j="http://xmlns.jcp.org/jsf">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>Quantum - Flamencos</title>
+
+    </head>
+
+    <body>
+
+        <ui:composition template="./plantilla.xhtml">
+
+            <ui:define name="content">
+                <f:event type="preRenderView" listener="#{menuBean.capturarmenu(session)}"/>
+                <div class="container-fluid">
+                    <div class="row flex-grow">
+                        <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-5 d-flex align-items-stretch" style="margin-bottom: 10px;">
+                            <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
+                                <div class="media">
+                                    <i class="mdi mdi-account-card-details icon-md text-primary d-flex align-self-start mr-2"></i>
+                                    <div class="media-body">
+                                        <p class="card-text"><h3 class="card-title">Registro De Opciones De Menú</h3></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row flex-grow">
+                        <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-5 d-flex align-items-stretch grid-margin">
+                            <div class="card-body">
+                                <form j:id="formMenu" method="post" class="forms-sample">
+                                    <div class="form-group">
+                                        <label for="tipo">Tipo de Opción</label>
+                                        <h:selectOneMenu id="tipo" class="form-control" onchange="submit()" value="#{menuBean.menu.type}" valueChangeListener="#{menuBean.muestramenus}">
+                                            <f:selectItem itemLabel="Seleccione un Tipo" itemValue="" />
+                                            <f:selectItem itemValue = "M" itemLabel = "Menu" /> 
+                                            <f:selectItem itemValue = "S" itemLabel = "Submenu" />
+                                            <f:selectItem itemValue = "I" itemLabel = "Item" />
+                                        </h:selectOneMenu>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre de la Opción</label>
+                                        <input type="text" class="form-control" j:id="nombre" placeholder="Nombre de la opción" j:value="#{menuBean.menu.nombre}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="icono">Icono</label>
+                                        <div class="media">
+                                            <i class="mdi icon-sm text-primary d-flex align-self-start mr-2" id="ico"></i>
+                                            <div class="media-body">
+                                                <input type="text" class="form-control" j:id="icono" placeholder="Icono" j:value="#{menuBean.menu.ico}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <ui:fragment rendered="#{menuBean.menu.type eq 'S'}">
+                                        <div class="form-group">
+                                            <label for="pageSub">Pagina</label>
+                                            <input type="text" class="form-control" j:id="pageSub" placeholder="Nombre de la Pagina" j:value="#{menuBean.menu.link}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="menu">Menu al que Pertenece</label>
+                                            <h:selectOneMenu id="menu" class="form-control" value="#{menuBean.menu.padre}">
+                                                <f:selectItem itemLabel="Seleccione un Menu" itemValue="" />
+                                                <f:selectItems value="#{menuBean.lstMenu}" var="opmenu" itemLabel="#{opmenu.nombre}" itemValue="#{opmenu.codigo}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </ui:fragment>
+
+
+                                    <ui:fragment rendered="#{menuBean.menu.type eq 'I'}">
+                                        <div class="form-group">
+                                            <label for="page">Pagina</label>
+                                            <input type="text" class="form-control" j:id="page" placeholder="Nombre de la Pagina" j:value="#{menuBean.menu.link}"/>
+                                        </div>
+                                    </ui:fragment>
+
+                                    <div id="mensaje" style="display: #{menuBean.message.display}" class="alert alert-#{menuBean.message.clase} form-row">
+                                        <div class="col-3">
+                                            <i class="mdi #{menuBean.message.ico} text-#{menuBean.message.clase} icon-md "></i>
+                                        </div>
+                                        <div class="col-8">
+                                            <span class="font-weight-medium text-right">#{menuBean.message.mensaje}</span>
+                                        </div>
+                                    </div>
+                                    <div class="template-demo">
+                                        <button type="submit" class="btn btn-success mr-2" j:actionListener="#{menuBean.operar()}"> 
+                                            #{menuBean.boton}
+                                        </button>
+
+                                        <button type="reset" class="btn btn-light">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <script src="../resources/js/jquery-3.3.1.min.js"></script>
+                <script src="../resources/js/jquery.min.js"></script>
+                <script>
+                                            $(document).ready(function () {
+
+                                                $("#formMenu\\:icono").focusin(function () {
+                                                    if ($("#formMenu\\:icono").val() !== "") {
+                                                        $("#ico").removeClass($("#formMenu\\:icono").val());
+                                                    }
+                                                });
+
+
+                                            });
+                </script>
+                <script>
+                    $(document).ready(function () {
+
+                        $("#formMenu\\:icono").focusout(function () {
+                            if ($("#formMenu\\:icono").val() !== "") {
+                                $("#ico").addClass($("#formMenu\\:icono").val());
+                            }
+                        });
+
+
+                    });
+                </script>
+                <script>
+
+                    $(document).ready(function () {
+
+                        setTimeout(function () {
+                            $("#mensaje").fadeOut(1500);
+                        }, 3000);
+                    });
+                </script>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

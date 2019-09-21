@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:j="http://xmlns.jcp.org/jsf"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../resources/css/default.css" rel="stylesheet"/>
+        <link href="../resources/css/dataTables.bootstrap4.css" rel="stylesheet"/>
+        <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="../resources/css/sb-admin.css" rel="stylesheet"/>
+        <link href="../resources/fontawesome-free/css/all.min.css" rel="stylesheet"/>
+        <title>Quantum - Flamencos</title>
+
+    </head>
+
+    <body>
+
+        <ui:composition template="./plantilla.xhtml">
+
+            <ui:define name="content">
+                <f:event type="preRenderView" listener="#{prospectosBean.capturarprospectos(session)}"/>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px;">
+                            <div class="card" >
+                                <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
+                                    <div class="media">
+                                        <i class="mdi mdi-account-card-details icon-md text-primary d-flex align-self-start mr-2"></i>
+                                        <div class="media-body">
+                                            <p class="card-text"><h3 class="card-title">Registro de Prospectos</h3></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                    <form j:id="formProspectos">
+                        <div class="row">
+
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 grid-margin">
+
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label for="fecingre">Fecha de Ingreso</label>
+                                                <input type="date" class="form-control" j:id="fecingre" placeholder="Fecha de Ingreso del Prospecto" j:value="#{prospectosBean.prospectos.fecha_prospecto}" />
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="fecreg">Fecha de Registro</label>
+                                                <input type="date" class="form-control" j:id="fecreg" placeholder="Fecha de Registro del Prospecto" j:value="#{prospectosBean.prospectos.fecha_ingreso}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <label for="nombreapellido">Nombres y Apellidos</label>
+                                                <input type="text" class="form-control" j:id="nombreapellido" placeholder="Nombres y Apellidos" j:value="#{prospectosBean.prospectos.nombreapellido}"/>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label for="email">Email</label>
+                                                <input type="email" class="form-control" j:id="email" placeholder="Email del Prospecto" j:value="#{prospectosBean.prospectos.correo}"/>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="telefono1">Telefono Principal</label>
+                                                <input type="text" j:id="telefono1" class="form-control bfh-phone" data-format="+dd (ddd) ddd-ddd" placeholder="Telefono Principal" j:value="#{prospectosBean.prospectos.telefono1}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label for="origen">Derivado de</label>
+                                                <h:selectOneMenu id="origen" class="form-control" value="#{prospectosBean.prospectos.origen}">
+                                                    <f:selectItem itemLabel="Seleccione un Origen" itemValue="" />
+                                                    <f:selectItems value="#{prospectosBean.lstorigenes}" var="origenes" itemLabel="#{origenes.origen}" itemValue="#{origenes.codigo}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+
+                                            <ui:fragment rendered="#{usuariosBean.asesorVali.rol eq 'SUP' or  usuariosBean.asesorVali.rol eq 'ADM' or  usuariosBean.asesorVali.rol eq 'mk' }">
+                                                <div class="col-sm-6">
+                                                    <label for="asesor" >Asignar al asesor: </label>
+                                                    <h:selectOneMenu id="asesor" class="form-control" value="#{prospectosBean.asesores.correo}">
+                                                        <f:selectItem itemLabel="Seleccione un Asesor" itemValue="" />
+                                                        <f:selectItems value="#{prospectosBean.lstasesores}" var="asesores" itemLabel="#{asesores.nombres} #{asesores.apellidos}" itemValue="#{asesores.correo}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </ui:fragment>
+
+                                        </div>
+
+
+                                        <div id="mensaje" style="display: #{prospectosBean.message.display}" class="alert alert-#{prospectosBean.message.clase} form-row">
+                                            <div class="col-3">
+                                                <i class="mdi #{prospectosBean.message.ico} text-#{prospectosBean.message.clase} icon-md "></i>
+                                            </div>
+                                            <div class="col-8">
+                                                <span class="font-weight-medium text-right">#{prospectosBean.message.mensaje}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 grid-margin">
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="form-group row">
+
+                                            <div class="col-sm-6">
+                                                <label for="edad">Edad</label>
+                                                <input type="text" j:id="edad" class="form-control" placeholder="Edad"  j:value="#{prospectosBean.prospectos.edad}" maxlength="2" />
+
+                                            </div>
+                                            <div class="col-sm-6">
+
+                                                <f:metadata>
+                                                    <f:viewParam name="sexo" value="#{prospectosBean.prospectos.sexo}"/>
+                                                </f:metadata>
+
+
+                                                <label>Sexo</label>
+                                                <div class="form-group row" style="margin-bottom: 0 !important;">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-radio">
+                                                            <label class="form-check-label">
+                                                                <input type="radio" class="form-check-input" a:name="sexo" j:id="masculino" value="M"/> Masculino
+                                                                <i class="input-helper"></i></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-radio">
+                                                            <label class="form-check-label">
+                                                                <input type="radio" class="form-check-input" a:name="sexo" j:id="femenino" value="F"/> Femenino
+                                                                <i class="input-helper"></i></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label for="telefono2">Telefono Secundario</label>
+                                                <input type="text" j:id="telefono2" class="form-control bfh-phone" data-format="+dd (ddd) ddd-ddd" placeholder="Telefono Sec." j:value="#{prospectosBean.prospectos.telefono2}"/>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="email2">Email</label>
+                                                <input type="email" class="form-control" j:id="email2" placeholder="Email Secundario" j:value="#{prospectosBean.prospectos.correo_sec}"/>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group row">
+
+                                            <div class="col-sm-6">
+                                                <label for="origen">Distrito donde vive</label>
+                                                <h:selectOneMenu class="form-control" value="#{prospectosBean.prospectos.distrito}">
+                                                    <f:selectItem itemLabel="Seleccione un Distrito" itemValue="" />
+                                                    <f:selectItems value="#{prospectosBean.lstdistritos}" var="distritos" itemLabel="#{distritos.distrito}" itemValue="#{distritos.codigo}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="cargo">Ocupación</label>
+                                                <input type="text" class="form-control" j:id="cargo" placeholder="Ocupación" j:value="#{prospectosBean.prospectos.cargo}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <label for="comentario">Comentarios Adicionales</label>
+                                                <textarea class="form-control" j:id="comentario" rows="3" j:value="#{prospectosBean.prospectos.comentario}" ></textarea>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <a class="nav-link float-left" style="padding: 0.5rem 0rem !important;" j:actionListener="#{prospectosBean.retornalista(session)}" j:immediate="true">
+                                            <i class="mdi mdi-keyboard-return mdi-18px"></i>
+                                            Regresar al Listado
+                                        </a>
+                                        <button type="submit" class="btn btn-success mr-2 float-right" j:actionListener="#{prospectosBean.operar()}">
+                                            #{prospectosBean.boton}
+                                        </button>
+                                        <button type="reset" id="cancelar" class="btn btn-light float-right">Cancel</button>
+                                    </div>
+                                </div>
+
+                            </div> 
+
+
+                        </div>
+                    </form>
+                </div>
+                <script src="../resources/js/jquery-3.3.1.min.js"></script>
+                <script src="../resources/js/bootstrap-formhelpers.min.js"></script>
+                <script>
+
+                    $(document).ready(function () {
+                        var boton = "#{prospectosBean.boton}";
+                        var sexo = "#{prospectosBean.prospectos.sexo}";
+                        if (boton === "Actualizar") {
+                            if (sexo !== null) {
+                                if (sexo === "F") {
+                                    $("#formProspectos\\:femenino").prop("checked", true);
+                                } else {
+                                    $("#formProspectos\\:masculino").prop("checked", true);
+                                }
+
+
+                            }
+                        }
+
+
+                    });
+                </script>
+                <script>
+                    $(document).ready(function () {
+                        $("#formProspectos\\:femenino").click(function () {
+                            $("#formProspectos\\:masculino").prop("checked", false);
+                        });
+                    });
+                </script>
+                <script>
+                    $(document).ready(function () {
+                        $("#formProspectos\\:masculino").click(function () {
+                            $("#formProspectos\\:femenino").prop("checked", false);
+                        });
+                    });
+                </script>
+                <script>
+                    $(function () {
+
+                        $('#formProspectos\\:edad').keypress(function (e) {
+                            if (isNaN(this.value + String.fromCharCode(e.charCode)))
+                                return false;
+                        })
+                                .on("cut copy paste", function (e) {
+                                    e.preventDefault();
+                                });
+
+                    });
+                </script>
+                <script>
+
+                    $(document).ready(function () {
+
+                        setTimeout(function () {
+                            $("#mensaje").fadeOut(1500);
+                        }, 3000);
+                    });
+                </script>
+                <script>
+                    $(document).ready(function () {
+                        var fecha = "#{prospectosBean.prospectos.fecha_ingreso}";
+                        var now = new Date();
+                        var day = ("0" + now.getDate()).slice(-2);
+                        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+
+                        if (fecha !== "") {
+
+                        } else {
+                            $('#formProspectos\\:fecreg').val(today);
+                        }
+
+
+
+                    });
+                </script>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

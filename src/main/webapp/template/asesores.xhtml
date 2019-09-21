@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:j="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../resources/css/default.css" rel="stylesheet"/>
+        <link href="../resources/css/dataTables.bootstrap4.css" rel="stylesheet"/>
+        <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="../resources/css/sb-admin.css" rel="stylesheet"/>
+        <link href="../resources/fontawesome-free/css/all.min.css" rel="stylesheet"/>
+
+        <title>Quantum - Flamencos</title>
+
+    </head>
+
+    <body>
+
+        <ui:composition template="./plantilla.xhtml">
+
+            <ui:define name="content">
+
+                <f:event type="preRenderView" listener="#{asesoresBean.capturarasesor(session)}"/>
+
+                <div class="container-fluid">
+
+                    <!-- Breadcrumbs-->
+                    <div class="row flex-grow">
+                        <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-5 d-flex align-items-stretch" style="margin-bottom: 10px;">
+                            <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
+                                <div class="media">
+                                    <i class="mdi mdi-account icon-md text-primary d-flex align-self-start mr-2"></i>
+                                    <div class="media-body">
+                                        <p class="card-text"><h3 class="card-title">Registro de Asesores</h3></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form j:id="formasesores" class="forms-sample">
+                        <div class="row flex-grow">
+                            <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-5 d-flex align-items-stretch grid-margin">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="form-label-group">
+                                            <label for="correo">Correo</label>
+                                            <input type="email" j:id="correo" class="form-control" placeholder="Correo del Asesor" j:value="#{asesoresBean.asesores.correo}"/>
+                                        </div>
+                                    </div> 
+                                    <div class="form-group" id="bloquecontrasena">
+                                        <div class="form-label-group">
+                                            <label for="contrasena">Contraseña</label>
+                                            <input type="password" j:id="contrasena" class="form-control" placeholder="Password"  j:value="#{asesoresBean.asesores.contrasena}"/>
+                                        </div>
+                                    </div> 
+                                    <div class="form-group row">
+                                        <div class="col-md-6 ">
+                                            <div class="form-label-group">
+                                                <label for="nombre">Nombres del Asesor</label>
+                                                <input type="text" j:id="nombre" class="form-control" placeholder="Nombres del Asesor"  j:value="#{asesoresBean.asesores.nombres}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 ">
+                                            <div class="form-label-group">
+                                                <label for="apellido">Apellidos del Asesor</label>
+                                                <input type="text" j:id="apellido" class="form-control" placeholder="Apellidos del Asesor"  j:value="#{asesoresBean.asesores.apellidos}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-4 ">
+                                            <div class="form-label-group">
+                                                <label for="edad">Edad</label>
+                                                <input type="text" j:id="edad" class="form-control" placeholder="Edad"  j:value="#{asesoresBean.asesores.edad}" maxlength="2" />
+
+                                            </div>
+                                        </div>    
+
+                                        <div class="col-md-8">
+                                            <div class="form-label-group">
+                                                <div class="form-group">
+                                                    <f:metadata>
+                                                        <f:viewParam name="sexo" value="#{asesoresBean.asesores.sexo}"/>
+                                                    </f:metadata>
+
+
+                                                    <label>Sexo</label>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-radio">
+                                                                <label class="form-check-label">
+                                                                    <input type="radio" class="form-check-input" a:name="sexo" j:id="masculino" value="M"/> Masculino
+                                                                    <i class="input-helper"></i></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-radio">
+                                                                <label class="form-check-label">
+                                                                    <input type="radio" class="form-check-input" a:name="sexo" j:id="femenino" value="F"/> Femenino
+                                                                    <i class="input-helper"></i></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>    
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-6 ">
+                                            <div class="form-label-group">
+                                                <label for="telefono1">Telefono Personal</label>
+                                                <input type="text" j:id="telefono1" class="form-control bfh-phone" data-format="+dd (ddd) ddd-ddd" placeholder="Telefono Principal" j:value="#{asesoresBean.asesores.telefono}"/>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 ">
+                                            <div class="form-label-group">
+                                                <label for="telefono2">Telefono Asignado</label>
+                                                <div class="input-group">
+                                                    <input type="text" j:id="telefono2" class="form-control bfh-phone" data-format="+dd (ddd) ddd-ddd" placeholder="Telefono Asignado" j:value="#{asesoresBean.asesores.telefono_asig}"/>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+
+                                        <div class="col-md-6 ">
+                                            <div class="form-label-group">
+                                                <label for="rol">Rol del Sistema</label>
+                                                <h:selectOneMenu id="rol" class="form-control" value="#{asesoresBean.asesores.rol}">
+                                                    <f:selectItem itemLabel="Seleccione un Rol" itemValue="" />
+                                                    <f:selectItems value="#{asesoresBean.lstRoles}" var="rol" itemLabel="#{rol.descripcion}" itemValue="#{rol.rol}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 ">
+                                            <div class="form-label-group">
+                                                <label for="superencar">Supervisor</label>
+                                                <h:selectOneMenu id="superencar" class="form-control" value="#{asesoresBean.asesores.sup_encargado}">
+                                                    <f:selectItem itemLabel="Seleccione un Supervisor" itemValue="" />
+                                                    <f:selectItems value="#{asesoresBean.lstsupervisores}" var="super" itemLabel="#{super.nombres}" itemValue="#{super.correo}"/>
+                                                    <f:ajax event="change" listener="#{asesoresBean.muestradependientes}" render="motivo permitemotivo permitellamar permitelote parcela permitefpago permitecasa checkSlide" execute="@this" />
+                                                </h:selectOneMenu>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 ">
+                                            <label for="supervisor">Supervisor</label>
+
+                                            <div class="form-group row">
+                                                <ui:repeat value="#{asesoresBean.lstsupervisores}" var="super">
+                                                    <div class="form-check">
+                                                        <label class="form-check-inline">
+                                                            <input type="checkbox" checked="true" class="form-check-input" id="check-#{super.correo}" j:value="#{asesoresBean.supervisoresChecked[super.correo]}" /> #{super.nombres}  
+                                                            <i class="input-helper"></i>
+                                                        </label>
+                                                    </div>
+                                                </ui:repeat>    
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="asesores">Asesores</label>
+
+                                            <div class="form-group row ">
+                                                <ui:repeat value="#{asesoresBean.lstasesor}" var="ase">
+                                                    <div class="form-check">
+                                                        <label class="form-check-inline">
+                                                            <input type="checkbox" checked="true" class="form-check-input" id="check-#{ase.correo}" j:value="#{asesoresBean.asesoresChecked[ase.correo]}" /> #{ase.nombres}  
+                                                            <i class="input-helper"></i>
+                                                        </label>
+                                                    </div>
+                                                </ui:repeat>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div id="mensaje" style="display: #{asesoresBean.message.display}" class="alert alert-#{asesoresBean.message.clase} form-row">
+                                        <div class="col-3">
+                                            <i class="mdi #{asesoresBean.message.ico} text-#{asesoresBean.message.clase} icon-md "></i>
+                                        </div>
+                                        <div class="col-8">
+                                            <span class="font-weight-medium text-right">#{asesoresBean.message.mensaje}</span>
+                                        </div>
+                                    </div>
+                                    <div class="template-demo">
+                                        <button type="submit" id="registrar" class="btn btn-success mr-2" j:actionListener="#{asesoresBean.operar()}">
+                                            #{asesoresBean.boton}
+                                        </button>
+                                        <button type="reset" id="cancelar" class="btn btn-light">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                    </form>
+
+
+
+
+
+                </div>
+                <script src="../resources/js/jquery-3.3.1.min.js"></script>
+                <script src="../resources/js/jquery.min.js"></script>
+                <script src="../resources/js/bootstrap-formhelpers.min.js"></script>
+                <script>
+                    $(function () {
+
+                        $('#formasesores\\:edad').keypress(function (e) {
+                            if (isNaN(this.value + String.fromCharCode(e.charCode)))
+                                return false;
+                        })
+                                .on("cut copy paste", function (e) {
+                                    e.preventDefault();
+                                });
+
+                    });
+                </script>
+                <script>
+
+                    $(document).ready(function () {
+
+                        setTimeout(function () {
+                            $("#mensaje").fadeOut(1500);
+                        }, 3000);
+                    });
+                </script>
+                <script>
+
+                    $(document).ready(function () {
+                        var boton = "#{asesoresBean.boton}";
+                        var sexo = "#{asesoresBean.asesores.sexo}";
+                        if (boton === "Actualizar") {
+                            $("#bloquecontrasena").hide();
+                            if (sexo !== null) {
+                                if (sexo === "F") {
+                                    $("#formasesores\\:femenino").prop("checked", true);
+                                } else {
+                                    $("#formasesores\\:masculino").prop("checked", true);
+                                }
+
+
+                            }
+                        }
+
+
+                    });
+                </script>
+                <script>
+                    $(document).ready(function () {
+                        $("#formasesores\\:femenino").click(function () {
+                            $("#formasesores\\:masculino").prop("checked", false);
+                        });
+                    });
+                </script>
+                <script>
+                    $(document).ready(function () {
+                        $("#formasesores\\:masculino").click(function () {
+                            $("#formasesores\\:femenino").prop("checked", false);
+                        });
+                    });
+                </script>
+                <script>
+                    $(document).ready(function () {
+                        if ($("#formasesores\\:correo").val() !== "") {
+                            var correo = $("#formasesores\\:correo").val();
+                            $("#formasesores\\:correo").focusout(function () {
+                                $("#formasesores\\:correo").val(correo);
+                            });
+                        } else {
+
+                        }
+
+                    });
+                </script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

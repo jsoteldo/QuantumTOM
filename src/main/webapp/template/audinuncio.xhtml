@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:j="http://xmlns.jcp.org/jsf">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>Quantum - Flamencos</title>
+    </head>
+
+    <body>
+
+        <ui:composition template="./plantilla.xhtml">
+
+            <ui:define name="content">
+
+                <f:event type="preRenderView" listener="#{marketingBean.listar()}"/>
+                <div class="container-fluid">
+                    <div class="row flex-grow">
+                        <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-stretch" style="margin-bottom: 10px;">
+                            <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
+                                <div class="media">
+                                    <i class="mdi mdi-facebook icon-md text-primary d-flex align-self-start mr-2"></i>
+                                    <div class="media-body">
+                                        <p class="card-text"><h3 class="card-title">Publicidad de Facebook</h3></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-0 pl-1 pr-1 mt-0"  style="display: #{marketingBean.message.display}">
+                            <div class="from-group">
+                                <div id="mensaje" class="alert alert-#{marketingBean.message.clase} form-row">
+                                    <div class="col-3">
+                                        <i class="mdi #{marketingBean.message.ico} text-#{marketingBean.message.clase} icon-md "></i>
+                                    </div>
+                                    <div class="col-8">
+                                        <span class="font-weight-medium text-right">#{marketingBean.message.mensaje}</span>
+                                    </div>
+                                </div>
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 grid-margin" style="margin-bottom: 10px;">
+                        <form j:id="formConjunto" method="post">
+                            <div class="card">
+                                <div class="card-body" >
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p class="card-text"><h4 >Audiencias</h4></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <label for="conjuntos">Conjunto de Anuncios:</label>
+                                            <h:selectOneMenu id="conjuntos" class="form-control" value="#{marketingBean.conjunto.id}" required="true">
+                                                <f:selectItem itemLabel="Conjuntos" itemValue="" />
+                                                <f:selectItems value="#{marketingBean.lstConjunto}" var="conjunto" itemValue="#{conjunto.id}" itemLabel="#{conjunto.descripcion}"/>
+                                                <f:ajax event="change" listener="#{marketingBean.muestraConjunto}" render="formConjunto" execute="@this" />
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>    
+                                    <div class="form-group row mb-0">
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                            <label for="estados">Sexo:</label>
+                                            <div class="form-group">
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" j:value="#{marketingBean.conjunto.masculino}" class="form-check-input"/> Masculinos
+                                                        <i class="input-helper"></i></label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" j:value="#{marketingBean.conjunto.femenino}" class="form-check-input"/> Femeninos
+                                                        <i class="input-helper"></i></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
+                                            <label for="estados">Edad:</label>
+                                            <div class="form-group row">
+                                                <div class="col-md-5 ">
+                                                    <input type="number" class="form-control" j:id="edad1" placeholder="0" j:value="#{marketingBean.conjunto.edadini}" min="0" max="100"/>
+                                                </div>
+                                                <div class="col-md-2 "> 
+
+                                                    <label class="mt-2">a</label>
+                                                </div>
+
+                                                <div class="col-md-5 ">
+                                                    <input type="number" class="form-control" j:id="edad2" placeholder="0" j:value="#{marketingBean.conjunto.edadfin}" min="0" max="100"/>
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="bds">Bases de Datos:</label>
+                                        <input type="text" class="form-control" j:id="bds" placeholder="Nombre de Bases de datos" j:value="#{marketingBean.conjunto.bd}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="adicional">Adicionales:</label>
+                                        <input type="text" class="form-control" j:id="adicional" placeholder="Notas adicionales" j:value="#{marketingBean.conjunto.adicional}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="geografia">Zona Geográfica:</label>
+                                        <input type="text" class="form-control" j:id="geografia" placeholder="Ciudades, Localidades u otros" j:value="#{marketingBean.conjunto.zngeo}"/>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-success" j:actionListener="#{marketingBean.operarConjunto()}">
+                                        #{marketingBean.boton}
+                                    </button>
+
+
+
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 grid-margin" style="margin-bottom: 10px;">
+                        <form j:id="formAnuncios" method="post">
+                            <div class="card">
+                                <div class="card-body" >
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p class="card-text"><h4 >Anuncios</h4></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="anuncios">Anuncios:</label>
+                                        <h:selectOneMenu id="anuncios" class="form-control" value="#{marketingBean.anuncio.codigo}" required="true">
+                                            <f:selectItem itemLabel="Anuncios" itemValue="" />
+                                            <f:selectItems value="#{marketingBean.lstAnuncios}" var="anuncio" itemValue="#{anuncio.codigo}" itemLabel="#{anuncio.descripcion}"/>
+                                            <f:ajax event="change" listener="#{marketingBean.muestraAnuncio}" render="formAnuncios" execute="@this" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="uimg">URL Imagen</label>
+                                        <input type="url" class="form-control" j:id="uimg" placeholder="URL" j:value="#{marketingBean.anuncio.urlimg}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ufb">URL Facebook</label>
+                                        <input type="url" class="form-control" j:id="ufb" placeholder="URL" j:value="#{marketingBean.anuncio.urlfb}"/>
+                                    </div>
+
+
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-success" j:actionListener="#{marketingBean.operarAnuncio()}">
+                                        #{marketingBean.boton}
+                                    </button>
+
+
+
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    
+                    <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 grid-margin" style="margin-bottom: 10px;">
+                        <form j:id="formCampañas" method="post">
+                            <div class="card">
+                                <div class="card-body" >
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p class="card-text"><h4 >Campañas</h4></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="campanas">Campañas</label>
+                                        <h:selectOneMenu id="campanas" class="form-control" value="#{marketingBean.campana.codigo}" required="true">
+                                            <f:selectItem itemLabel="Campañas" itemValue="" />
+                                            <f:selectItems value="#{marketingBean.lstCampanas}" var="campana" itemValue="#{campana.codigo}" itemLabel="#{campana.nombre}"/>
+                                            <f:ajax event="change" listener="#{marketingBean.muestraCampanas}" render="formCampañas" execute="@this" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="describecampana">Descripción</label>
+                                        <textarea rows="7" class="form-control" j:id="describecampana"  j:value="#{marketingBean.campana.descripcion}"/>
+                                    </div>
+                                    
+
+
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-success" j:actionListener="#{marketingBean.operarCampana()}">
+                                        #{marketingBean.boton}
+                                    </button>
+
+
+
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    
+                </div>
+                <script src="../resources/js/jquery-3.3.1.min.js"></script>
+                <script>
+                    $(document).ready(function () {
+
+                        setTimeout(function () {
+                            $("#mensaje").fadeOut(1500);
+                        }, 3000);
+                    });
+                </script>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

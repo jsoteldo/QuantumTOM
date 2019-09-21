@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:j="http://xmlns.jcp.org/jsf">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Quantum - Flamencos</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="../resources/lib/notifyMessage/css/notifyMessage.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+
+    </head>
+
+    <body>
+
+        <ui:composition template="./plantilla.xhtml">
+
+            <ui:define name="content">
+                <f:event type="preRenderView" listener="#{tipocampoBean.listar()}"/>
+
+
+                <div class="container-fluid">
+                    <div class="alertas" style="position: fixed; top: 100px; right: 10px; width: 250px; z-index: 9999;"></div>
+                    <h:panelGroup id="script">
+                        <h:outputScript rendered="#{not empty tipocampoBean.script}">#{tipocampoBean.script}</h:outputScript>
+                    </h:panelGroup>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px;">
+                            <div class="card" >
+                                <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
+                                    <div class="media">
+                                        <i class="mdi mdi-comment-alert-outline icon-md text-primary d-flex align-self-start mr-2"></i>
+                                        <div class="media-body">
+                                            <p class="card-text"><h3 class="card-title">Registro de Tipo de Campo</h3></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 grid-margin">
+                            <div class="card" >
+                                <div class="card-body">
+                                    <form j:id="formtipo1"  method="post" class="forms-sample">
+                                        <div class="form-group">
+                                            <label for="nombre">Nombre del Campo</label>
+                                            <input type="text" class="form-control" j:id="nombre" placeholder="Codigo" maxlength="50" j:value="#{tipocampoBean.campo.nombre}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="descripcion">Descripcion del Campo</label>
+                                            <input type="text" class="form-control" j:id="descripcion" placeholder="Descripción" maxlength="50" j:value="#{tipocampoBean.campo.descripcion}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tipo">Tipo de Campo</label>
+                                            <h:selectOneMenu id="tipo" onchange="muestracapacidad()" class="form-control" value="#{tipocampoBean.campo.tipo}">
+                                                <f:selectItem itemLabel="Seleccione un Origen" itemValue="" noSelectionOption="true"/>
+                                                <f:selectItems value="#{tipocampoBean.lstTipocampo}" var="tipo" itemLabel="#{tipo.tipo}" itemValue="#{tipo.valor}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="form-group" id='datoscapa' style='display: #{tipocampoBean.capacidad};'>
+                                            <label for="capacidad">Capacidad del Campo</label>
+                                            <input type="text" class="form-control" j:id="capacidad" placeholder="Tamaño del Campo" maxlength="50" j:value="#{tipocampoBean.campo.capacidad}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="prioridad">Prioridad del Campo</label>
+                                            <h:selectOneMenu id="selectOneMenu" class="form-control" value="#{tipocampoBean.campo.prioridad}">
+                                                <f:selectItem itemLabel="Seleccione una Prioridad" itemValue="" noSelectionOption="true"/>
+                                                <f:selectItem itemLabel="Alta" itemValue="Alta" />
+                                                <f:selectItem itemLabel="Baja" itemValue="Baja" />
+                                            </h:selectOneMenu>    
+
+                                        </div>
+
+                                        <div class="template-demo">
+                                            <h:commandButton id="btopera" class="btn btn-success mr-2 dispara" value=" #{tipocampoBean.boton}" > 
+                                                <f:ajax  execute="@form" listener="#{tipocampoBean.operar()}" render=":formtipo2 formtipo1 nombre descripcion tipo capacidad prioridad mensaje btopera :script" />   
+                                            </h:commandButton>
+                                            <h:commandButton id="btreset" class="btn btn-light" value="Cancel" > 
+                                                <f:ajax  execute="@form" listener="#{tipocampoBean.limpiar()}" render=":formtipo2 formtipo1 nombre descripcion tipo capacidad prioridad mensaje btopera datoscapa" />   
+                                            </h:commandButton>
+                                        </div>
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive-sm table-responsive-md table-responsive-lg" >
+                                        <h:form id="formtipo2" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                            <table id="table" class="table table-striped table-sm" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nombre</th>
+                                                        <th>Prioridad</th>
+                                                        <th>Editar</th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Nombre</th>
+                                                        <th>Prioridad</th>
+                                                        <th>Editar</th>
+
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                    <ui:repeat value="#{tipocampoBean.lstcampos}" var="campo">
+                                                        <tr>
+                                                            <td>#{campo.nombre}</td>
+                                                            <td>#{campo.prioridad}</td>
+                                                            <td>
+                                                                <div class="form-group row" style="margin-bottom: 0 !important; ">
+                                                                    <h:commandLink id="leer" class="col-sm-4 nav-link dispara" style="cursor: pointer; color:#007bff;" > 
+                                                                        <f:ajax event="click" listener="#{tipocampoBean.leerIDcampo(campo,session)}" render="formtipo1" execute="@this" />
+                                                                        <i class="mdi mdi-account-edit mdi-18px"></i>
+                                                                    </h:commandLink>
+
+                                                                    <h:commandLink id="idBorrar" class="nav-link col-sm-4 dispara" style="cursor: pointer; color:#007bff;" >
+                                                                        <f:ajax event="click" listener="#{tipocampoBean.borrarcampo(campo)}" render="formtipo1 formtipo2 :script" execute="@this"/>
+                                                                        <i class="mdi mdi-delete-empty mdi-18px"></i>
+                                                                    </h:commandLink>
+
+                                                                </div>    
+                                                            </td>
+                                                        </tr>
+                                                    </ui:repeat>
+                                                </tbody>
+                                            </table>
+
+
+                                        </h:form> 
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> 
+
+
+
+                </div>
+
+                <script src="../resources/js/jquery-3.3.1.min.js"></script>
+                <script type="text/javascript" src="../resources/lib/notifyMessage/js/notifyMessage.js"></script>
+                <script>
+                    
+                    
+                    function muestracapacidad() {
+                        var tipo = $("#formtipo1\\:tipo").val();
+                        if (tipo === 'VARCHAR') {
+                            $("#datoscapa").css("display", "");
+                            
+                        } else {
+                            $("#datoscapa").css("display", "none");
+                        }
+                    }
+                </script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:j="http://xmlns.jcp.org/jsf">
+    <head>
+        <title>Quantum - Flamencos</title>
+        <!-- Custom styles for this template-->
+        
+        <link rel="stylesheet" href="resources/vendors/iconfonts/mdi/css/materialdesignicons.min.css"/>
+        
+        <link rel="stylesheet" href="resources/vendors/css/vendor.bundle.addons.css"/>
+        
+        <link rel="stylesheet" href="resources/vendors/css/vendor.bundle.base.css"/>
+        <link rel="stylesheet" href="resources/css/style.css"/>
+        <link rel="stylesheet" href="resources/css/default.css"/>
+        <link rel="shortcut icon" href="resources/images/icoflamencos.png" />
+
+    </head>
+    <body >
+
+        <div class="container-scroller">
+            <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
+                <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
+                    <div class="row w-100">
+                        <div class="col-lg-4 col-md-8 col-sm-12 mx-auto">
+                            <div class="auto-form-wrapper">
+                                <form j:id="form" method="post">
+                                    <div class="form-group">
+                                        <label class="label">Usuario</label>
+                                        <div class="input-group">
+                                            <input j:id="correo" type="email" class="form-control" placeholder="Usuario" j:value="#{usuariosBean.asesores.correo}"/>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="mdi mdi-account"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="label">Contraseña</label>
+                                        <div class="input-group">
+                                            <input j:id="contrasena" type="password" class="form-control" placeholder="*********" j:value="#{usuariosBean.asesores.contrasena}" required="true"/>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="mdi mdi-account-key"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: #{usuariosBean.message.display}" class="alert alert-warning form-row">
+                                        <div class="col-3">
+                                            <i class="mdi mdi-alert-octagram text-warning icon-md "></i>
+                                        </div>
+                                        <div class="col-8">
+                                            <span class="font-weight-medium text-right ">#{usuariosBean.message.mensaje}</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <button class="btn btn-danger submit-btn btn-block" j:actionListener="#{usuariosBean.inicioSession(session)}" >Ingresar</button>
+                                    </div>
+
+
+                                    <div class="text-block text-center my-3">
+                                        <span class="text-small font-weight-semibold"></span>
+                                        <a href="register.html" class="text-black text-small">Crear un nuevo usuario.</a>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- content-wrapper ends -->
+            </div>
+            <!-- page-body-wrapper ends -->
+        </div>
+        
+        
+        
+        <script src="resources/vendors/js/vendor.bundle.base.js"></script>
+        <script src="resources/vendors/js/vendor.bundle.addons.js"></script>
+        <!-- endinject -->
+        <!-- inject:js -->
+        <script src="resources/js/off-canvas.js"></script>
+        <script src="resources/js/misc.js"></script>
+
+    </body>
+</html>
+

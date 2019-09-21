@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:j="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <head j:id="head">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../resources/vendors/datatables/dataTables.bootstrap4.css" rel="stylesheet"/>
+        <link href="../resources/vendors/datatables/dataTables.responsive.css" rel="stylesheet"/>
+
+        <title>Quantum - Flamencos</title>
+    </head>
+
+    <body>
+
+        <ui:composition template="./plantilla.xhtml">
+
+            <ui:define name="content">
+                <script src="../resources/js/jquery-3.3.1.min.js"></script>
+                <script src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+                <script>
+                    $(document).ready(function () {
+
+                        var tabla = '#{prospectosBean.estado}';
+
+                        switch (tabla) {
+                            case 'descartados':
+                                $("#todos").hide();
+                                $("#descartados").show();
+                                $("#pendientes").hide();
+                                $("#gestion").hide();
+                                $("#asignar").hide();
+                                break;
+                            case 'pendientes':
+                                $("#todos").hide();
+                                $("#descartados").hide();
+                                $("#pendientes").show();
+                                $("#gestion").hide();
+                                $("#asignar").hide();
+                                break;
+                            case 'gestion':
+                                $("#todos").hide();
+                                $("#descartados").hide();
+                                $("#pendientes").hide();
+                                $("#gestion").show();
+                                $("#asignar").hide();
+                                break;
+                            case 'asignar':
+                                $("#todos").hide();
+                                $("#descartados").hide();
+                                $("#pendientes").hide();
+                                $("#gestion").hide();
+                                $("#asignar").show();
+                                break;
+                            default:
+                                $("#todos").show();
+                                $("#descartados").hide();
+                                $("#pendientes").hide();
+                                $("#gestion").hide();
+                                $("#asignar").hide();
+                        }
+
+
+
+
+
+                        $("#btTodos").click(function () {
+                            $("#todos").show();
+                            $("#descartados").hide();
+                            $("#pendientes").hide();
+                            $("#gestion").hide();
+                            $("#asignar").hide();
+                        });
+
+                        $("#btDescartados").click(function () {
+                            $("#todos").hide();
+                            $("#descartados").show();
+                            $("#pendientes").hide();
+                            $("#gestion").hide();
+                            $("#asignar").hide();
+                        });
+
+                        $("#btPendientes").click(function () {
+                            $("#todos").hide();
+                            $("#descartados").hide();
+                            $("#pendientes").show();
+                            $("#gestion").hide();
+                            $("#asignar").hide();
+                        });
+
+                        $("#btGestion").click(function () {
+                            $("#todos").hide();
+                            $("#descartados").hide();
+                            $("#pendientes").hide();
+                            $("#gestion").show();
+                            $("#asignar").hide();
+                        });
+
+                        $("#btAsignar").click(function () {
+                            $("#todos").hide();
+                            $("#descartados").hide();
+                            $("#pendientes").hide();
+                            $("#gestion").hide();
+                            $("#asignar").show();
+                        });
+
+
+                    });
+                </script>
+                <script>
+                    $(document).ready(function () {
+                        $('.dataTable').DataTable({
+                            initComplete: function () {
+                                this.api().columns([3]).every(function () {
+                                    var column = this;
+                                    var select = $('<select  class="form-control form-control-sm" style="height: calc(1.8125rem + -6px) !important; padding: 0.1rem 0.2rem !important;"><option value=""></option></select>')
+                                            .appendTo($(column.header()).empty())
+                                            .on('change', function () {
+                                                var val = $.fn.dataTable.util.escapeRegex(
+                                                        $(this).val()
+                                                        );
+                                                column
+                                                        .search(val ? '^' + val + '$' : '', true, false)
+                                                        .draw();
+                                            });
+                                    column.data().unique().sort().each(function (d, j) {
+                                        var val = $('<div/>').html(d).text();
+                                        select.append('<option value="' + val + '">' + val + '</option>');
+                                    });
+                                });
+                                this.api().columns([4]).every(function () {
+                                    var column = this;
+                                    var select = $('<select class="form-control form-control-sm" style="height: calc(1.8125rem + -6px) !important; padding: 0.1rem 0.2rem !important;"><option value=""></option></select>')
+                                            .appendTo($(column.header()).empty())
+                                            .on('change', function () {
+                                                var val = $.fn.dataTable.util.escapeRegex(
+                                                        $(this).val()
+                                                        );
+                                                column
+                                                        .search(val ? '^' + val + '$' : '', true, false)
+                                                        .draw();
+                                            });
+                                    column.data().unique().sort().each(function (d, j) {
+                                        var val = $('<div/>').html(d).text();
+                                        select.append('<option value="' + val + '">' + val + '</option>');
+                                    });
+                                });
+                            },
+                            language: {
+                                "decimal": "",
+                                "emptyTable": "No hay datos",
+                                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                "infoFiltered": "(Filtro de _MAX_ total registros)",
+                                "infoPostFix": "",
+                                "thousands": ",",
+                                "lengthMenu": "Mostrar _MENU_ registros",
+                                "loadingRecords": "Cargando...",
+                                "processing": "Procesando...",
+                                "search": "Buscar:",
+                                "zeroRecords": "No se encontraron coincidencias",
+                                "paginate": {
+                                    "first": "Primero",
+                                    "last": "Ultimo",
+                                    "next": "Próximo",
+                                    "previous": "Anterior"
+                                },
+                                "aria": {
+                                    "sortAscending": ": Activar orden de columna ascendente",
+                                    "sortDescending": ": Activar orden de columna desendente"
+                                }
+                            },
+                            stateSave: true
+                        }
+                        );
+                    });
+                </script> 
+                <script>
+                    $(document).ready(function () {
+                        $('.dataTablegestion').DataTable({
+                            initComplete: function () {
+                                this.api().columns([0]).every(function () {
+                                    var column = this;
+                                    var select = $('<select  class="form-control form-control-sm" style="height: calc(1.8125rem + -6px) !important; padding: 0.1rem 0.2rem !important;"><option value=""></option></select>')
+                                            .appendTo($(column.header()).empty())
+                                            .on('change', function () {
+                                                var val = $.fn.dataTable.util.escapeRegex(
+                                                        $(this).val()
+                                                        );
+                                                column
+                                                        .search(val ? '^' + val + '$' : '', true, false)
+                                                        .draw();
+                                            });
+                                    column.data().unique().sort().each(function (d, j) {
+                                        var val = $('<div/>').html(d).text();
+                                        select.append('<option value="' + val + '">' + val + '</option>');
+                                    });
+                                });
+                                this.api().columns([4]).every(function () {
+                                    var column = this;
+                                    var select = $('<select class="form-control form-control-sm" style="height: calc(1.8125rem + -6px) !important; padding: 0.1rem 0.2rem !important;"><option value=""></option></select>')
+                                            .appendTo($(column.header()).empty())
+                                            .on('change', function () {
+                                                var val = $.fn.dataTable.util.escapeRegex(
+                                                        $(this).val()
+                                                        );
+                                                column
+                                                        .search(val ? '^' + val + '$' : '', true, false)
+                                                        .draw();
+                                            });
+                                    column.data().unique().sort().each(function (d, j) {
+                                        var val = $('<div/>').html(d).text();
+                                        select.append('<option value="' + val + '">' + val + '</option>');
+                                    });
+                                });
+                                this.api().columns([5]).every(function () {
+                                    var column = this;
+                                    var select = $('<select class="form-control form-control-sm" style="height: calc(1.8125rem + -6px) !important; padding: 0.1rem 0.2rem !important;"><option value=""></option></select>')
+                                            .appendTo($(column.header()).empty())
+                                            .on('change', function () {
+                                                var val = $.fn.dataTable.util.escapeRegex(
+                                                        $(this).val()
+                                                        );
+                                                column
+                                                        .search(val ? '^' + val + '$' : '', true, false)
+                                                        .draw();
+                                            });
+                                    column.data().unique().sort().each(function (d, j) {
+                                        var val = $('<div/>').html(d).text();
+                                        select.append('<option value="' + val + '">' + val + '</option>');
+                                    });
+                                });
+                            },
+                            language: {
+                                "decimal": "",
+                                "emptyTable": "No hay datos",
+                                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                "infoFiltered": "(Filtro de _MAX_ total registros)",
+                                "infoPostFix": "",
+                                "thousands": ",",
+                                "lengthMenu": "Mostrar _MENU_ registros",
+                                "loadingRecords": "Cargando...",
+                                "processing": "Procesando...",
+                                "search": "Buscar:",
+                                "zeroRecords": "No se encontraron coincidencias",
+                                "paginate": {
+                                    "first": "Primero",
+                                    "last": "Ultimo",
+                                    "next": "Próximo",
+                                    "previous": "Anterior"
+                                },
+                                "aria": {
+                                    "sortAscending": ": Activar orden de columna ascendente",
+                                    "sortDescending": ": Activar orden de columna desendente"
+                                }
+                            },
+                            stateSave: true
+                        }
+                        );
+                    });
+                </script> 
+                <script>
+                    $(document).ready(function () {
+                        $('.dataTablePendiente').DataTable({
+
+                            language: {
+                                "decimal": "",
+                                "emptyTable": "No hay datos",
+                                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                "infoFiltered": "(Filtro de _MAX_ total registros)",
+                                "infoPostFix": "",
+                                "thousands": ",",
+                                "lengthMenu": "Mostrar _MENU_ registros",
+                                "loadingRecords": "Cargando...",
+                                "processing": "Procesando...",
+                                "search": "Buscar:",
+                                "zeroRecords": "No se encontraron coincidencias",
+                                "paginate": {
+                                    "first": "Primero",
+                                    "last": "Ultimo",
+                                    "next": "Próximo",
+                                    "previous": "Anterior"
+                                },
+                                "aria": {
+                                    "sortAscending": ": Activar orden de columna ascendente",
+                                    "sortDescending": ": Activar orden de columna desendente"
+                                }
+                            },
+                            stateSave: true
+                        }
+                        );
+                    });
+                </script> 
+                <c:set var = "ultimocontacto" value = "${fn:replace(prospecto.fecha_ultimo_contac, 'T', '&#160; &#160;')}" />
+
+                <f:event type="preRenderView" listener="#{prospectosBean.listar(session)}"/>
+                <div class="container-fluid">
+
+                    <div class="row flex-grow">
+                        <div class="card col-12 d-flex align-items-stretch" style="margin-bottom: 10px;">
+                            <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
+                                <div class="media">
+                                    <i class="mdi mdi-clipboard-account icon-md text-primary d-flex align-self-start mr-2"></i>
+                                    <div class="media-body">
+                                        <p class="card-text"><h3 class="card-title">Listado de Prospectos</h3></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row flex-grow">
+                        <div class="card col-12 d-flex align-items-stretch grid-margin">
+                            <div class="card-title" style="margin-bottom: 0px !important;">
+                                <div clas="card" style="margin-top: 2%;">
+                                    <ui:fragment rendered="#{usuariosBean.asesorVali.rol eq 'SUP' or  usuariosBean.asesorVali.rol eq 'ADM'}">
+                                        <h:commandButton id="btTodos" class="btn btn-inverse-success btn-rounded btn-fw mr-2" value="Todos"> 
+                                          
+                                        </h:commandButton>
+                                        <h:commandButton id="btDescartados" class="btn btn-inverse-dark btn-rounded btn-fw mr-2" value="Ventas Caidas"> 
+                                             
+                                        </h:commandButton>
+                                        <button id="btPendientes" class="btn btn-inverse-danger btn-rounded btn-fw mr-2" > 
+                                            Por Contactar
+                                        </button>
+                                        <button id="btGestion" class="btn btn-inverse-primary btn-rounded btn-fw mr-2" > 
+                                            Gestion
+                                        </button>
+                                        <button id="btAsignar" class="btn btn-inverse-warning btn-rounded btn-fw mr-2" > 
+                                            Por Asignar
+                                        </button>
+
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{usuariosBean.asesorVali.rol ne 'SUP' and  usuariosBean.asesorVali.rol ne 'ADM'}">
+                                        <button id="btTodos" class="btn btn-inverse-success btn-rounded btn-fw mr-2"> 
+                                            Todos   
+                                        </button>
+                                        <button id="btDescartados" class="btn btn-inverse-dark btn-rounded btn-fw mr-2" > 
+                                            Ventas Caidas
+                                        </button>
+                                        <button id="btPendientes" class="btn btn-inverse-danger btn-rounded btn-fw mr-2"> 
+                                            Por Contactar
+                                        </button>
+
+                                    </ui:fragment>
+                                </div>
+                            </div>  
+                            <div class="card-body" style="padding: 1.88rem 0rem !important;">
+                                <div id="todos" class="table-responsive-sm table-responsive-md table-responsive-lg" style="display:">
+                                    <table id="todostable" class="table table-striped dataTable table-sm" style="width:100%">
+                                        <thead>
+                                            <tr class="table-success">
+                                                <th>Fecha Ult. Contacto</th>
+                                                <th>Nombre y Apellido</th>
+                                                <th>Teléfono</th>
+                                                <th>Estado</th>
+                                                <th>Motivo</th>
+                                                <th>Editar</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr class="table-success">
+                                                <th>Fecha Ult. Contacto</th>
+                                                <th>Nombre y Apellido</th>
+                                                <th>Teléfono</th>
+                                                <th>Estado</th>
+                                                <th>Motivo</th>
+                                                <th>Editar</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <ui:repeat value="#{prospectosBean.lstProspectos}" var="prospecto">
+                                                <tr>
+                                                    <td>
+                                                        ${ultimocontacto}
+                                                    </td>
+                                                    <td>#{prospecto.nombreapellido}</td>
+                                                    <td>#{prospecto.telefono1}</td>
+                                                    <td>
+                                                        <label class="badge badge-#{prospecto.colorestado}">#{prospecto.estado}</label>
+                                                    </td>
+                                                    <td>#{prospecto.motivo}</td>
+                                                    <td>
+                                                        <div class="form-group row" style="margin-bottom: 0 !important;">
+                                                            <ui:fragment rendered="#{usuariosBean.asesorVali.rol ne 'SUP' and  usuariosBean.asesorVali.rol ne 'ADM'}">
+                                                                 <form j:id="formprospectos" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerID(prospecto,session,'todos')}">
+                                                                        <i class="mdi mdi-account-edit  text-success mdi-18px"></i>
+                                                                    </a>
+                                                                </form>
+                                                                <form j:id="formgestion" method="post" class="col-4">  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerIdtoGestion(prospecto, session,'todos')}">
+                                                                        <i class="mdi mdi-eye-outline text-success mdi-18px"></i>
+                                                                    </a>
+                                                                </form>
+                                                            </ui:fragment>
+
+                                                            <ui:fragment rendered="#{usuariosBean.asesorVali.rol eq 'SUP' or  usuariosBean.asesorVali.rol eq 'ADM'}">
+
+                                                                <form j:id="formprospectos2" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerID(prospecto,session,'todos')}">
+                                                                        <i class="mdi mdi-account-edit  text-success mdi-18px"></i>
+                                                                    </a>
+                                                                </form>
+                                                                <form j:id="formgestionadm2" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerIdtoGestion(prospecto, session,'todos')}">
+                                                                        <i class="mdi mdi-eye-outline text-success mdi-18px"></i>
+                                                                    </a>
+                                                                </form>
+                                                                <form j:id="formdeletepros2" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                                                    <a class="nav-link" j:actionListener="#{prospectosBean.borrar(prospecto,session)}">
+                                                                        <i class="mdi mdi-delete-empty text-success mdi-18px"></i>
+                                                                    </a>
+                                                                </form> 
+
+
+                                                            </ui:fragment>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ui:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div id="descartados" class="table-responsive-sm table-responsive-md table-responsive-lg" style="display:none;">
+                                    <table class="table table-striped dataTable table-sm" style="width:100%">
+                                        <thead>
+                                            <tr class="table-dark">
+                                                <th>Fecha Ult. Contacto</th>
+                                                <th>Nombre y Apellido</th>
+                                                <th>Teléfono</th>
+                                                <th>Estado</th>
+                                                <th>Motivo</th>
+                                                <th>Editar</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr class="table-dark">
+                                                <th>Fecha Ult. Contacto</th>
+                                                <th>Nombre y Apellido</th>
+                                                <th>Teléfono</th>
+                                                <th>Estado</th>
+                                                <th>Motivo</th>
+                                                <th>Editar</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <ui:repeat value="#{prospectosBean.lstProspectosdescar}" var="prospecto">
+                                                <tr>
+                                                    <td>${ultimocontacto}</td>
+                                                    <td>#{prospecto.nombreapellido}</td>
+                                                    <td>#{prospecto.telefono1}</td>
+                                                    <td> <label class="badge badge-#{prospecto.colorestado}">#{prospecto.estado}</label></td>
+                                                    <td>#{prospecto.motivo}</td>
+                                                    <td>
+
+
+
+
+
+                                                        <div class="form-group row" style="margin-bottom: 0 !important; ">
+                                                            <ui:fragment rendered="#{usuariosBean.asesorVali.rol ne 'SUP' and  usuariosBean.asesorVali.rol ne 'ADM'}">
+                                                                <form j:id="formpendiprospec" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerID(prospecto,session,'descartados')}">
+                                                                        <i class="mdi mdi-account-edit mdi-18px  text-dark "></i>
+                                                                    </a>
+                                                                </form>
+                                                                <form j:id="formprospectos" class="col-4" method="post" >  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerIdtoGestion(prospecto,session,'descartados')}">
+                                                                        <i class="mdi mdi-eye-outline mdi-18px text-dark "></i>
+                                                                    </a>
+                                                                </form>
+                                                            </ui:fragment>    
+                                                            <ui:fragment rendered="#{usuariosBean.asesorVali.rol eq 'SUP' or  usuariosBean.asesorVali.rol eq 'ADM'}">
+
+                                                                <form j:id="formpendienprospec" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerID(prospecto,session,'descartados')}">
+                                                                        <i class="mdi mdi-account-edit mdi-18px  text-dark "></i>
+                                                                    </a>
+                                                                </form>
+                                                                <form j:id="formgestionadm" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerIdtoGestion(prospecto, session,'descartados')}">
+                                                                        <i class="mdi mdi-eye-outline mdi-18px  text-dark "></i>
+                                                                    </a>
+                                                                </form>
+                                                                <form j:id="formpendiendelete" class="col-4"  method="post" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                                                    <a class="nav-link" j:actionListener="#{prospectosBean.borrar(prospecto,session)}">
+                                                                        <i class="mdi mdi-delete-empty mdi-18px text-dark"></i>
+                                                                    </a>
+                                                                </form> 
+                                                            </ui:fragment>
+
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ui:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div id="pendientes" class="table-responsive-sm table-responsive-md table-responsive-lg" style="display:none;">
+                                    <table class="table table-striped dataTablePendiente table-sm" style="width:100%">
+                                        <thead>
+                                            <tr class="table-danger">
+                                                <th>Fecha de Asignación</th>
+                                                <th>Nombre y Apellido</th>
+                                                <th>Teléfono</th>
+                                                <th>Estado</th>
+                                                <th>Motivo</th>
+                                                <th >Editar</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr class="table-danger">
+                                                <th>Fecha de Asignación</th>
+                                                <th>Nombre y Apellido</th>
+                                                <th>Teléfono</th>
+                                                <th>Estado</th>
+                                                <th>Motivo</th>
+                                                <th>Editar</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <ui:repeat value="#{prospectosBean.lstProspectospendientes}" var="prospecto">
+                                                <tr>
+                                                    <td>#{prospecto.fecha_asignacion}</td>
+                                                    <td>#{prospecto.nombreapellido}</td>
+                                                    <td>#{prospecto.telefono1}</td>
+                                                    <td>
+                                                        <label class="badge badge-#{prospecto.colorestado}">#{prospecto.estado}</label>
+                                                    </td>
+                                                    <td>#{prospecto.motivo}</td>
+                                                    <td>
+                                                        <div class="form-group row" style="margin-bottom: 0 !important; ">
+                                                            <ui:fragment rendered="#{usuariosBean.asesorVali.rol ne 'SUP' and  usuariosBean.asesorVali.rol ne 'ADM'}">
+                                                                 <form j:id="formpenprospec" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerID(prospecto,session,'pendientes')}">
+                                                                        <i class="mdi mdi-account-edit mdi-18px  text-danger "></i>
+                                                                    </a>
+                                                                </form>
+                                                                <form j:id="formprospectos" class="col-4" method="post" >  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerIdtoGestion(prospecto,session,'pendientes')}">
+                                                                        <i class="mdi mdi-eye-outline mdi-18px text-danger "></i>
+                                                                    </a>
+                                                                </form>
+                                                            </ui:fragment>    
+                                                            <ui:fragment rendered="#{usuariosBean.asesorVali.rol eq 'SUP' or  usuariosBean.asesorVali.rol eq 'ADM'}">
+                                                                <form j:id="formpendienprospec" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerID(prospecto,session,'pendientes')}">
+                                                                        <i class="mdi mdi-account-edit mdi-18px  text-danger "></i>
+                                                                    </a>
+                                                                </form>
+                                                                <form j:id="formgestionadm" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerIdtoGestion(prospecto, session,'pendientes')}">
+                                                                        <i class="mdi mdi-eye-outline mdi-18px  text-danger "></i>
+                                                                    </a>
+                                                                </form>
+
+                                                                <form j:id="formpendiendelete" class="col-4"  method="post" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                                                    <a class="nav-link" j:actionListener="#{prospectosBean.borrar(prospecto,session)}">
+                                                                        <i class="mdi mdi-delete-empty mdi-18px text-danger"></i>
+                                                                    </a>
+                                                                </form> 
+                                                            </ui:fragment>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ui:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div id="gestion" class="table-responsive-sm table-responsive-md table-responsive-lg" style="display:none;">
+                                    <table class="table table-striped dataTablegestion table-sm" style="width:100%">
+                                        <thead>
+                                            <tr class="table-primary">
+                                                <th>Asesor</th>
+                                                <th>Fecha Ult. Contacto</th>
+                                                <th>Nombre y Apellido</th>
+                                                <th>Teléfono</th>
+                                                <th>Estado</th>
+                                                <th>Motivo</th>
+                                                <th>Editar</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr class="table-primary">
+                                                <th>Asesor</th>
+                                                <th>Fecha de Ingreso</th>
+                                                <th>Nombre y Apellido</th>
+                                                <th>Teléfono</th>
+                                                <th>Estado</th>
+                                                <th>Motivo</th>
+                                                <th>Editar</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <ui:repeat value="#{prospectosBean.lstProspectosgestion}" var="prospecto">
+                                                <tr>
+                                                    <td>
+                                                        <span class="profile-text">#{prospecto.asesor}</span>
+                                                        <img class="img-xs rounded-circle" src="../resources/images/faces/#{prospecto.imgasesor}" alt="Profile image"/>
+
+
+                                                    </td>
+                                                    <td>#{prospecto.fecha_ingreso}</td>
+                                                    <td>#{prospecto.nombreapellido}</td>
+                                                    <td>#{prospecto.telefono1}</td>
+                                                    <td>
+                                                        <label class="badge badge-#{prospecto.colorestado}">#{prospecto.estado}</label>
+                                                    </td>
+                                                    <td>#{prospecto.motivo}</td>
+                                                    <td>
+                                                        <div class="form-group row" style="margin-bottom: 0 !important; ">
+                                                            <ui:fragment rendered="#{usuariosBean.asesorVali.rol ne 'SUP' and  usuariosBean.asesorVali.rol ne 'ADM'}">
+                                                                <form j:id="formprospecto" class="col-4" method="post" >  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerID(prospecto,session,'gestion')}">
+                                                                        <i class="mdi mdi-eye-outline"></i>
+                                                                    </a>
+                                                                </form>
+                                                                <form j:id="formgestigestion" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;" >  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerIdtoGestion(prospecto, session,'gestion')}">
+                                                                        <i class="mdi mdi-eye-outline mdi-18px text-primary"></i>
+                                                                    </a>
+                                                                </form>
+                                                            </ui:fragment>
+                                                            <ui:fragment rendered="#{usuariosBean.asesorVali.rol eq 'SUP' or  usuariosBean.asesorVali.rol eq 'ADM'}">
+                                                                <form j:id="formgestion" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;" >  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerID(prospecto,session,'gestion')}">
+                                                                        <i class="mdi mdi-account-edit mdi-18px text-primary"></i>
+                                                                    </a>
+                                                                </form>
+                                                                <form j:id="formgestiongestion" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;" >  
+                                                                    <a class="nav-link" j:action="#{prospectosBean.leerIdtoGestion(prospecto, session,'gestion')}">
+                                                                        <i class="mdi mdi-eye-outline mdi-18px text-primary"></i>
+                                                                    </a>
+                                                                </form>
+                                                                <form j:id="formgestiondelete" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;" >  
+                                                                    <a class="nav-link" j:actionListener="#{prospectosBean.borrar(prospecto,session)}">
+                                                                        <i class="mdi mdi-delete-empty mdi-18px text-primary"></i>
+                                                                    </a>
+                                                                </form> 
+                                                            </ui:fragment>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ui:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div id="asignar" class="table-responsive-sm table-responsive-md table-responsive-lg" style="display:none;">
+                                    <table class="table table-striped dataTablePendiente table-sm" style="width:100%">
+                                        <thead>
+                                            <tr class="table-warning"> 
+                                                <th>Fecha de Ingreso</th>
+                                                <th>Nombre y Apellido</th>
+                                                <th>Telefono 1</th>
+                                                <th>Correo</th>
+                                                <th>Editar</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr class="table-warning">
+                                                <th>Fecha de Ingreso</th>
+                                                <th>Nombre y Apellido</th>
+                                                <th>Telefono 1</th>
+                                                <th>Correo</th>
+                                                <th>Editar</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <ui:repeat value="#{prospectosBean.lstProspectosporasignar}" var="prospecto">
+                                                <tr>
+                                                    <td>#{prospecto.fecha_ingreso}</td>
+                                                    <td>#{prospecto.nombreapellido}</td>
+                                                    <td>#{prospecto.telefono1}</td>
+                                                    <td>#{prospecto.correo}</td>
+                                                    <td>
+                                                        <div class="form-group row" style="margin-bottom: 0 !important; ">
+                                                            <form j:id="formasigpropec" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                                                <a class="nav-link" j:action="#{prospectosBean.leerID(prospecto,session,'')}">
+                                                                    <i class="mdi mdi-account-edit mdi-18px text-warning"></i>
+                                                                </a>
+                                                            </form>
+                                                            <form j:id="formdeletepros" class="col-4" method="post" style="padding-left: 0 !important; padding-right: 0 !important;">  
+                                                                <a class="nav-link" j:actionListener="#{prospectosBean.borrar(prospecto,session)}">
+                                                                    <i class="mdi mdi-delete-empty mdi-18px text-warning"></i>
+                                                                </a>
+                                                            </form> 
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ui:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+
+
+                </div>
+
+                
+
+            </ui:define>
+
+        </ui:composition>
+
+
+
+    </body>
+</html>

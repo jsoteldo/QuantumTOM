@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:j="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <head j:id="head">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../resources/css/jquery.dataTables.min.css" rel="stylesheet"/>
+        <title>Quantum - Flamencos</title>
+    </head>
+
+    <body>
+
+        <ui:composition template="./plantilla.xhtml">
+
+            <ui:define name="content">
+
+
+                <f:event type="preRenderView" listener="#{estadosBean.listar()}"/>
+                <div class="row">
+                    <div class="col-12 grid-margin" style="margin-bottom: 10px;">
+                        <div class="card">
+                            <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
+                                <div class="media">
+                                    <i class="mdi mdi-clipboard-text icon-md text-primary d-flex align-self-start mr-2"></i>
+                                    <div class="media-body">
+                                        <p class="card-text"><h3 class="card-title">Listados de Estados y Motivos</h3></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+
+
+                    <div id="mensaje" style="display: #{gestionBean.message.display}" class="alert alert-#{gestionBean.message.clase} form-row">
+                        <div class="col-3">
+                            <i class="mdi #{gestionBean.message.ico} text-#{gestionBean.message.clase} icon-md "></i>
+                        </div>
+                        <div class="col-8">
+                            <span class="font-weight-medium text-right">#{gestionBean.message.mensaje}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive-sm table-responsive-md table-responsive-lg">
+                                    <table class="table table-striped dataTable table-sm compact"  id="tablestado" >
+                                        <thead>
+                                            <tr>
+                                                <th>Codigo</th>
+                                                <th>Estado</th>
+                                                <th><i class="mdi mdi-account-edit mdi-18px"></i></th>
+                                                <th><i class="mdi mdi-delete-empty mdi-18px"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Codigo</th>
+                                                <th>Estado</th>
+                                                <th><i class="mdi mdi-account-edit mdi-18px"></i></th>
+                                                <th><i class="mdi mdi-delete-empty mdi-18px"></i></th>
+
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <ui:repeat value="#{estadosBean.lstEstados}" var="estados">
+                                                <tr>
+                                                    <td>#{estados.codigo}</td>
+                                                    <td>#{estados.estado}</td>
+                                                    <td>
+                                                        <form j:id="formeditestatus" class="col-sm-4" method="post" >  
+                                                            <a class="nav-link" j:action="#{estadosBean.leerID(estados,session)}">
+                                                                <i class="mdi mdi-account-edit mdi-18px"></i>
+                                                            </a>
+                                                        </form>
+                                                    </td>
+                                                    <td>
+                                                        <form j:id="formdeleteestatus" class="col-sm-4" method="post" >  
+                                                            <a class="nav-link" j:actionListener="#{estadosBean.borrar(estados)}">
+                                                                <i class="mdi mdi-delete-empty mdi-18px"></i>
+                                                            </a>
+                                                        </form>
+                                                    </td>
+
+                                                </tr>
+                                            </ui:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive-sm table-responsive-md table-responsive-lg" >
+                                    <table class="table table-striped dataTable table-sm compact" id="tablemotivo" >
+                                        <thead>
+                                            <tr>
+                                                <th>Estados</th>
+                                                <th>Codigo</th>
+                                                <th>Motivos</th>
+                                                <th><i class="mdi mdi-account-edit mdi-18px"></i></th>
+                                                <th><i class="mdi mdi-delete-empty mdi-18px"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Estados</th>
+                                                <th>Codigo</th>
+                                                <th>Motivos</th>
+                                                <th><i class="mdi mdi-account-edit mdi-18px"></i></th>
+                                                <th><i class="mdi mdi-delete-empty mdi-18px"></i></th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <ui:repeat value="#{estadosBean.lstMotivos}" var="motivos">
+                                                <tr>
+                                                    <td>#{motivos.estado}</td>
+                                                    <td>#{motivos.codmot}</td>
+                                                    <td>#{motivos.motivo}</td>
+                                                    <td>
+                                                        <form j:id="formeditestatus" class="col-sm-4" method="post" >  
+                                                            <a class="nav-link" j:action="#{estadosBean.leerIDmotivo(motivos, session)}">
+                                                                <i class="mdi mdi-account-edit mdi-18px"></i>
+                                                            </a>
+                                                        </form>
+                                                    </td>
+                                                    <td>
+                                                        <form j:id="formdeleteestatus" class="col-sm-4" method="post" >  
+                                                            <a class="nav-link" j:actionListener="#{estadosBean.borrarmotivo(motivos)}">
+                                                                <i class="mdi mdi-delete-empty mdi-18px"></i>
+                                                            </a>
+                                                        </form>
+                                                    </td>
+
+                                                </tr>
+                                            </ui:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>    
+
+
+
+                <script src="../resources/js/jquery-3.3.1.min.js"></script>
+                <script src="../resources/js/jquery.min.js"></script>
+                <script src="../resources/js/jquery.dataTables.min.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        $('#tablestado').DataTable({
+                            responsive: true,
+                            language: {
+                                "decimal": "",
+                                "emptyTable": "No hay datos",
+                                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                "infoFiltered": "(Filtro de _MAX_ total registros)",
+                                "infoPostFix": "",
+                                "thousands": ",",
+                                "lengthMenu": "Mostrar _MENU_ registros",
+                                "loadingRecords": "Cargando...",
+                                "processing": "Procesando...",
+                                "search": "Buscar:",
+                                "zeroRecords": "No se encontraron coincidencias",
+                                "paginate": {
+                                    "first": "Primero",
+                                    "last": "Ultimo",
+                                    "next": "Próximo",
+                                    "previous": "Anterior"
+                                },
+                                "aria": {
+                                    "sortAscending": ": Activar orden de columna ascendente",
+                                    "sortDescending": ": Activar orden de columna desendente"
+                                }
+                            }
+                        });
+                        $('#tablemotivo').DataTable({
+                            responsive: true,
+                            language: {
+                                "decimal": "",
+                                "emptyTable": "No hay datos",
+                                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                "infoFiltered": "(Filtro de _MAX_ total registros)",
+                                "infoPostFix": "",
+                                "thousands": ",",
+                                "lengthMenu": "Mostrar _MENU_ registros",
+                                "loadingRecords": "Cargando...",
+                                "processing": "Procesando...",
+                                "search": "Buscar:",
+                                "zeroRecords": "No se encontraron coincidencias",
+                                "paginate": {
+                                    "first": "Primero",
+                                    "last": "Ultimo",
+                                    "next": "Próximo",
+                                    "previous": "Anterior"
+                                },
+                                "aria": {
+                                    "sortAscending": ": Activar orden de columna ascendente",
+                                    "sortDescending": ": Activar orden de columna desendente"
+                                }
+                            }
+                        });
+                    });
+                </script>    
+            </ui:define>
+
+        </ui:composition>
+
+
+    </body>
+</html>

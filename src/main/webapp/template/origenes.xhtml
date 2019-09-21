@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:j="http://xmlns.jcp.org/jsf">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>Quantum - Flamencos</title>
+
+    </head>
+
+    <body>
+
+        <ui:composition template="./plantilla.xhtml">
+
+            <ui:define name="content">
+
+                <f:event type="preRenderView" listener="#{origenesBean.capturarorigen(session)}"/>
+                <div class="container-fluid">
+                    <div class="row flex-grow">
+                        <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-5 d-flex align-items-stretch" style="margin-bottom: 10px;">
+                            <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
+                                <div class="media">
+                                    <i class="mdi mdi-account-card-details icon-md text-primary d-flex align-self-start mr-2"></i>
+                                    <div class="media-body">
+                                        <p class="card-text"><h3 class="card-title">Registro de Origenes</h3></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row flex-grow">
+                        <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-5 d-flex align-items-stretch grid-margin">
+                            <div class="card-body">
+                                <form j:id="formOrigenes" method="post" class="forms-sample">
+                                    <div class="form-group">
+                                        <label for="codigo">Codigo de Origen</label>
+                                        <input type="text" class="form-control" j:id="codigo" placeholder="Codigo" maxlength="5" j:value="#{origenesBean.origenes.codigo}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="origen">Nombre del Origen</label>
+                                        <input type="text" class="form-control" j:id="origen" placeholder="Descripción" j:value="#{origenesBean.origenes.origen}"/>
+                                    </div>
+                                    <div id="mensaje" style="display: #{origenesBean.message.display}" class="alert alert-#{origenesBean.message.clase} form-row">
+                                        <div class="col-3">
+                                            <i class="mdi #{origenesBean.message.ico} text-#{origenesBean.message.clase} icon-md "></i>
+                                        </div>
+                                        <div class="col-8">
+                                            <span class="font-weight-medium text-right">#{origenesBean.message.mensaje}</span>
+                                        </div>
+                                    </div>
+                                    <div class="template-demo">
+                                        <button type="submit" class="btn btn-success mr-2" j:actionListener="#{origenesBean.operar()}"> 
+                                            #{origenesBean.boton}
+                                        </button>
+                                        <button type="reset" class="btn btn-light">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

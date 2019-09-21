@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:j="http://xmlns.jcp.org/jsf">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>Quantum - Flamencos</title>
+
+    </head>
+
+    <body>
+
+        <ui:composition template="./plantilla.xhtml">
+
+            <ui:define name="content">
+                <f:event type="preRenderView" listener="#{rolesBean.capturarrol(session)}"/>
+
+                <div class="row grid-margin">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
+                                <div class="media">
+                                    <i class="mdi mdi-settings icon-md text-primary d-flex align-self-start mr-2"></i>
+                                    <div class="media-body">
+                                        <p class="card-text"><h3 class="card-title">Registro de Roles</h3></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="mensaje" style="display: #{rolesBean.message.display}" class="alert alert-#{rolesBean.message.clase} form-row">
+                            <div class="col-3">
+                                <i class="mdi #{rolesBean.message.ico} text-#{rolesBean.message.clase} icon-md "></i>
+                            </div>
+                            <div class="col-8">
+                                <span class="font-weight-medium text-right">#{rolesBean.message.mensaje}</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <form j:id="formrol" method="post" class="forms-sample">
+                    <div class="row grid-margin">
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex align-items-stretch grid-margin">
+                            <div class="row flex-grow">
+                                <div class="col-12 stretch-card" style="display:inline-block !important;">
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                            <div class="form-group">
+                                                <label for="codigo">Codigo de Rol</label>
+                                                <input type="text" class="form-control" j:id="codigo" placeholder="Codigo" maxlength="5" j:value="#{rolesBean.rol.rol}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="objecion">Nombre del Rol</label>
+                                                <input type="text" class="form-control" j:id="objecion" placeholder="Descripción" j:value="#{rolesBean.rol.descripcion}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-8 col-md-8 col-md-8 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Permisos</h4>
+                                    <div class="form-group row">
+                                        <ui:repeat value="#{rolesBean.lstMenu}" var="menu">
+                                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <i class="menu-icon mdi #{menu.ico} icon-sm" style="color: #4995e4;"></i>
+                                                    <p class="mb-0 ml-1">
+                                                        #{menu.nombre}
+                                                    </p>
+                                                </div>
+                                                <ui:fragment rendered="#{menu.type eq 'I'}">
+                                                    <div class="form-group">
+                                                        <ui:fragment rendered="#{menu.check eq 'false'}">
+                                                            <div class="form-check">
+                                                                <label class="form-check-label"  >
+                                                                    <input type="checkbox" class="form-check-input" id="check-#{menu.descripcion}" j:value="#{rolesBean.permisoChecked[menu.codigo]}" /> 
+                                                                    #{menu.nombre}
+                                                                    <i class="input-helper"  ></i>
+                                                                </label>
+                                                            </div>
+                                                        </ui:fragment>
+                                                        <ui:fragment rendered="#{menu.check eq 'true'}">
+                                                            <div class="form-check">
+                                                                <label class="form-check-label"  >
+                                                                    <input type="checkbox" checked="true" class="form-check-input" id="check-#{menu.descripcion}" j:value="#{rolesBean.permisoChecked[menu.codigo]}" /> 
+                                                                    #{menu.nombre}
+                                                                    <i class="input-helper"  ></i>
+                                                                </label>
+                                                            </div>
+                                                        </ui:fragment>
+
+                                                    </div>
+                                                </ui:fragment>
+                                                <ui:repeat value="#{rolesBean.lstSubmenu}" var="sMenu">
+                                                    <div class="form-group">
+                                                        <ui:fragment rendered="#{sMenu.padre eq menu.codigo}">
+                                                            <ui:fragment rendered="#{sMenu.check eq 'false'}">
+                                                                <div class="form-check">
+                                                                    <label class="form-check-label">
+                                                                        <input type="checkbox" class="form-check-input" id="check-#{sMenu.descripcion}" j:value="#{rolesBean.permisoChecked[sMenu.codigo]}" /> #{sMenu.nombre}  
+                                                                        <i class="input-helper"></i>
+                                                                    </label>
+                                                                </div>
+                                                            </ui:fragment>
+                                                            <ui:fragment rendered="#{sMenu.check eq 'true'}">
+                                                                <div class="form-check">
+                                                                    <label class="form-check-label">
+                                                                        <input type="checkbox" checked="true" class="form-check-input" id="check-#{sMenu.descripcion}" j:value="#{rolesBean.permisoChecked[sMenu.codigo]}" /> #{sMenu.nombre}  
+                                                                        <i class="input-helper"></i>
+                                                                    </label>
+                                                                </div>
+                                                            </ui:fragment>
+                                                        </ui:fragment>
+                                                    </div>
+                                                </ui:repeat>
+                                            </div>
+                                        </ui:repeat>
+                                    </div>
+                                    <div class="template-demo">
+                                        <button type="submit" class="btn btn-success mr-2" j:actionListener="#{rolesBean.operar()}"> 
+                                            #{rolesBean.boton}
+                                        </button>
+                                        <button type="reset" class="btn btn-light">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>    
+                <script src="../resources/js/jquery-3.3.1.min.js"></script>
+                <script src="../resources/js/jquery.min.js"></script>
+
+                <script>
+
+                    $(document).ready(function () {
+
+                        setTimeout(function () {
+                            $("#mensaje").fadeOut(1500);
+                        }, 3000);
+                    });
+                </script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

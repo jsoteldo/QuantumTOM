@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:j="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../resources/css/default.css" rel="stylesheet"/>
+        <link href="../resources/css/dataTables.bootstrap4.css" rel="stylesheet"/>
+        <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="../resources/css/sb-admin.css" rel="stylesheet"/>
+        <link href="../resources/fontawesome-free/css/all.min.css" rel="stylesheet"/>
+
+        <title>Quantum - Flamencos</title>
+
+    </head>
+
+    <body>
+
+        <ui:composition template="./plantilla.xhtml">
+
+            <ui:define name="content">
+
+                <f:event type="preRenderView" listener="#{asesoresBean.capturarasesor(session)}"/>
+
+                <div class="container-fluid">
+
+                    <!-- Breadcrumbs-->
+                    <div class="row flex-grow">
+                        <div class="card col-4 d-flex align-items-stretch" style="margin-bottom: 10px;">
+                            <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
+                                <div class="media">
+                                    <i class="mdi mdi-account icon-md text-primary d-flex align-self-start mr-2"></i>
+                                    <div class="media-body">
+                                        <p class="card-text"><h3 class="card-title">Cambio de Contraseña</h3></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mx-auto">
+                        <h2 class="text-center mb-4">Register</h2>
+                        <div class="auto-form-wrapper">
+                            <form action="#">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Username"/>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="mdi mdi-check-circle-outline"></i>
+                                                </span>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" placeholder="Password"/>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="mdi mdi-check-circle-outline"></i>
+                                                </span>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" placeholder="Confirm Password"/>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="mdi mdi-check-circle-outline"></i>
+                                                </span>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex justify-content-center">
+                                    <div class="form-check form-check-flat mt-0">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" checked=""/> I agree to the terms
+                                                <i class="input-helper"></i></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary submit-btn btn-block">Register</button>
+                                </div>
+                                <div class="text-block text-center my-3">
+                                    <span class="text-small font-weight-semibold">Already have and account ?</span>
+                                    <a href="login.html" class="text-black text-small">Login</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+                <script src="../resources/js/jquery-3.3.1.min.js"></script>
+                <script src="../resources/js/jquery.min.js"></script>
+                <script src="../resources/js/bootstrap-formhelpers.min.js"></script>
+                <script>
+                    $(function () {
+
+                        $('#formasesores\\:edad').keypress(function (e) {
+                            if (isNaN(this.value + String.fromCharCode(e.charCode)))
+                                return false;
+                        })
+                                .on("cut copy paste", function (e) {
+                                    e.preventDefault();
+                                });
+
+                    });
+                </script>
+                <script>
+
+                    $(document).ready(function () {
+
+                        setTimeout(function () {
+                            $("#mensaje").fadeOut(1500);
+                        }, 3000);
+                    });
+                </script>
+                <script>
+
+                    $(document).ready(function () {
+                        var boton = "#{asesoresBean.boton}";
+                        var sexo = "#{asesoresBean.asesores.sexo}";
+                        if (boton === "Actualizar") {
+                            $("#bloquecontrasena").hide();
+                            if (sexo !== null) {
+                                if (sexo === "F") {
+                                    $("#formasesores\\:femenino").prop("checked", true);
+                                } else {
+                                    $("#formasesores\\:masculino").prop("checked", true);
+                                }
+
+
+                            }
+                        }
+
+
+                    });
+                </script>
+                <script>
+                    $(document).ready(function () {
+                        $("#formasesores\\:femenino").click(function () {
+                            $("#formasesores\\:masculino").prop("checked", false);
+                        });
+                    });
+                </script>
+                <script>
+                    $(document).ready(function () {
+                        $("#formasesores\\:masculino").click(function () {
+                            $("#formasesores\\:femenino").prop("checked", false);
+                        });
+                    });
+                </script>
+                <script>
+                    $(document).ready(function () {
+                        if ($("#formasesores\\:correo").val() !== "") {
+                            var correo = $("#formasesores\\:correo").val();
+                            $("#formasesores\\:correo").focusout(function () {
+                                $("#formasesores\\:correo").val(correo);
+                            });
+                        } else {
+
+                        }
+
+                    });
+                </script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
