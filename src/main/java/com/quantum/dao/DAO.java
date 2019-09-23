@@ -20,7 +20,7 @@ public class DAO {
         this.conexion = conexion;
     }
 
-    public void Conectar() throws Exception {
+    public void Conectar() throws IOException, Exception {
         try {
             Properties prop = new Properties();
             System.out.println("\n\n=======================\nJDBC Connector Test ");
