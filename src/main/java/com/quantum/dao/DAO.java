@@ -27,7 +27,7 @@ public class DAO {
             System.out.println("User home directory: " + System.getProperty("user.home"));
             Class.forName("org.mariadb.jdbc.Driver");
             //conexion = DriverManager.getConnection("jdbc:mariadb://192.168.3.17:3306/test", "flamencos", "$flamencosQuantum");
-            conexion = DriverManager.getConnection("jdbc:mariadb://node48103-env-3675608.jl.serv.net.mx/db_structure.php?server=1&db=test", "flamencos", "$flamencosQuantum");
+            conexion = DriverManager.getConnection("jdbc:mariadb://node48103-env-3675608.jl.serv.net.mx/test", "flamencos", "$flamencosQuantum");
 
         } catch (Exception e) {
             throw e;
