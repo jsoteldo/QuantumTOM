@@ -17,7 +17,7 @@ public class ArchivoDAO extends DAO {
         Mensaje validosesion;
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO ARCHIVO (NAME, DIR, FECHA, PROCESADO) VALUES (?,?,?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO archivo (NAME, DIR, FECHA, PROCESADO) VALUES (?,?,?,?)");
             declaracion.setString(1, archivo.getName());
             declaracion.setString(2, archivo.getDir());
             declaracion.setString(3, archivo.getFecha());
@@ -39,8 +39,8 @@ public class ArchivoDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT NAME, DIR, FECHA, PROCESADO FROM ARCHIVO "
-                    + "WHERE FECHA in (SELECT MAX(STR_TO_DATE(FECHA,'%Y-%m-%d %H:%i:%s')) FROM ARCHIVO )");
+                    + "SELECT NAME, DIR, FECHA, PROCESADO FROM archivo "
+                    + "WHERE FECHA in (SELECT MAX(STR_TO_DATE(FECHA,'%Y-%m-%d %H:%i:%s')) FROM archivo )");
             resultado = declaracion.executeQuery();
             Archivo arch = new Archivo();
             while (resultado.next()) {
@@ -64,7 +64,7 @@ public class ArchivoDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM ARCHIVO WHERE NAME = ?");
+                    + "DELETE FROM archivo WHERE NAME = ?");
             declaracion.setString(1, archivo.getName());
             declaracion.executeUpdate();
         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class ArchivoDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE ARCHIVO set ARCHIVO.PROCESADO = ? WHERE ARCHIVO.FECHA in (SELECT MAX(STR_TO_DATE(m2.FECHA,'%Y-%m-%d %H:%i:%s')) FROM (select * from ARCHIVO) AS m2 )");
+                    + "UPDATE archivo set archivo.PROCESADO = ? WHERE archivo.FECHA in (SELECT MAX(STR_TO_DATE(m2.FECHA,'%Y-%m-%d %H:%i:%s')) FROM (select * from archivo) AS m2 )");
 
             declaracion.setString(1, "true");
             declaracion.executeUpdate();

@@ -18,7 +18,7 @@ public class OrigenesDAO extends DAO {
          Mensaje validosesion;
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO ORIGENES (CODIGO, ORIGEN) VALUES (?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO origenes (CODIGO, ORIGEN) VALUES (?,?)");
             declaracion.setString(1,origenes.getCodigo());
             declaracion.setString(2,origenes.getOrigen());
             declaracion.executeUpdate();
@@ -39,7 +39,7 @@ public class OrigenesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CODIGO, ORIGEN FROM ORIGENES");
+                    + "SELECT CODIGO, ORIGEN FROM origenes");
             
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -62,7 +62,7 @@ public class OrigenesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM ORIGENES WHERE CODIGO = ?");
+                    + "DELETE FROM origenes WHERE CODIGO = ?");
             declaracion.setString(1, origen.getCodigo());
             declaracion.executeUpdate();
         } catch (Exception e) {
@@ -80,7 +80,7 @@ public class OrigenesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE ORIGENES set ORIGEN = ? WHERE CODIGO = ?");
+                    + "UPDATE origenes set ORIGEN = ? WHERE CODIGO = ?");
 
             declaracion.setString(1, origen.getOrigen());
             declaracion.setString(2, origen.getCodigo());

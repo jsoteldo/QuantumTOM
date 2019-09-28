@@ -18,7 +18,7 @@ public class TipobjecionesDAO extends DAO {
         Mensaje validosesion;
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO TIPOBJECION (CODIGO, TIPO) VALUES (?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO tipobjecion (CODIGO, TIPO) VALUES (?,?)");
             declaracion.setString(1, tipobjecion.getCodigo());
             declaracion.setString(2, tipobjecion.getTipo());
             declaracion.executeUpdate();
@@ -38,7 +38,7 @@ public class TipobjecionesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CODIGO, TIPO FROM TIPOBJECION");
+                    + "SELECT CODIGO, TIPO FROM tipobjecion");
 
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -63,7 +63,7 @@ public class TipobjecionesDAO extends DAO {
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM TIPOBJECION WHERE CODIGO = ? ");
+                    + "DELETE FROM tipobjecion WHERE CODIGO = ? ");
             declaracion.setString(1, tipobjecion.getCodigo());
             declaracion.executeUpdate();
             validosesion = new Mensaje("", "Eliminado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
@@ -83,7 +83,7 @@ public class TipobjecionesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE TIPOBJECION set TIPO = ? WHERE CODIGO = ?");
+                    + "UPDATE tipobjecion set TIPO = ? WHERE CODIGO = ?");
 
             declaracion.setString(1, tipobjecion.getTipo());
             declaracion.setString(2, tipobjecion.getCodigo());

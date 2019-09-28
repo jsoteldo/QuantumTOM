@@ -21,7 +21,7 @@ public class LotesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT PARCELA, LOTE FROM LOTES");
+                    + "SELECT PARCELA, LOTE FROM lotes");
 
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -46,7 +46,7 @@ public class LotesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT PARCELA, LOTE FROM LOTES "
+                    + "SELECT PARCELA, LOTE FROM lotes "
                     + "WHERE PARCELA = ? ");
             declaracion.setString(1, opcion);
             resultado = declaracion.executeQuery();
@@ -72,7 +72,7 @@ public class LotesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement("UPDATE"
-                    + " LOTES set FRONTAL = ?, DERECHA = ?, IZQUIERDA = ?, "
+                    + " lotes set FRONTAL = ?, DERECHA = ?, IZQUIERDA = ?, "
                     + " FONDO = ?, EXCLUSIVA = ?, ACOMUN = ?, TOTAL = ?, PRECIO = ?, IMG = ? WHERE PARCELA = ? AND LOTE = ?");
 
             declaracion.setFloat(1, lotes.getFrontal());
@@ -103,7 +103,7 @@ public class LotesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT PARCELA, LOTE, FRONTAL, DERECHA, IZQUIERDA, FONDO, EXCLUSIVA, ACOMUN, TOTAL, PRECIO, IMG FROM LOTES");
+                    + "SELECT PARCELA, LOTE, FRONTAL, DERECHA, IZQUIERDA, FONDO, EXCLUSIVA, ACOMUN, TOTAL, PRECIO, IMG FROM lotes");
 
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -137,7 +137,7 @@ public class LotesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT PARCELA, LOTE , FRONTAL, DERECHA, IZQUIERDA, FONDO, EXCLUSIVA, ACOMUN, TOTAL, PRECIO, IMG FROM LOTES "
+                    + "SELECT PARCELA, LOTE , FRONTAL, DERECHA, IZQUIERDA, FONDO, EXCLUSIVA, ACOMUN, TOTAL, PRECIO, IMG FROM lotes "
                     + "WHERE PARCELA = ? ");
             declaracion.setString(1, opcion);
             resultado = declaracion.executeQuery();
@@ -171,7 +171,7 @@ public class LotesDAO extends DAO {
 
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO LOTES "
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO lotes "
                     + "(PARCELA, LOTE , FRONTAL, DERECHA, IZQUIERDA, FONDO, EXCLUSIVA, ACOMUN, TOTAL, PRECIO, IMG) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             declaracion.setString(1, lotes.getParcela());
@@ -201,7 +201,7 @@ public class LotesDAO extends DAO {
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM LOTES WHERE PARCELA = ? AND LOTE = ?");
+                    + "DELETE FROM lotes WHERE PARCELA = ? AND LOTE = ?");
             declaracion.setString(1, lotes.getParcela());
             declaracion.setString(2, lotes.getLote());
             declaracion.executeUpdate();

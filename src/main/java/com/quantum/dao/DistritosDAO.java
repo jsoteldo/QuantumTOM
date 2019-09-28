@@ -18,7 +18,7 @@ public class DistritosDAO extends DAO {
          Mensaje validosesion;
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO DISTRITOS (CODIGO, DISTRITO) VALUES (?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO distritos (CODIGO, DISTRITO) VALUES (?,?)");
             declaracion.setString(1,distritos.getCodigo());
             declaracion.setString(2,distritos.getDistrito());
             declaracion.executeUpdate();
@@ -39,7 +39,7 @@ public class DistritosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CODIGO, DISTRITO FROM DISTRITOS");
+                    + "SELECT CODIGO, DISTRITO FROM distritos");
             
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -62,7 +62,7 @@ public class DistritosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM DISTRITOS WHERE CODIGO = ?");
+                    + "DELETE FROM distritos WHERE CODIGO = ?");
             declaracion.setString(1, origen.getCodigo());
             declaracion.executeUpdate();
         } catch (Exception e) {
@@ -80,7 +80,7 @@ public class DistritosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE DISTRITOS set DISTRITO = ? WHERE CODIGO = ?");
+                    + "UPDATE distritos set DISTRITO = ? WHERE CODIGO = ?");
 
             declaracion.setString(1, origen.getDistrito());
             declaracion.setString(2, origen.getCodigo());

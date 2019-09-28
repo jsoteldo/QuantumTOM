@@ -53,7 +53,7 @@ public class ProspectosDAO extends DAO {
         try {
 
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO PROSPECTOS ( CODIGO, FECHA_PROSPECTO, FECHA_INGRESO, NOMBREAPELLIDO, TELEFONO1, "
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO prospectos ( CODIGO, FECHA_PROSPECTO, FECHA_INGRESO, NOMBREAPELLIDO, TELEFONO1, "
                     + "TELEFONO2, CORREO, ORIGEN, CARGO, FECHARETIRO, ENCOLA, REITERASOLICITUD, CORREO_SEC, EDAD, SEXO, DISTRITO, COMENTARIO ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             declaracion.setString(1, this.maxcodigo(prospectos.getOrigen()));
@@ -145,23 +145,23 @@ public class ProspectosDAO extends DAO {
 
             if (asesor.getRol().equals("ADM") || asesor.getRol().equals("SUP")) {
                 declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT PROSPECTOS.CODIGO, GESTION.CODIGO, substr(FECHA_PROSPECTO,1,10), substr(FECHA_INGRESO,1,10), NOMBREAPELLIDO, "
-                        + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, ESTADOS.ESTADO, MOTIVOS.MOTIVO, CORREO_SEC, EDAD, SEXO, DISTRITO, PROSPECTOS.COMENTARIO "
-                        + " FROM GESTION INNER JOIN PROSPECTOS ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                        + " LEFT JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                        + " LEFT JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
+                        + "SELECT prospectos.CODIGO, gestion.CODIGO, substr(FECHA_PROSPECTO,1,10), substr(FECHA_INGRESO,1,10), NOMBREAPELLIDO, "
+                        + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, estados.ESTADO, motivos.MOTIVO, CORREO_SEC, EDAD, SEXO, DISTRITO, prospectos.COMENTARIO "
+                        + " FROM gestion INNER JOIN prospectos ON gestion.COD_PROSPECTO = prospectos.CODIGO "
+                        + " LEFT JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                        + " LEFT JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
                         + " WHERE ESTATUS_VENTA = 'VCAI'"
                         + " ORDER BY 4,3");
             } else {
 
                 declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT PROSPECTOS.CODIGO, GESTION.CODIGO, substr(FECHA_PROSPECTO,1,10), substr(FECHA_INGRESO,1,10), NOMBREAPELLIDO, "
-                        + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, ESTADOS.ESTADO, MOTIVOS.MOTIVO, CORREO_SEC, EDAD, SEXO, DISTRITO, PROSPECTOS.COMENTARIO "
-                        + " FROM GESTION INNER JOIN PROSPECTOS ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                        + " LEFT JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                        + " LEFT JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
+                        + "SELECT prospectos.CODIGO, gestion.CODIGO, substr(FECHA_PROSPECTO,1,10), substr(FECHA_INGRESO,1,10), NOMBREAPELLIDO, "
+                        + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, estados.ESTADO, motivos.MOTIVO, CORREO_SEC, EDAD, SEXO, DISTRITO, prospectos.COMENTARIO "
+                        + " FROM gestion INNER JOIN prospectos ON gestion.COD_PROSPECTO = prospectos.CODIGO "
+                        + " LEFT JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                        + " LEFT JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
                         + " WHERE ESTATUS_VENTA = 'VCAI'"
-                        + " AND GESTION.COD_ASESOR = ?"
+                        + " AND gestion.COD_ASESOR = ?"
                         + " ORDER BY 4,3 ");
                 declaracion.setString(1, asesor.getCorreo());
             }
@@ -186,7 +186,7 @@ public class ProspectosDAO extends DAO {
                 prospecto.setEdad(resultado.getString("EDAD"));
                 prospecto.setSexo(resultado.getString("SEXO"));
                 prospecto.setDistrito(resultado.getString("DISTRITO"));
-                prospecto.setComentario(resultado.getString("PROSPECTOS.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("prospectos.COMENTARIO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
                 lista.add(prospecto);
             }
@@ -210,25 +210,25 @@ public class ProspectosDAO extends DAO {
 
             if (asesor.getRol().equals("ADM") || asesor.getRol().equals("SUP")) {
                 declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT PROSPECTOS.CODIGO, GESTION.CODIGO, substr(FECHA_PROSPECTO,1,10), substr(FECHA_INGRESO,1,10), NOMBREAPELLIDO, "
-                        + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, ESTADOS.ESTADO, MOTIVOS.MOTIVO, CORREO_SEC, EDAD, SEXO, DISTRITO, PROSPECTOS.COMENTARIO "
-                        + " FROM GESTION INNER JOIN PROSPECTOS ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                        + " LEFT JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                        + " LEFT JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
+                        + "SELECT prospectos.CODIGO, gestion.CODIGO, substr(FECHA_PROSPECTO,1,10), substr(FECHA_INGRESO,1,10), NOMBREAPELLIDO, "
+                        + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, estados.ESTADO, motivos.MOTIVO, CORREO_SEC, EDAD, SEXO, DISTRITO, prospectos.COMENTARIO "
+                        + " FROM gestion INNER JOIN prospectos ON gestion.COD_PROSPECTO = prospectos.CODIGO "
+                        + " LEFT JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                        + " LEFT JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
                         + " WHERE ESTATUS_VENTA = 'PEN'"
                         + " AND PROCESO_ESTATUS = 'PPC'"
                         + " ORDER BY 4,3");
             } else {
 
                 declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT PROSPECTOS.CODIGO, GESTION.CODIGO, substr(FECHA_PROSPECTO,1,10), substr(FECHA_INGRESO,1,10), NOMBREAPELLIDO, "
-                        + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, ESTADOS.ESTADO, MOTIVOS.MOTIVO, CORREO_SEC, EDAD, SEXO, DISTRITO, PROSPECTOS.COMENTARIO"
-                        + " FROM GESTION INNER JOIN PROSPECTOS ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                        + " LEFT JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                        + " LEFT JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
+                        + "SELECT prospectos.CODIGO, gestion.CODIGO, substr(FECHA_PROSPECTO,1,10), substr(FECHA_INGRESO,1,10), NOMBREAPELLIDO, "
+                        + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, estados.ESTADO, motivos.MOTIVO, CORREO_SEC, EDAD, SEXO, DISTRITO, prospectos.COMENTARIO"
+                        + " FROM gestion INNER JOIN prospectos ON gestion.COD_PROSPECTO = prospectos.CODIGO "
+                        + " LEFT JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                        + " LEFT JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
                         + " WHERE ESTATUS_VENTA = 'PEN'"
                         + " AND PROCESO_ESTATUS = 'PPC' "
-                        + " AND GESTION.COD_ASESOR = ?"
+                        + " AND gestion.COD_ASESOR = ?"
                         + " ORDER BY 4,3 ");
                 declaracion.setString(1, asesor.getCorreo());
             }
@@ -254,7 +254,7 @@ public class ProspectosDAO extends DAO {
                 prospecto.setEdad(resultado.getString("EDAD"));
                 prospecto.setSexo(resultado.getString("SEXO"));
                 prospecto.setDistrito(resultado.getString("DISTRITO"));
-                prospecto.setComentario(resultado.getString("PROSPECTOS.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("prospectos.COMENTARIO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
                 lista.add(prospecto);
             }
@@ -275,9 +275,9 @@ public class ProspectosDAO extends DAO {
             this.Conectar();
 
             declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT PROSPECTOS.CODIGO, GESTION.CODIGO, FECHA_PROSPECTO, FECHA_INGRESO, NOMBREAPELLIDO, "
-                    + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, CORREO_SEC, EDAD, SEXO, DISTRITO, PROSPECTOS.COMENTARIO"
-                    + " FROM GESTION INNER JOIN PROSPECTOS ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
+                    + "SELECT prospectos.CODIGO, gestion.CODIGO, FECHA_PROSPECTO, FECHA_INGRESO, NOMBREAPELLIDO, "
+                    + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, CORREO_SEC, EDAD, SEXO, DISTRITO, prospectos.COMENTARIO"
+                    + " FROM gestion INNER JOIN prospectos ON gestion.COD_PROSPECTO = prospectos.CODIGO "
                     + " WHERE PROCESO_ESTATUS IS NOT NULL");
 
             resultado = declaracion.executeQuery();
@@ -298,7 +298,7 @@ public class ProspectosDAO extends DAO {
                 prospecto.setEdad(resultado.getString("EDAD"));
                 prospecto.setSexo(resultado.getString("SEXO"));
                 prospecto.setDistrito(resultado.getString("DISTRITO"));
-                prospecto.setComentario(resultado.getString("PROSPECTOS.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("prospectos.COMENTARIO"));
                 lista.add(prospecto);
             }
 
@@ -317,8 +317,8 @@ public class ProspectosDAO extends DAO {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
                     + "SELECT CODIGO, FECHA_PROSPECTO, FECHA_INGRESO, NOMBREAPELLIDO,"
-                    + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, CORREO_SEC, EDAD, SEXO, DISTRITO, PROSPECTOS.COMENTARIO "
-                    + " FROM PROSPECTOS INNER JOIN FBLEADS ON PROSPECTOS.CODIGO = FBLEADS.ID "
+                    + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, CORREO_SEC, EDAD, SEXO, DISTRITO, prospectos.COMENTARIO "
+                    + " FROM prospectos INNER JOIN FBLEADS ON prospectos.CODIGO = FBLEADS.ID "
                     + " WHERE ENCOLA = 'FALSE' "
                     + " AND FECHARETIRO IS NULL "
                     + " AND REPITE= 'FALSE' "
@@ -341,7 +341,7 @@ public class ProspectosDAO extends DAO {
                 prospecto.setEdad(resultado.getString("EDAD"));
                 prospecto.setSexo(resultado.getString("SEXO"));
                 prospecto.setDistrito(resultado.getString("DISTRITO"));
-                prospecto.setComentario(resultado.getString("PROSPECTOS.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("prospectos.COMENTARIO"));
                 lista.add(prospecto);
             }
 
@@ -363,27 +363,27 @@ public class ProspectosDAO extends DAO {
             dao = new EstadosDAO();
             if (asesor.getRol().equals("ADM") || asesor.getRol().equals("SUP")) {
                 declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT PROSPECTOS.CODIGO, GESTION.CODIGO, FECHA_PROSPECTO, substr(GESTION.FECHA_ULTIMO_CONTAC,1,10), NOMBREAPELLIDO, "
-                        + "TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, ESTADOS.ESTADO, MOTIVOS.MOTIVO, CORREO_SEC, EDAD, SEXO, DISTRITO, PROSPECTOS.COMENTARIO "
-                        + "FROM PROSPECTOS left join gestion on prospectos.codigo = gestion.cod_prospecto "
-                        + "INNER JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                        + "INNER JOIN MOTIVOS ON GESTION.ESTADO = MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
+                        + "SELECT prospectos.CODIGO, gestion.CODIGO, FECHA_PROSPECTO, substr(gestion.FECHA_ULTIMO_CONTAC,1,10), NOMBREAPELLIDO, "
+                        + "TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, estados.ESTADO, motivos.MOTIVO, CORREO_SEC, EDAD, SEXO, DISTRITO, prospectos.COMENTARIO "
+                        + "FROM prospectos left join gestion on prospectos.codigo = gestion.cod_prospecto "
+                        + "INNER JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                        + "INNER JOIN motivos ON gestion.ESTADO = motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
                         + "WHERE FECHARETIRO is null"
-                        + " AND GESTION.PROCESO_ESTATUS not in ('PPC')"
-                        + " AND GESTION.ESTATUS_VENTA not in ('VCAI')"
+                        + " AND gestion.PROCESO_ESTATUS not in ('PPC')"
+                        + " AND gestion.ESTATUS_VENTA not in ('VCAI')"
                         + " ORDER BY 4");
             } else {
                 declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT PROSPECTOS.CODIGO, GESTION.CODIGO, FECHA_PROSPECTO, substr(GESTION.FECHA_ULTIMO_CONTAC,1,10), NOMBREAPELLIDO,"
-                        + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, ESTADOS.ESTADO, MOTIVOS.MOTIVO, CORREO_SEC, EDAD, SEXO, DISTRITO, PROSPECTOS.COMENTARIO "
-                        + "FROM PROSPECTOS inner join GESTION ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                        + "INNER JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                        + "INNER JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
+                        + "SELECT prospectos.CODIGO, gestion.CODIGO, FECHA_PROSPECTO, substr(gestion.FECHA_ULTIMO_CONTAC,1,10), NOMBREAPELLIDO,"
+                        + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, estados.ESTADO, motivos.MOTIVO, CORREO_SEC, EDAD, SEXO, DISTRITO, prospectos.COMENTARIO "
+                        + "FROM prospectos inner join gestion ON gestion.COD_PROSPECTO = prospectos.CODIGO "
+                        + "INNER JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                        + "INNER JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
                         + " WHERE FECHARETIRO is null"
-                        + " AND GESTION.COD_ASESOR = ?"
+                        + " AND gestion.COD_ASESOR = ?"
                         + " AND FECHA_DESCARTE is null"
-                        + " AND GESTION.PROCESO_ESTATUS not in ('PPC')"
-                        + " AND GESTION.ESTATUS_VENTA not in ('VCAI')"
+                        + " AND gestion.PROCESO_ESTATUS not in ('PPC')"
+                        + " AND gestion.ESTATUS_VENTA not in ('VCAI')"
                         + " ORDER BY 4");
                 declaracion.setString(1, asesor.getCorreo());
             }
@@ -408,7 +408,7 @@ public class ProspectosDAO extends DAO {
                 prospecto.setEdad(resultado.getString("EDAD"));
                 prospecto.setSexo(resultado.getString("SEXO"));
                 prospecto.setDistrito(resultado.getString("DISTRITO"));
-                prospecto.setComentario(resultado.getString("PROSPECTOS.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("prospectos.COMENTARIO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
                 lista.add(prospecto);
             }
@@ -428,9 +428,9 @@ public class ProspectosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT PROSPECTOS.CODIGO, FECHA_PROSPECTO, FECHA_INGRESO, NOMBREAPELLIDO, "
-                    + "TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, CORREO_SEC, EDAD, SEXO, DISTRITO, PROSPECTOS.COMENTARIO "
-                    + "FROM GESTION INNER JOIN PROSPECTOS ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
+                    + "SELECT prospectos.CODIGO, FECHA_PROSPECTO, FECHA_INGRESO, NOMBREAPELLIDO, "
+                    + "TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, CORREO_SEC, EDAD, SEXO, DISTRITO, prospectos.COMENTARIO "
+                    + "FROM gestion INNER JOIN prospectos ON gestion.COD_PROSPECTO = prospectos.CODIGO "
                     + "WHERE COD_ASESOR = ? "
                     + "AND ESTATUS_VENTA = 'PEN'");
             declaracion.setString(1, asesor);
@@ -450,7 +450,7 @@ public class ProspectosDAO extends DAO {
                 prospecto.setCorreo_sec(resultado.getString("CORREO_SEC"));
                 prospecto.setEdad(resultado.getString("EDAD"));
                 prospecto.setSexo(resultado.getString("SEXO"));
-                prospecto.setComentario(resultado.getString("PROSPECTOS.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("prospectos.COMENTARIO"));
                 prospecto.setDistrito(resultado.getString("DISTRITO"));
                 lista.add(prospecto);
             }
@@ -469,9 +469,9 @@ public class ProspectosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT PROSPECTOS.CODIGO, FECHA_PROSPECTO, FECHA_INGRESO, NOMBREAPELLIDO, "
-                    + "TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, CORREO_SEC, EDAD, SEXO, DISTRITO, PROSPECTOS.COMENTARIO "
-                    + "FROM GESTION INNER JOIN PROSPECTOS ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
+                    + "SELECT prospectos.CODIGO, FECHA_PROSPECTO, FECHA_INGRESO, NOMBREAPELLIDO, "
+                    + "TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, CORREO_SEC, EDAD, SEXO, DISTRITO, prospectos.COMENTARIO "
+                    + "FROM gestion INNER JOIN prospectos ON gestion.COD_PROSPECTO = prospectos.CODIGO "
                     + "WHERE COD_ASESOR = ? "
                     + "AND ESTATUS_VENTA <> 'PEN'");
             declaracion.setString(1, asesor);
@@ -492,7 +492,7 @@ public class ProspectosDAO extends DAO {
                 prospecto.setEdad(resultado.getString("EDAD"));
                 prospecto.setSexo(resultado.getString("SEXO"));
                 prospecto.setDistrito(resultado.getString("DISTRITO"));
-                prospecto.setComentario(resultado.getString("PROSPECTOS.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("prospectos.COMENTARIO"));
                 lista.add(prospecto);
             }
 
@@ -509,7 +509,7 @@ public class ProspectosDAO extends DAO {
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE PROSPECTOS set FECHARETIRO = ? WHERE CODIGO = ?");
+                    + "UPDATE prospectos set FECHARETIRO = ? WHERE CODIGO = ?");
             declaracion.setString(1, prospecto.getFecharetiro());
             declaracion.setString(2, prospecto.getCodigo());
             declaracion.executeUpdate();
@@ -530,7 +530,7 @@ public class ProspectosDAO extends DAO {
             this.Conectar();
             if (rol.equals("ASE")) {
                 declaracion = this.getConexion().prepareStatement("UPDATE"
-                        + " PROSPECTOS set  TELEFONO2 = ?,  ORIGEN = ?, CARGO = ?, EDAD = ?, SEXO = ?, DISTRITO = ?, CORREO_SEC = ?, COMENTARIO = ?"
+                        + " prospectos set  TELEFONO2 = ?,  ORIGEN = ?, CARGO = ?, EDAD = ?, SEXO = ?, DISTRITO = ?, CORREO_SEC = ?, COMENTARIO = ?"
                         + " WHERE CODIGO = ?");
                 declaracion.setString(1, prospecto.getTelefono2());
                 declaracion.setString(2, prospecto.getOrigen());
@@ -548,7 +548,7 @@ public class ProspectosDAO extends DAO {
                 return validosesion;
             } else {
                 declaracion = this.getConexion().prepareStatement("UPDATE"
-                        + " PROSPECTOS set FECHA_PROSPECTO = ?, FECHA_INGRESO = ?, NOMBREAPELLIDO = ?,"
+                        + " prospectos set FECHA_PROSPECTO = ?, FECHA_INGRESO = ?, NOMBREAPELLIDO = ?,"
                         + " TELEFONO1 = ?, TELEFONO2 = ?, CORREO = ?, CORREO_SEC = ?, ORIGEN = ?, CARGO = ?, EDAD = ?, SEXO = ?, DISTRITO = ?, COMENTARIO = ?"
                         + " WHERE CODIGO = ?");
                 declaracion.setString(1, prospecto.getFecha_prospecto());
@@ -628,12 +628,12 @@ public class ProspectosDAO extends DAO {
             this.Conectar();
             dao = new EstadosDAO();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT PROSPECTOS.CODIGO, GESTION.CODIGO, SUBSTR(FECHA_PROSPECTO,1,10), FECHA_INGRESO, NOMBREAPELLIDO,"
-                    + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, ESTADOS.ESTADO, CORREO_SEC, EDAD, SEXO, DISTRITO, PROSPECTOS.COMENTARIO "
-                    + "FROM PROSPECTOS inner join GESTION ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                    + "INNER JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
+                    + "SELECT prospectos.CODIGO, gestion.CODIGO, SUBSTR(FECHA_PROSPECTO,1,10), FECHA_INGRESO, NOMBREAPELLIDO,"
+                    + " TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, estados.ESTADO, CORREO_SEC, EDAD, SEXO, DISTRITO, prospectos.COMENTARIO "
+                    + "FROM prospectos inner join gestion ON gestion.COD_PROSPECTO = prospectos.CODIGO "
+                    + "INNER JOIN estados ON gestion.ESTADO = estados.CODIGO "
                     + " WHERE FECHARETIRO is null"
-                    + " AND GESTION.COD_ASESOR = ?"
+                    + " AND gestion.COD_ASESOR = ?"
                     + " AND FECHA_DESCARTE is null");
             declaracion.setString(1, asesor.getCorreo());
             resultado = declaracion.executeQuery();
@@ -655,7 +655,7 @@ public class ProspectosDAO extends DAO {
                 prospecto.setEdad(resultado.getString("EDAD"));
                 prospecto.setSexo(resultado.getString("SEXO"));
                 prospecto.setDistrito(resultado.getString("DISTRITO"));
-                prospecto.setComentario(resultado.getString("PROSPECTOS.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("prospectos.COMENTARIO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
                 lista.add(prospecto);
             }
@@ -675,9 +675,9 @@ public class ProspectosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT PROSPECTOS.CODIGO, GESTION.CODIGO, substr(FECHA_PROSPECTO,1,10), substr(FECHA_CONTACTO,1,10), NOMBREAPELLIDO, "
-                    + "TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, GESTION.FECHA_CONTACTO, CORREO_SEC, EDAD, SEXO, DISTRITO, PROSPECTOS.COMENTARIO "
-                    + "FROM GESTION inner join PROSPECTOS on GESTION.cod_prospecto = PROSPECTOS.codigo "
+                    + "SELECT prospectos.CODIGO, gestion.CODIGO, substr(FECHA_PROSPECTO,1,10), substr(FECHA_CONTACTO,1,10), NOMBREAPELLIDO, "
+                    + "TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, gestion.FECHA_CONTACTO, CORREO_SEC, EDAD, SEXO, DISTRITO, prospectos.COMENTARIO "
+                    + "FROM gestion inner join prospectos on gestion.cod_prospecto = prospectos.codigo "
                     + "where cod_asesor = ? "
                     + "and prospectos.fecharetiro is null "
                     + "and substr(gestion.fecha_contacto,1,10) <=  ? "
@@ -703,7 +703,7 @@ public class ProspectosDAO extends DAO {
                 prospecto.setEdad(resultado.getString("EDAD"));
                 prospecto.setSexo(resultado.getString("SEXO"));
                 prospecto.setDistrito(resultado.getString("DISTRITO"));
-                prospecto.setComentario(resultado.getString("PROSPECTOS.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("prospectos.COMENTARIO"));
                 lista.add(prospecto);
             }
             return lista;
@@ -722,8 +722,8 @@ public class ProspectosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "select PROSPECTOS.CODIGO, GESTION.CODIGO, substr(FECHA_PROSPECTO,1,10), substr(FECHA_INGRESO,1,10), NOMBREAPELLIDO, "
-                    + "TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, CORREO_SEC, EDAD, SEXO, DISTRITO, PROSPECTOS.COMENTARIO "
+                    + "select prospectos.CODIGO, gestion.CODIGO, substr(FECHA_PROSPECTO,1,10), substr(FECHA_INGRESO,1,10), NOMBREAPELLIDO, "
+                    + "TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, CORREO_SEC, EDAD, SEXO, DISTRITO, prospectos.COMENTARIO "
                     + " from gestion inner join prospectos on gestion.cod_prospecto = prospectos.codigo "
                     + "where cod_asesor = ? "
                     + "and prospectos.fecharetiro is null "
@@ -748,7 +748,7 @@ public class ProspectosDAO extends DAO {
                 prospecto.setEdad(resultado.getString("EDAD"));
                 prospecto.setSexo(resultado.getString("SEXO"));
                 prospecto.setDistrito(resultado.getString("DISTRITO"));
-                prospecto.setComentario(resultado.getString("PROSPECTOS.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("prospectos.COMENTARIO"));
                 lista.add(prospecto);
             }
             return lista;
@@ -767,9 +767,9 @@ public class ProspectosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT PROSPECTOS.CODIGO, GESTION.CODIGO, substr(FECHA_PROSPECTO,1,10), substr(FECHA_INGRESO,1,10), NOMBREAPELLIDO, "
-                    + "TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, GESTION.FECHA_CONTACTO,CORREO_SEC, EDAD, SEXO, DISTRITO, PROSPECTOS.COMENTARIO "
-                    + "FROM GESTION inner join PROSPECTOS on GESTION.cod_prospecto = PROSPECTOS.codigo "
+                    + "SELECT prospectos.CODIGO, gestion.CODIGO, substr(FECHA_PROSPECTO,1,10), substr(FECHA_INGRESO,1,10), NOMBREAPELLIDO, "
+                    + "TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, gestion.FECHA_CONTACTO,CORREO_SEC, EDAD, SEXO, DISTRITO, prospectos.COMENTARIO "
+                    + "FROM gestion inner join prospectos on gestion.cod_prospecto = prospectos.codigo "
                     + "where cod_asesor = ? "
                     + "and prospectos.fecharetiro is null "
                     + "and estatus_venta = 'PRO' "
@@ -798,7 +798,7 @@ public class ProspectosDAO extends DAO {
                 prospecto.setEdad(resultado.getString("EDAD"));
                 prospecto.setSexo(resultado.getString("SEXO"));
                 prospecto.setDistrito(resultado.getString("DISTRITO"));
-                prospecto.setComentario(resultado.getString("PROSPECTOS.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("prospectos.COMENTARIO"));
                 lista.add(prospecto);
             }
             return lista;

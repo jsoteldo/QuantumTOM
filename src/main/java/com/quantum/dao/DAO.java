@@ -1,5 +1,6 @@
 package com.quantum.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
@@ -39,10 +40,6 @@ public class DAO {
 
         } catch (Exception e) {
             throw e;
-        }
-        catch (IOException e) {
-            System.out.println("Unable to find mydb.cfg in " + System.getProperty("user.home") + "\n Please make sure that configuration file created in this folder.");
-             
         }
     }
 

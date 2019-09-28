@@ -49,7 +49,7 @@ public class AsesoresDAO extends DAO {
                 return this.validaUsuario(asesores);
             } else {
                 this.Conectar();
-                PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO ASESORES (CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, ROL) VALUES (?,?,?,?,?,?,?,?,?)");
+                PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO asesores (CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, ROL) VALUES (?,?,?,?,?,?,?,?,?)");
                 declaracion.setString(1, asesores.getCorreo());
                 declaracion.setString(2, asesores.getNombres());
                 declaracion.setString(3, asesores.getApellidos());
@@ -78,9 +78,9 @@ public class AsesoresDAO extends DAO {
         Mensaje validosesion;
         this.Conectar();
         PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                + "SELECT CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, FECHARETIRO, ASESORES.ROL, ROLES.DESCRIPCION, IMG, EMPL_CARGO "
-                + "FROM ASESORES "
-                + "INNER JOIN ROLES ON ASESORES.ROL = ROLES.ROL "
+                + "SELECT CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, FECHARETIRO, asesores.ROL, ROLES.DESCRIPCION, IMG, EMPL_CARGO "
+                + "FROM asesores "
+                + "INNER JOIN ROLES ON asesores.ROL = ROLES.ROL "
                 + "WHERE CORREO = ? "
                 + "AND FECHARETIRO is null");
         declaracion.setString(1, asesores.getCorreo());
@@ -121,7 +121,7 @@ public class AsesoresDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, ROL, IMG FROM ASESORES"
+                    + "SELECT CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, ROL, IMG FROM asesores"
                     + " WHERE FECHARETIRO is NULL");
 
             resultado = declaracion.executeQuery();
@@ -154,7 +154,7 @@ public class AsesoresDAO extends DAO {
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE ASESORES set FECHARETIRO = ? WHERE CORREO = ?");
+                    + "UPDATE asesores set FECHARETIRO = ? WHERE CORREO = ?");
             declaracion.setString(1, asesor.getFecharetiro());
             declaracion.setString(2, asesor.getCorreo());
             declaracion.executeUpdate();
@@ -174,7 +174,7 @@ public class AsesoresDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement("UPDATE"
-                    + " ASESORES set NOMBRES = ?, APELLIDOS = ?, "
+                    + " asesores set NOMBRES = ?, APELLIDOS = ?, "
                     + " EDAD = ?, SEXO = ?, TELEFONO = ?, TELEFONO_ASIG = ?, ROL = ? WHERE CORREO = ?");
 
             declaracion.setString(1, asesores.getNombres());
@@ -228,7 +228,7 @@ public class AsesoresDAO extends DAO {
             } else {
                 this.Conectar();
                 PreparedStatement declaracion = this.getConexion().prepareStatement("UPDATE"
-                        + " ASESORES set CONTRASENA = ? WHERE CORREO = ?");
+                        + " asesores set CONTRASENA = ? WHERE CORREO = ?");
                 declaracion.setString(1, this.hashPassword(asesores.getNew_contra()));
                 declaracion.setString(2, asesores.getCorreo());
                 declaracion.executeUpdate();
@@ -251,7 +251,7 @@ public class AsesoresDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CORREO, NOMBRES, APELLIDOS, ROL, IMG FROM ASESORES"
+                    + "SELECT CORREO, NOMBRES, APELLIDOS, ROL, IMG FROM asesores"
                     + " WHERE CORREO = ?");
             declaracion.setString(1, correoasesor);
             resultado = declaracion.executeQuery();
@@ -279,7 +279,7 @@ public class AsesoresDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, ROL, IMG FROM ASESORES"
+                    + "SELECT CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, ROL, IMG FROM asesores"
                     + " WHERE FECHARETIRO is NULL"
                     + " AND ROL = 'ASE'"
                     + " AND CORREO not in ('"+asesoractual+"')");
@@ -315,7 +315,7 @@ public class AsesoresDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, ROL, IMG FROM ASESORES"
+                    + "SELECT CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, ROL, IMG FROM asesores"
                     + " WHERE FECHARETIRO is NULL"
                     + " AND ROL = 'ASE'");
 
@@ -350,7 +350,7 @@ public class AsesoresDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, ROL, IMG FROM ASESORES"
+                    + "SELECT CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, ROL, IMG FROM asesores"
                     + " WHERE FECHARETIRO is NULL"
                     + " AND ROL = 'SUP'");
 
@@ -388,7 +388,7 @@ public class AsesoresDAO extends DAO {
 
             if (ase.getRol().equals("ADM")) {
                 PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT CORREO, NOMBRES, APELLIDOS FROM ASESORES "
+                        + "SELECT CORREO, NOMBRES, APELLIDOS FROM asesores "
                         + "WHERE ROL = 'ASE' "
                         + "AND FECHARETIRO IS NULL");
 
@@ -407,7 +407,7 @@ public class AsesoresDAO extends DAO {
 
             } else if (ase.getRol().equals("SUP")) {
                 StringBuilder queryvariables = new StringBuilder("");
-                StringBuilder queryconsulta = new StringBuilder("SELECT CORREO, NOMBRES, APELLIDOS FROM ASESORES "
+                StringBuilder queryconsulta = new StringBuilder("SELECT CORREO, NOMBRES, APELLIDOS FROM asesores "
                         + "WHERE ROL = 'ASE' "
                         + "AND FECHARETIRO IS NULL "
                         + "AND CORREO IN (");

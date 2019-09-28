@@ -20,7 +20,7 @@ public class CasasDAO extends DAO{
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CODIGO, MODELO FROM CASAS");
+                    + "SELECT CODIGO, MODELO FROM casas");
             
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();

@@ -19,7 +19,7 @@ public class ProcesosestatusDAO extends DAO {
         
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO PROCESOESTATUS (ESTATUS, CODPRO, PROCESO) VALUES (?,?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO procesoestatus (ESTATUS, CODPRO, PROCESO) VALUES (?,?,?)");
             declaracion.setString(1,procesosestatus.getEstatus());
             declaracion.setString(2,procesosestatus.getCodpro());
             declaracion.setString(3,procesosestatus.getProceso());
@@ -40,7 +40,7 @@ public class ProcesosestatusDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT ESTATUS, CODPRO, PROCESO FROM PROCESOESTATUS");
+                    + "SELECT ESTATUS, CODPRO, PROCESO FROM procesoestatus");
             
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -66,7 +66,7 @@ public class ProcesosestatusDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT ESTATUS, CODPRO, PROCESO FROM PROCESOESTATUS "
+                    + "SELECT ESTATUS, CODPRO, PROCESO FROM procesoestatus "
                     + "WHERE ESTATUS = ? ");
             declaracion.setString(1, opcion);
             resultado = declaracion.executeQuery();
@@ -92,7 +92,7 @@ public class ProcesosestatusDAO extends DAO {
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM PROCESOESTATUS WHERE CODPRO = ? and ESTATUS = ? ");
+                    + "DELETE FROM procesoestatus WHERE CODPRO = ? and ESTATUS = ? ");
             declaracion.setString(1, proceso.getCodpro());
             declaracion.setString(2, proceso.getEstatus());
             declaracion.executeUpdate();
@@ -110,7 +110,7 @@ public class ProcesosestatusDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE PROCESOESTATUS set PROCESO = ? WHERE CODPRO = ? and ESTATUS = ?");
+                    + "UPDATE procesoestatus set PROCESO = ? WHERE CODPRO = ? and ESTATUS = ?");
 
             declaracion.setString(1, proceso.getProceso());
             declaracion.setString(2, proceso.getCodpro());

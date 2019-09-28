@@ -17,7 +17,7 @@ public class ConjuntoDAO extends DAO {
         Mensaje validosesion;
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO CONJUANUNCIOS (ID, DESCRIPCION, MASCULINO, FEMENINO, EDADINI, EDADFIN, BD, ADICIONAL,ZNGEO) VALUES (?,?,?,?,?,?,?,?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO conjuanuncios (ID, DESCRIPCION, MASCULINO, FEMENINO, EDADINI, EDADFIN, BD, ADICIONAL,ZNGEO) VALUES (?,?,?,?,?,?,?,?,?)");
             declaracion.setString(1, conjunto.getId());
             declaracion.setString(2, conjunto.getDescripcion());
             declaracion.setString(3, conjunto.getMasculino());
@@ -45,7 +45,7 @@ public class ConjuntoDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT ID, DESCRIPCION, MASCULINO, FEMENINO, EDADINI, EDADFIN, BD, ADICIONAL, ZNGEO FROM CONJUANUNCIOS");
+                    + "SELECT ID, DESCRIPCION, MASCULINO, FEMENINO, EDADINI, EDADFIN, BD, ADICIONAL, ZNGEO FROM conjuanuncios");
 
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -77,7 +77,7 @@ public class ConjuntoDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT ID, DESCRIPCION, MASCULINO, FEMENINO, EDADINI, EDADFIN, BD, ADICIONAL, ZNGEO FROM CONJUANUNCIOS "
+                    + "SELECT ID, DESCRIPCION, MASCULINO, FEMENINO, EDADINI, EDADFIN, BD, ADICIONAL, ZNGEO FROM conjuanuncios "
                     + "WHERE ID = ?");
             declaracion.setString(1, idconjunto);
             resultado = declaracion.executeQuery();
@@ -105,7 +105,7 @@ public class ConjuntoDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM CONJUANUNCIOS WHERE ID = ?");
+                    + "DELETE FROM conjuanuncios WHERE ID = ?");
             declaracion.setString(1, conjunto.getId());
             declaracion.executeUpdate();
         } catch (Exception e) {
@@ -123,7 +123,7 @@ public class ConjuntoDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE CONJUANUNCIOS set MASCULINO = ?, FEMENINO = ?, EDADINI = ?, EDADFIN = ?, BD = ?, ADICIONAL = ?, ZNGEO = ? WHERE ID = ?");
+                    + "UPDATE conjuanuncios set MASCULINO = ?, FEMENINO = ?, EDADINI = ?, EDADFIN = ?, BD = ?, ADICIONAL = ?, ZNGEO = ? WHERE ID = ?");
 
             declaracion.setString(1, conjunto.getMasculino());
             declaracion.setString(2, conjunto.getFemenino());

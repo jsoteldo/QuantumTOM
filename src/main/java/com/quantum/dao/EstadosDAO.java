@@ -19,7 +19,7 @@ public class EstadosDAO extends DAO{
         
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO ESTADOS (CODIGO, ESTADO) VALUES (?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO estados (CODIGO, ESTADO) VALUES (?,?)");
             declaracion.setString(1,estado.getCodigo());
             declaracion.setString(2,estado.getEstado());
             declaracion.executeUpdate();
@@ -40,7 +40,7 @@ public class EstadosDAO extends DAO{
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CODIGO, ESTADO, PERMITELLAMAR, MOTIVOS, CERRADA FROM ESTADOS");
+                    + "SELECT CODIGO, ESTADO, PERMITELLAMAR, MOTIVOS, CERRADA FROM estados");
             
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -69,7 +69,7 @@ public class EstadosDAO extends DAO{
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CODIGO, ESTADO, PERMITELLAMAR, MOTIVOS, CERRADA FROM ESTADOS WHERE CODIGO = ?");
+                    + "SELECT CODIGO, ESTADO, PERMITELLAMAR, MOTIVOS, CERRADA FROM estados WHERE CODIGO = ?");
             declaracion.setString(1, codigo);
             resultado = declaracion.executeQuery();
             while(resultado.next()){
@@ -95,7 +95,7 @@ public class EstadosDAO extends DAO{
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM ESTADOS WHERE CODIGO = ?");
+                    + "DELETE FROM estados WHERE CODIGO = ?");
             declaracion.setString(1, estado.getCodigo());
             declaracion.executeUpdate();
         } catch (Exception e) {
@@ -113,7 +113,7 @@ public class EstadosDAO extends DAO{
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE ESTADOS set  ESTADO = ? WHERE CODIGO = ?");
+                    + "UPDATE estados set  ESTADO = ? WHERE CODIGO = ?");
 
             declaracion.setString(1, estado.getEstado());
             declaracion.setString(2, estado.getCodigo());
@@ -134,7 +134,7 @@ public class EstadosDAO extends DAO{
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT COLOR FROM ESTADOS WHERE ESTADO = ?");
+                    + "SELECT COLOR FROM estados WHERE ESTADO = ?");
             declaracion.setString(1, estado);
             resultado = declaracion.executeQuery();
             while(resultado.next()){

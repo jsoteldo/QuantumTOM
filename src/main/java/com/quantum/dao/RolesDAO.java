@@ -19,7 +19,7 @@ public class RolesDAO extends DAO {
 
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO ROLES (ROL, DESCRIPCION, PERMISOS) VALUES (?,?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO roles (ROL, DESCRIPCION, PERMISOS) VALUES (?,?,?)");
             declaracion.setString(1, rol.getRol());
             declaracion.setString(2, rol.getDescripcion());
             declaracion.setString(3, rol.getPermiso().toString());
@@ -40,7 +40,7 @@ public class RolesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT ROL, DESCRIPCION, PERMISOS FROM ROLES");
+                    + "SELECT ROL, DESCRIPCION, PERMISOS FROM roles");
 
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -65,7 +65,7 @@ public class RolesDAO extends DAO {
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM ROLES WHERE ROL = ?");
+                    + "DELETE FROM roles WHERE ROL = ?");
             declaracion.setString(1, rol.getRol());
             declaracion.executeUpdate();
         } catch (Exception e) {
@@ -83,7 +83,7 @@ public class RolesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE ROLES set DESCRIPCION = ?, PERMISOS = ? WHERE ROL = ?");
+                    + "UPDATE roles set DESCRIPCION = ?, PERMISOS = ? WHERE ROL = ?");
 
             declaracion.setString(1, rol.getDescripcion());
             declaracion.setString(2, rol.getPermiso().toString());
@@ -106,7 +106,7 @@ public class RolesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT ROL, DESCRIPCION, PERMISOS FROM ROLES "
+                    + "SELECT ROL, DESCRIPCION, PERMISOS FROM roles "
                     + "WHERE ROL = ?");
             declaracion.setString(1, rol);
             resultado = declaracion.executeQuery();

@@ -59,7 +59,7 @@ public class DistribucionDAO extends DAO {
 
             if (ase.getRol().equals("ADM")) {
                 PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT CORREO, NOMBRES, APELLIDOS FROM ASESORES "
+                        + "SELECT CORREO, NOMBRES, APELLIDOS FROM asesores "
                         + "WHERE ROL = 'ASE' "
                         + "AND FECHARETIRO IS NULL");
 
@@ -80,7 +80,7 @@ public class DistribucionDAO extends DAO {
 
             } else if (ase.getRol().equals("SUP")) {
                 StringBuilder queryvariables = new StringBuilder("");
-                StringBuilder queryconsulta = new StringBuilder("SELECT CORREO, NOMBRES, APELLIDOS FROM ASESORES "
+                StringBuilder queryconsulta = new StringBuilder("SELECT CORREO, NOMBRES, APELLIDOS FROM asesores "
                         + "WHERE ROL = 'ASE' "
                         + "AND FECHARETIRO IS NULL "
                         + "AND CORREO IN (");
@@ -132,7 +132,7 @@ public class DistribucionDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CORREO, NOMBRES, APELLIDOS FROM ASESORES "
+                    + "SELECT CORREO, NOMBRES, APELLIDOS FROM asesores "
                     + "WHERE ROL in ('SUP','ADM') "
                     + "AND FECHARETIRO IS NULL "
             );
@@ -200,7 +200,7 @@ public class DistribucionDAO extends DAO {
             this.Conectar();
 
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CORREO FROM ASESORES "
+                    + "SELECT CORREO FROM asesores "
                     + "WHERE ROL = 'ASE' "
                     + "AND FECHARETIRO IS NULL");
 
@@ -225,11 +225,11 @@ public class DistribucionDAO extends DAO {
             this.Conectar();
 
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CODIGO FROM PROSPECTOS "
-                    + "INNER JOIN FBLEADS ON PROSPECTOS.CODIGO = FBLEADS.ID "
+                    + "SELECT CODIGO FROM prospectos "
+                    + "INNER JOIN fbleads ON prospectos.CODIGO = fbleads.ID "
                     + "WHERE ENCOLA = 'FALSE' "
                     + "AND FECHARETIRO IS NULL "
-                    + "AND FBLEADS.SUP_ENCARGADO = ?");
+                    + "AND fbleads.SUP_ENCARGADO = ?");
 
             declaracion.setString(1, ase.getCorreo());
 
@@ -255,7 +255,7 @@ public class DistribucionDAO extends DAO {
 
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
                     + "select id from fbleads "
-                    + "where FBLEADS.SUP_ENCARGADO is null "
+                    + "where fbleads.SUP_ENCARGADO is null "
                     + "and fbleads.repite ='FALSE'");
 
             resultado = declaracion.executeQuery();
@@ -311,9 +311,9 @@ public class DistribucionDAO extends DAO {
             for (Distribucion distribuir : lstDistribucion) {
 
                 PreparedStatement declaraciondistribucion = this.getConexion().prepareStatement(
-                        "UPDATE FBLEADS "
+                        "UPDATE fbleads "
                         + "SET SUP_ENCARGADO= ?  "
-                        + "WHERE ID IN (SELECT ID FROM FBLEADS LIMIT " + distribuir.getCantidad() + ") "
+                        + "WHERE ID IN (SELECT ID FROM fbleads LIMIT " + distribuir.getCantidad() + ") "
                         + "AND SUP_ENCARGADO IS NULL"
                 );
 
@@ -343,11 +343,11 @@ public class DistribucionDAO extends DAO {
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(
-                    "INSERT INTO GESTION (COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, "
+                    "INSERT INTO gestion (COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, "
                     + "PROCESO_ESTATUS, FECHA_ASIGNACION, ESTADO, MOTIVO) VALUES (?,?,?,?,?,?,?)");
 
             PreparedStatement declaraciondistribucion = this.getConexion().prepareStatement(
-                    "INSERT INTO DISTRIBUCION (ASESOR, CANT_ASIGNADA, PORC_ASIGNADA,"
+                    "INSERT INTO distribucion (ASESOR, CANT_ASIGNADA, PORC_ASIGNADA,"
                     + " BASEASIG, MES, ANO, FECH_ASIGNADA) VALUES (?,?,?,?,?,?,?)");
 
             lstProspectos = this.buscaprospectos(ase);
@@ -403,11 +403,11 @@ public class DistribucionDAO extends DAO {
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(
-                    "INSERT INTO GESTION (COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, "
+                    "INSERT INTO gestion (COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, "
                     + "PROCESO_ESTATUS, FECHA_ASIGNACION, ESTADO, MOTIVO) VALUES (?,?,?,?,?,?,?)");
 
             PreparedStatement declaraciondistribucion = this.getConexion().prepareStatement(
-                    "INSERT INTO DISTRIBUCION (ASESOR, CANT_ASIGNADA, PORC_ASIGNADA,"
+                    "INSERT INTO distribucion (ASESOR, CANT_ASIGNADA, PORC_ASIGNADA,"
                     + " BASEASIG, MES, ANO, FECH_ASIGNADA) VALUES (?,?,?,?,?,?,?)");
 
             declaraciondistribucion.setString(1, ase.getCorreo());
@@ -451,13 +451,13 @@ public class DistribucionDAO extends DAO {
             if (ase.getCorreo().isEmpty()) {
                 declaracion = this.getConexion().prepareStatement(""
                         + "SELECT CODIGO, FECHA_PROSPECTO, FECHA_INGRESO, NOMBREAPELLIDO, TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, LINK "
-                        + "FROM PROSPECTOS "
+                        + "FROM prospectos "
                         + "WHERE ENCOLA = 'FALSE' "
                         + "AND FECHARETIRO IS NULL");
             } else {
                 declaracion = this.getConexion().prepareStatement(""
                         + "SELECT CODIGO, FECHA_PROSPECTO, FECHA_INGRESO, NOMBREAPELLIDO, TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, LINK "
-                        + "FROM PROSPECTOS INNER JOIN fbleads on prospectos.CODIGO = fbleads.id "
+                        + "FROM prospectos INNER JOIN fbleads on prospectos.CODIGO = fbleads.id "
                         + "WHERE ENCOLA = 'FALSE' "
                         + "AND FECHARETIRO IS NULL "
                         + "AND fbleads.sup_encargado = ?");
@@ -484,7 +484,7 @@ public class DistribucionDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement("UPDATE"
-                    + " PROSPECTOS set ENCOLA = 'TRUE' WHERE ENCOLA = 'FALSE'"
+                    + " prospectos set ENCOLA = 'TRUE' WHERE ENCOLA = 'FALSE'"
                     + " AND CODIGO = ?");
 
             declaracion.setString(1, asesores);
@@ -509,7 +509,7 @@ public class DistribucionDAO extends DAO {
             for (String campos : prospectos) {
                 System.out.println(campos);
             }
-            StringBuilder queryUpdate = new StringBuilder("UPDATE PROSPECTOS SET ENCOLA ='TRUE'"
+            StringBuilder queryUpdate = new StringBuilder("UPDATE prospectos SET ENCOLA ='TRUE'"
                     + " WHERE CODIGO IN (");
 
             for (int a = 0; a < prospectos.size(); a++) {
@@ -546,7 +546,7 @@ public class DistribucionDAO extends DAO {
                     + "limit ?");
 
             PreparedStatement declaraciondistribucion = this.getConexion().prepareStatement(
-                    "INSERT INTO DISTRIBUCION (ASESOR, CANT_ASIGNADA, PORC_ASIGNADA,"
+                    "INSERT INTO distribucion (ASESOR, CANT_ASIGNADA, PORC_ASIGNADA,"
                     + " BASEASIG, MES, ANO, FECH_ASIGNADA) VALUES (?,?,?,?,?,?,?)");
 
             for (Distribucion distribuir : lstDistribucion) {

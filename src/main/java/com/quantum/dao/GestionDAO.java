@@ -25,7 +25,7 @@ public class GestionDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE GESTION set COD_PROSPECTO = ?, COD_ASESOR = ?, ESTATUS_VENTA = ?, COMENTARIO = ?,"
+                    + "UPDATE gestion set COD_PROSPECTO = ?, COD_ASESOR = ?, ESTATUS_VENTA = ?, COMENTARIO = ?,"
                     + " AGENDO_CITA = ?, FECHA_CONTACTO = ?, FECHA_ULTIMO_CONTAC = ?, FEC_VISITA_OFIC = ?, "
                     + "FEC_VISITA_PROYEC = ?, FEC_RESERVA = ?, FEC_CONTRATO = ?, PROCESO_ESTATUS = ?, "
                     + "FECHA_ASIGNACION = ?, FECHA_DESCARTE = ?, TIPOBJECION = ?, ESTADO = ?, MOTIVO = ?, "
@@ -77,7 +77,7 @@ public class GestionDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO "
-                    + "GESTION ( COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, COMENTARIO, AGENDO_CITA, "
+                    + "gestion ( COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, COMENTARIO, AGENDO_CITA, "
                     + "FECHA_CONTACTO, FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, "
                     + "FEC_CONTRATO, PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADO, "
                     + "MOTIVO, PARCELA, LOTE, DIAFPAGO, MESFPAGO, MONTOFPAGO, PRECIOLOTE, "
@@ -124,15 +124,15 @@ public class GestionDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, "
+                    + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, "
                     + "FECHA_CONTACTO, FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
                     + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADO, MOTIVO, PARCELA, LOTE, DIAFPAGO, "
                     + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO,FECHA_PROSPECTO, "
                     + "FECHA_INGRESO, NOMBREAPELLIDO, TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, FECHARETIRO, ENCOLA "
-                    + "FROM GESTION inner join PROSPECTOS on GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                    + "WHERE GESTION.COD_ASESOR = ? "
-                    + "AND GESTION.ESTATUS_VENTA='PEN'"
-                    + "AND GESTION.PROCESO_ESTATUS='PPC'");
+                    + "FROM gestion inner join prospectos on gestion.COD_PROSPECTO = prospectos.CODIGO "
+                    + "WHERE gestion.COD_ASESOR = ? "
+                    + "AND gestion.ESTATUS_VENTA='PEN'"
+                    + "AND gestion.PROCESO_ESTATUS='PPC'");
             declaracion.setString(1, correoasesor);
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -142,7 +142,7 @@ public class GestionDAO extends DAO {
                 gestion.setCod_prospecto(resultado.getString("COD_PROSPECTO"));
                 gestion.setCod_asesor(resultado.getString("COD_ASESOR"));
                 gestion.setEstatus_venta(resultado.getString("ESTATUS_VENTA"));
-                gestion.setComentario(resultado.getString("GESTION.COMENTARIO"));
+                gestion.setComentario(resultado.getString("gestion.COMENTARIO"));
                 gestion.setAgendo_cita(resultado.getString("AGENDO_CITA"));
                 gestion.setFecha_contacto(resultado.getString("FECHA_CONTACTO"));
                 gestion.setFecha_ultimo_contac(resultado.getString("FECHA_ULTIMO_CONTAC"));
@@ -193,16 +193,16 @@ public class GestionDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, "
-                    + "FECHA_CONTACTO, GESTION.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
-                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO, GESTION.ESTADO, GESTION.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
+                    + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, "
+                    + "FECHA_CONTACTO, gestion.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
+                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO, gestion.ESTADO, gestion.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
                     + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO, SUBSTR(FECHA_PROSPECTO,1,10), "
-                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, PROSPECTOS.CORREO, ORIGEN, CARGO, PROSPECTOS.FECHARETIRO, ENCOLA, concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS), ASESORES.IMG "
-                    + "FROM GESTION inner join PROSPECTOS on GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                    + "INNER JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                    + "INNER JOIN MOTIVOS ON GESTION.ESTADO = MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
-                    + " INNER JOIN ASESORES ON GESTION.COD_ASESOR = ASESORES.CORREO "
-                    + "WHERE GESTION.CODIGO = ? ");
+                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, prospectos.CORREO, ORIGEN, CARGO, prospectos.FECHARETIRO, ENCOLA, concat(asesores.NOMBRES,' ',asesores.APELLIDOS), asesores.IMG "
+                    + "FROM gestion inner join prospectos on gestion.COD_PROSPECTO = prospectos.CODIGO "
+                    + "INNER JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                    + "INNER JOIN motivos ON gestion.ESTADO = motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
+                    + " INNER JOIN asesores ON gestion.COD_ASESOR = asesores.CORREO "
+                    + "WHERE gestion.CODIGO = ? ");
             declaracion.setString(1, codigo);
             resultado = declaracion.executeQuery();
             prospecto = new Gestion();
@@ -212,10 +212,10 @@ public class GestionDAO extends DAO {
                 prospecto.setCodigo(resultado.getString(1));
                 prospecto.setCod_asesor(resultado.getString("COD_ASESOR"));
                 prospecto.setEstatus_venta(resultado.getString("ESTATUS_VENTA"));
-                prospecto.setComentario(resultado.getString("GESTION.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("gestion.COMENTARIO"));
                 prospecto.setAgendo_cita(resultado.getString("AGENDO_CITA"));
                 prospecto.setFecha_contacto(resultado.getString("FECHA_CONTACTO"));
-                prospecto.setFecha_ultimo_contac(resultado.getString("GESTION.FECHA_ULTIMO_CONTAC"));
+                prospecto.setFecha_ultimo_contac(resultado.getString("gestion.FECHA_ULTIMO_CONTAC"));
                 prospecto.setFec_visita_ofic(resultado.getString("FEC_VISITA_OFIC"));
                 prospecto.setFec_visita_proyec(resultado.getString("FEC_VISITA_PROYEC"));
                 prospecto.setFec_reserva(resultado.getString("FEC_RESERVA"));
@@ -240,24 +240,24 @@ public class GestionDAO extends DAO {
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
                 prospecto.setTelefono2(resultado.getString("TELEFONO2"));
-                prospecto.setCorreo(resultado.getString("PROSPECTOS.CORREO"));
+                prospecto.setCorreo(resultado.getString("prospectos.CORREO"));
                 prospecto.setOrigen(resultado.getString("ORIGEN"));
                 prospecto.setCargo(resultado.getString("CARGO"));
                 prospecto.setEstado(resultado.getString(17));
                 prospecto.setMotivo(resultado.getString(18));
-                prospecto.setCodestado(resultado.getString("GESTION.ESTADO"));
-                prospecto.setCodmotivo(resultado.getString("GESTION.MOTIVO"));
+                prospecto.setCodestado(resultado.getString("gestion.ESTADO"));
+                prospecto.setCodmotivo(resultado.getString("gestion.MOTIVO"));
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
                 prospecto.setTelefono2(resultado.getString("TELEFONO2"));
                 prospecto.setCorreo(resultado.getString("CORREO"));
                 prospecto.setOrigen(resultado.getString("ORIGEN"));
                 prospecto.setCargo(resultado.getString("CARGO"));
-                prospecto.setFecharetiro(resultado.getString("PROSPECTOS.FECHARETIRO"));
+                prospecto.setFecharetiro(resultado.getString("prospectos.FECHARETIRO"));
                 prospecto.setEncola(resultado.getString("ENCOLA"));
                 prospecto.setCondipago(resultado.getString("CONDIPAGO"));
-                prospecto.setAsesor(resultado.getString("concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS)"));
-                prospecto.setImgasesor(resultado.getString("ASESORES.IMG"));
+                prospecto.setAsesor(resultado.getString("concat(asesores.NOMBRES,' ',asesores.APELLIDOS)"));
+                prospecto.setImgasesor(resultado.getString("asesores.IMG"));
             }
         } catch (Exception e) {
             throw e;
@@ -406,35 +406,35 @@ public class GestionDAO extends DAO {
             dao = new EstadosDAO();
             if (asesor.getRol().equals("ADM") || asesor.getRol().equals("SUP") || asesor.getRol().equals("mk")) {
                 declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, "
-                        + "FECHA_CONTACTO, GESTION.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
-                        + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO, GESTION.ESTADO, GESTION.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
+                        + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, "
+                        + "FECHA_CONTACTO, gestion.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
+                        + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO, gestion.ESTADO, gestion.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
                         + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO, SUBSTR(FECHA_PROSPECTO,1,10), "
-                        + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, PROSPECTOS.CORREO, ORIGEN, CARGO, PROSPECTOS.FECHARETIRO, ENCOLA, concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS), ASESORES.IMG "
-                        + "FROM GESTION inner join PROSPECTOS on GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                        + "INNER JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                        + "INNER JOIN MOTIVOS ON GESTION.ESTADO = MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
-                        + " INNER JOIN ASESORES ON GESTION.COD_ASESOR = ASESORES.CORREO "
-                        + "WHERE PROSPECTOS.FECHARETIRO is null"
-                        + " AND GESTION.PROCESO_ESTATUS not in ('PPC')"
-                        + " AND GESTION.ESTATUS_VENTA not in ('VCAI')"
+                        + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, prospectos.CORREO, ORIGEN, CARGO, prospectos.FECHARETIRO, ENCOLA, concat(asesores.NOMBRES,' ',asesores.APELLIDOS), asesores.IMG "
+                        + "FROM gestion inner join prospectos on gestion.COD_PROSPECTO = prospectos.CODIGO "
+                        + "INNER JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                        + "INNER JOIN motivos ON gestion.ESTADO = motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
+                        + " INNER JOIN asesores ON gestion.COD_ASESOR = asesores.CORREO "
+                        + "WHERE prospectos.FECHARETIRO is null"
+                        + " AND gestion.PROCESO_ESTATUS not in ('PPC')"
+                        + " AND gestion.ESTATUS_VENTA not in ('VCAI')"
                         + " ORDER BY 8");
             } else {
                 declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, "
-                        + "FECHA_CONTACTO, GESTION.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
-                        + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO , GESTION.ESTADO, GESTION.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
+                        + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, "
+                        + "FECHA_CONTACTO, gestion.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
+                        + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO , gestion.ESTADO, gestion.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
                         + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO, SUBSTR(FECHA_PROSPECTO,1,10), "
-                        + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, PROSPECTOS.CORREO, ORIGEN, CARGO, PROSPECTOS.FECHARETIRO, ENCOLA, concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS), ASESORES.IMG "
-                        + "FROM PROSPECTOS inner join GESTION ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                        + "INNER JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                        + "INNER JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
-                        + " INNER JOIN ASESORES ON GESTION.COD_ASESOR = ASESORES.CORREO "
-                        + " WHERE PROSPECTOS.FECHARETIRO is null"
-                        + " AND GESTION.COD_ASESOR = ?"
+                        + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, prospectos.CORREO, ORIGEN, CARGO, prospectos.FECHARETIRO, ENCOLA, concat(asesores.NOMBRES,' ',asesores.APELLIDOS), asesores.IMG "
+                        + "FROM prospectos inner join gestion ON gestion.COD_PROSPECTO = prospectos.CODIGO "
+                        + "INNER JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                        + "INNER JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
+                        + " INNER JOIN asesores ON gestion.COD_ASESOR = asesores.CORREO "
+                        + " WHERE prospectos.FECHARETIRO is null"
+                        + " AND gestion.COD_ASESOR = ?"
                         + " AND FECHA_DESCARTE is null"
-                        + " AND GESTION.PROCESO_ESTATUS not in ('PPC')"
-                        + " AND GESTION.ESTATUS_VENTA not in ('VCAI')"
+                        + " AND gestion.PROCESO_ESTATUS not in ('PPC')"
+                        + " AND gestion.ESTATUS_VENTA not in ('VCAI')"
                         + " ORDER BY 8");
                 declaracion.setString(1, asesor.getCorreo());
             }
@@ -447,10 +447,10 @@ public class GestionDAO extends DAO {
                 prospecto.setCodigo(resultado.getString(1));
                 prospecto.setCod_asesor(resultado.getString("COD_ASESOR"));
                 prospecto.setEstatus_venta(resultado.getString("ESTATUS_VENTA"));
-                prospecto.setComentario(resultado.getString("GESTION.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("gestion.COMENTARIO"));
                 prospecto.setAgendo_cita(resultado.getString("AGENDO_CITA"));
                 prospecto.setFecha_contacto(resultado.getString("FECHA_CONTACTO"));
-                prospecto.setFecha_ultimo_contac(resultado.getString("GESTION.FECHA_ULTIMO_CONTAC"));
+                prospecto.setFecha_ultimo_contac(resultado.getString("gestion.FECHA_ULTIMO_CONTAC"));
                 prospecto.setFec_visita_ofic(resultado.getString("FEC_VISITA_OFIC"));
                 prospecto.setFec_visita_proyec(resultado.getString("FEC_VISITA_PROYEC"));
                 prospecto.setFec_reserva(resultado.getString("FEC_RESERVA"));
@@ -475,13 +475,13 @@ public class GestionDAO extends DAO {
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
                 prospecto.setTelefono2(resultado.getString("TELEFONO2"));
-                prospecto.setCorreo(resultado.getString("PROSPECTOS.CORREO"));
+                prospecto.setCorreo(resultado.getString("prospectos.CORREO"));
                 prospecto.setOrigen(resultado.getString("ORIGEN"));
                 prospecto.setCargo(resultado.getString("CARGO"));
                 prospecto.setEstado(resultado.getString(17));
                 prospecto.setMotivo(resultado.getString(18));
-                prospecto.setCodestado(resultado.getString("GESTION.ESTADO"));
-                prospecto.setCodmotivo(resultado.getString("GESTION.MOTIVO"));
+                prospecto.setCodestado(resultado.getString("gestion.ESTADO"));
+                prospecto.setCodmotivo(resultado.getString("gestion.MOTIVO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
@@ -489,11 +489,11 @@ public class GestionDAO extends DAO {
                 prospecto.setCorreo(resultado.getString("CORREO"));
                 prospecto.setOrigen(resultado.getString("ORIGEN"));
                 prospecto.setCargo(resultado.getString("CARGO"));
-                prospecto.setFecharetiro(resultado.getString("PROSPECTOS.FECHARETIRO"));
+                prospecto.setFecharetiro(resultado.getString("prospectos.FECHARETIRO"));
                 prospecto.setEncola(resultado.getString("ENCOLA"));
                 prospecto.setCondipago(resultado.getString("CONDIPAGO"));
-                prospecto.setAsesor(resultado.getString("concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS)"));
-                prospecto.setImgasesor(resultado.getString("ASESORES.IMG"));
+                prospecto.setAsesor(resultado.getString("concat(asesores.NOMBRES,' ',asesores.APELLIDOS)"));
+                prospecto.setImgasesor(resultado.getString("asesores.IMG"));
 
                 lista.add(prospecto);
             }
@@ -518,31 +518,31 @@ public class GestionDAO extends DAO {
 
             if (asesor.getRol().equals("ADM") || asesor.getRol().equals("SUP") || asesor.getRol().equals("mk")) {
                 declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, "
-                        + "FECHA_CONTACTO, GESTION.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
-                        + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO , GESTION.ESTADO, GESTION.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
+                        + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, "
+                        + "FECHA_CONTACTO, gestion.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
+                        + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO , gestion.ESTADO, gestion.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
                         + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO, SUBSTR(FECHA_PROSPECTO,1,10), "
-                        + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, PROSPECTOS.CORREO, ORIGEN, CARGO, PROSPECTOS.FECHARETIRO, ENCOLA, concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS), ASESORES.IMG "
-                        + " FROM GESTION INNER JOIN PROSPECTOS ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                        + " LEFT JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                        + " LEFT JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
-                        + " INNER JOIN ASESORES ON GESTION.COD_ASESOR = ASESORES.CORREO "
+                        + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, prospectos.CORREO, ORIGEN, CARGO, prospectos.FECHARETIRO, ENCOLA, concat(asesores.NOMBRES,' ',asesores.APELLIDOS), asesores.IMG "
+                        + " FROM gestion INNER JOIN prospectos ON gestion.COD_PROSPECTO = prospectos.CODIGO "
+                        + " LEFT JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                        + " LEFT JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
+                        + " INNER JOIN asesores ON gestion.COD_ASESOR = asesores.CORREO "
                         + " WHERE ESTATUS_VENTA = 'VCAI'"
                         + " ORDER BY 8");
             } else {
 
                 declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, "
-                        + "FECHA_CONTACTO, GESTION.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
-                        + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO , GESTION.ESTADO, GESTION.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
+                        + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, "
+                        + "FECHA_CONTACTO, gestion.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
+                        + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO , gestion.ESTADO, gestion.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
                         + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO, SUBSTR(FECHA_PROSPECTO,1,10), "
-                        + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, PROSPECTOS.CORREO, ORIGEN, CARGO, PROSPECTOS.FECHARETIRO, ENCOLA, concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS), ASESORES.IMG "
-                        + " FROM GESTION INNER JOIN PROSPECTOS ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                        + " LEFT JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                        + " LEFT JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
-                        + " INNER JOIN ASESORES ON GESTION.COD_ASESOR = ASESORES.CORREO "
+                        + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, prospectos.CORREO, ORIGEN, CARGO, prospectos.FECHARETIRO, ENCOLA, concat(asesores.NOMBRES,' ',asesores.APELLIDOS), asesores.IMG "
+                        + " FROM gestion INNER JOIN prospectos ON gestion.COD_PROSPECTO = prospectos.CODIGO "
+                        + " LEFT JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                        + " LEFT JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
+                        + " INNER JOIN asesores ON gestion.COD_ASESOR = asesores.CORREO "
                         + " WHERE ESTATUS_VENTA = 'VCAI'"
-                        + " AND GESTION.COD_ASESOR = ?"
+                        + " AND gestion.COD_ASESOR = ?"
                         + " ORDER BY 8 ");
                 declaracion.setString(1, asesor.getCorreo());
             }
@@ -555,10 +555,10 @@ public class GestionDAO extends DAO {
                 prospecto.setCodigo(resultado.getString(1));
                 prospecto.setCod_asesor(resultado.getString("COD_ASESOR"));
                 prospecto.setEstatus_venta(resultado.getString("ESTATUS_VENTA"));
-                prospecto.setComentario(resultado.getString("GESTION.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("gestion.COMENTARIO"));
                 prospecto.setAgendo_cita(resultado.getString("AGENDO_CITA"));
                 prospecto.setFecha_contacto(resultado.getString("FECHA_CONTACTO"));
-                prospecto.setFecha_ultimo_contac(resultado.getString("GESTION.FECHA_ULTIMO_CONTAC"));
+                prospecto.setFecha_ultimo_contac(resultado.getString("gestion.FECHA_ULTIMO_CONTAC"));
                 prospecto.setFec_visita_ofic(resultado.getString("FEC_VISITA_OFIC"));
                 prospecto.setFec_visita_proyec(resultado.getString("FEC_VISITA_PROYEC"));
                 prospecto.setFec_reserva(resultado.getString("FEC_RESERVA"));
@@ -588,20 +588,20 @@ public class GestionDAO extends DAO {
                 prospecto.setCargo(resultado.getString("CARGO"));
                 prospecto.setEstado(resultado.getString(17));
                 prospecto.setMotivo(resultado.getString(18));
-                prospecto.setCodestado(resultado.getString("GESTION.ESTADO"));
-                prospecto.setCodmotivo(resultado.getString("GESTION.MOTIVO"));
+                prospecto.setCodestado(resultado.getString("gestion.ESTADO"));
+                prospecto.setCodmotivo(resultado.getString("gestion.MOTIVO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
                 prospecto.setTelefono2(resultado.getString("TELEFONO2"));
-                prospecto.setCorreo(resultado.getString("PROSPECTOS.CORREO"));
+                prospecto.setCorreo(resultado.getString("prospectos.CORREO"));
                 prospecto.setOrigen(resultado.getString("ORIGEN"));
                 prospecto.setCargo(resultado.getString("CARGO"));
-                prospecto.setFecharetiro(resultado.getString("PROSPECTOS.FECHARETIRO"));
+                prospecto.setFecharetiro(resultado.getString("prospectos.FECHARETIRO"));
                 prospecto.setEncola(resultado.getString("ENCOLA"));
                 prospecto.setCondipago(resultado.getString("CONDIPAGO"));
-                prospecto.setAsesor(resultado.getString("concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS)"));
-                prospecto.setImgasesor(resultado.getString("ASESORES.IMG"));
+                prospecto.setAsesor(resultado.getString("concat(asesores.NOMBRES,' ',asesores.APELLIDOS)"));
+                prospecto.setImgasesor(resultado.getString("asesores.IMG"));
                 lista.add(prospecto);
             }
 
@@ -624,33 +624,33 @@ public class GestionDAO extends DAO {
 
             if (asesor.getRol().equals("ADM") || asesor.getRol().equals("SUP") || asesor.getRol().equals("mk")) {
                 declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, "
-                        + "FECHA_CONTACTO, GESTION.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
-                        + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO , GESTION.ESTADO, GESTION.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
+                        + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, "
+                        + "FECHA_CONTACTO, gestion.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
+                        + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO , gestion.ESTADO, gestion.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
                         + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO, SUBSTR(FECHA_PROSPECTO,1,10), "
-                        + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, PROSPECTOS.CORREO, ORIGEN, CARGO, PROSPECTOS.FECHARETIRO, ENCOLA, concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS), ASESORES.IMG "
-                        + " FROM GESTION INNER JOIN PROSPECTOS ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                        + " LEFT JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                        + " LEFT JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
-                        + " INNER JOIN ASESORES ON GESTION.COD_ASESOR = ASESORES.CORREO "
+                        + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, prospectos.CORREO, ORIGEN, CARGO, prospectos.FECHARETIRO, ENCOLA, concat(asesores.NOMBRES,' ',asesores.APELLIDOS), asesores.IMG "
+                        + " FROM gestion INNER JOIN prospectos ON gestion.COD_PROSPECTO = prospectos.CODIGO "
+                        + " LEFT JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                        + " LEFT JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
+                        + " INNER JOIN asesores ON gestion.COD_ASESOR = asesores.CORREO "
                         + " WHERE ESTATUS_VENTA = 'PEN'"
                         + " AND PROCESO_ESTATUS = 'PPC'"
                         + " ORDER BY 14");
             } else {
 
                 declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, "
-                        + "FECHA_CONTACTO, GESTION.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
-                        + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO , GESTION.ESTADO, GESTION.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
+                        + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, "
+                        + "FECHA_CONTACTO, gestion.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
+                        + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO , gestion.ESTADO, gestion.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
                         + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO, SUBSTR(FECHA_PROSPECTO,1,10), "
-                        + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, PROSPECTOS.CORREO, ORIGEN, CARGO, PROSPECTOS.FECHARETIRO, ENCOLA, concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS), ASESORES.IMG "
-                        + " FROM GESTION INNER JOIN PROSPECTOS ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                        + " LEFT JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                        + " LEFT JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
-                        + " INNER JOIN ASESORES ON GESTION.COD_ASESOR = ASESORES.CORREO "
+                        + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, prospectos.CORREO, ORIGEN, CARGO, prospectos.FECHARETIRO, ENCOLA, concat(asesores.NOMBRES,' ',asesores.APELLIDOS), asesores.IMG "
+                        + " FROM gestion INNER JOIN prospectos ON gestion.COD_PROSPECTO = prospectos.CODIGO "
+                        + " LEFT JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                        + " LEFT JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
+                        + " INNER JOIN asesores ON gestion.COD_ASESOR = asesores.CORREO "
                         + " WHERE ESTATUS_VENTA = 'PEN'"
                         + " AND PROCESO_ESTATUS = 'PPC' "
-                        + " AND GESTION.COD_ASESOR = ?"
+                        + " AND gestion.COD_ASESOR = ?"
                         + " ORDER BY 14 ");
                 declaracion.setString(1, asesor.getCorreo());
             }
@@ -663,10 +663,10 @@ public class GestionDAO extends DAO {
                 prospecto.setCodigo(resultado.getString(1));
                 prospecto.setCod_asesor(resultado.getString("COD_ASESOR"));
                 prospecto.setEstatus_venta(resultado.getString("ESTATUS_VENTA"));
-                prospecto.setComentario(resultado.getString("GESTION.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("gestion.COMENTARIO"));
                 prospecto.setAgendo_cita(resultado.getString("AGENDO_CITA"));
                 prospecto.setFecha_contacto(resultado.getString("FECHA_CONTACTO"));
-                prospecto.setFecha_ultimo_contac(resultado.getString("GESTION.FECHA_ULTIMO_CONTAC"));
+                prospecto.setFecha_ultimo_contac(resultado.getString("gestion.FECHA_ULTIMO_CONTAC"));
                 prospecto.setFec_visita_ofic(resultado.getString("FEC_VISITA_OFIC"));
                 prospecto.setFec_visita_proyec(resultado.getString("FEC_VISITA_PROYEC"));
                 prospecto.setFec_reserva(resultado.getString("FEC_RESERVA"));
@@ -691,13 +691,13 @@ public class GestionDAO extends DAO {
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
                 prospecto.setTelefono2(resultado.getString("TELEFONO2"));
-                prospecto.setCorreo(resultado.getString("PROSPECTOS.CORREO"));
+                prospecto.setCorreo(resultado.getString("prospectos.CORREO"));
                 prospecto.setOrigen(resultado.getString("ORIGEN"));
                 prospecto.setCargo(resultado.getString("CARGO"));
                 prospecto.setEstado(resultado.getString(17));
                 prospecto.setMotivo(resultado.getString(18));
-                prospecto.setCodestado(resultado.getString("GESTION.ESTADO"));
-                prospecto.setCodmotivo(resultado.getString("GESTION.MOTIVO"));
+                prospecto.setCodestado(resultado.getString("gestion.ESTADO"));
+                prospecto.setCodmotivo(resultado.getString("gestion.MOTIVO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
@@ -705,11 +705,11 @@ public class GestionDAO extends DAO {
                 prospecto.setCorreo(resultado.getString("CORREO"));
                 prospecto.setOrigen(resultado.getString("ORIGEN"));
                 prospecto.setCargo(resultado.getString("CARGO"));
-                prospecto.setFecharetiro(resultado.getString("PROSPECTOS.FECHARETIRO"));
+                prospecto.setFecharetiro(resultado.getString("prospectos.FECHARETIRO"));
                 prospecto.setEncola(resultado.getString("ENCOLA"));
                 prospecto.setCondipago(resultado.getString("CONDIPAGO"));
-                prospecto.setAsesor(resultado.getString("concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS)"));
-                prospecto.setImgasesor(resultado.getString("ASESORES.IMG"));
+                prospecto.setAsesor(resultado.getString("concat(asesores.NOMBRES,' ',asesores.APELLIDOS)"));
+                prospecto.setImgasesor(resultado.getString("asesores.IMG"));
                 lista.add(prospecto);
             }
 
@@ -730,15 +730,15 @@ public class GestionDAO extends DAO {
             this.Conectar();
             dao = new EstadosDAO();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, "
-                    + "FECHA_CONTACTO, GESTION.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
-                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO , GESTION.ESTADO, GESTION.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
+                    + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, "
+                    + "FECHA_CONTACTO, gestion.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
+                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO , gestion.ESTADO, gestion.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
                     + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO, SUBSTR(FECHA_PROSPECTO,1,10), "
-                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, PROSPECTOS.CORREO, ORIGEN, CARGO, PROSPECTOS.FECHARETIRO, ENCOLA, concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS), ASESORES.IMG "
-                    + "FROM GESTION inner join PROSPECTOS on GESTION.cod_prospecto = PROSPECTOS.codigo "
-                    + "INNER JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                    + "INNER JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
-                    + " INNER JOIN ASESORES ON GESTION.COD_ASESOR = ASESORES.CORREO "
+                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, prospectos.CORREO, ORIGEN, CARGO, prospectos.FECHARETIRO, ENCOLA, concat(asesores.NOMBRES,' ',asesores.APELLIDOS), asesores.IMG "
+                    + "FROM gestion inner join prospectos on gestion.cod_prospecto = prospectos.codigo "
+                    + "INNER JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                    + "INNER JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
+                    + " INNER JOIN asesores ON gestion.COD_ASESOR = asesores.CORREO "
                     + "where cod_asesor = ? "
                     + "and prospectos.fecharetiro is null "
                     + "and substr(gestion.fecha_contacto,1,10) <=  ? "
@@ -754,10 +754,10 @@ public class GestionDAO extends DAO {
                 prospecto.setCodigo(resultado.getString(1));
                 prospecto.setCod_asesor(resultado.getString("COD_ASESOR"));
                 prospecto.setEstatus_venta(resultado.getString("ESTATUS_VENTA"));
-                prospecto.setComentario(resultado.getString("GESTION.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("gestion.COMENTARIO"));
                 prospecto.setAgendo_cita(resultado.getString("AGENDO_CITA"));
                 prospecto.setFecha_contacto(resultado.getString("FECHA_CONTACTO"));
-                prospecto.setFecha_ultimo_contac(resultado.getString("GESTION.FECHA_ULTIMO_CONTAC"));
+                prospecto.setFecha_ultimo_contac(resultado.getString("gestion.FECHA_ULTIMO_CONTAC"));
                 prospecto.setFec_visita_ofic(resultado.getString("FEC_VISITA_OFIC"));
                 prospecto.setFec_visita_proyec(resultado.getString("FEC_VISITA_PROYEC"));
                 prospecto.setFec_reserva(resultado.getString("FEC_RESERVA"));
@@ -787,8 +787,8 @@ public class GestionDAO extends DAO {
                 prospecto.setCargo(resultado.getString("CARGO"));
                 prospecto.setEstado(resultado.getString(17));
                 prospecto.setMotivo(resultado.getString(18));
-                prospecto.setCodestado(resultado.getString("GESTION.ESTADO"));
-                prospecto.setCodmotivo(resultado.getString("GESTION.MOTIVO"));
+                prospecto.setCodestado(resultado.getString("gestion.ESTADO"));
+                prospecto.setCodmotivo(resultado.getString("gestion.MOTIVO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
@@ -799,8 +799,8 @@ public class GestionDAO extends DAO {
                 prospecto.setFecharetiro(resultado.getString("FECHARETIRO"));
                 prospecto.setEncola(resultado.getString("ENCOLA"));
                 prospecto.setCondipago(resultado.getString("CONDIPAGO"));
-                prospecto.setAsesor(resultado.getString("concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS)"));
-                prospecto.setImgasesor(resultado.getString("ASESORES.IMG"));
+                prospecto.setAsesor(resultado.getString("concat(asesores.NOMBRES,' ',asesores.APELLIDOS)"));
+                prospecto.setImgasesor(resultado.getString("asesores.IMG"));
                 lista.add(prospecto);
             }
             return lista;
@@ -820,15 +820,15 @@ public class GestionDAO extends DAO {
             this.Conectar();
             dao = new EstadosDAO();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, "
-                    + "FECHA_CONTACTO, GESTION.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
-                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO , GESTION.ESTADO, GESTION.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
+                    + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, "
+                    + "FECHA_CONTACTO, gestion.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
+                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO , gestion.ESTADO, gestion.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
                     + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO, SUBSTR(FECHA_PROSPECTO,1,10), "
-                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, PROSPECTOS.CORREO, ORIGEN, CARGO, PROSPECTOS.FECHARETIRO, ENCOLA, concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS), ASESORES.IMG "
+                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, prospectos.CORREO, ORIGEN, CARGO, prospectos.FECHARETIRO, ENCOLA, concat(asesores.NOMBRES,' ',asesores.APELLIDOS), asesores.IMG "
                     + " from gestion inner join prospectos on gestion.cod_prospecto = prospectos.codigo "
-                    + "INNER JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                    + "INNER JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
-                    + " INNER JOIN ASESORES ON GESTION.COD_ASESOR = ASESORES.CORREO "
+                    + "INNER JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                    + "INNER JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
+                    + " INNER JOIN asesores ON gestion.COD_ASESOR = asesores.CORREO "
                     + "where cod_asesor = ? "
                     + "and prospectos.fecharetiro is null "
                     + "and gestion.estatus_venta = 'VC'"
@@ -842,10 +842,10 @@ public class GestionDAO extends DAO {
                 prospecto.setCodigo(resultado.getString(1));
                 prospecto.setCod_asesor(resultado.getString("COD_ASESOR"));
                 prospecto.setEstatus_venta(resultado.getString("ESTATUS_VENTA"));
-                prospecto.setComentario(resultado.getString("GESTION.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("gestion.COMENTARIO"));
                 prospecto.setAgendo_cita(resultado.getString("AGENDO_CITA"));
                 prospecto.setFecha_contacto(resultado.getString("FECHA_CONTACTO"));
-                prospecto.setFecha_ultimo_contac(resultado.getString("GESTION.FECHA_ULTIMO_CONTAC"));
+                prospecto.setFecha_ultimo_contac(resultado.getString("gestion.FECHA_ULTIMO_CONTAC"));
                 prospecto.setFec_visita_ofic(resultado.getString("FEC_VISITA_OFIC"));
                 prospecto.setFec_visita_proyec(resultado.getString("FEC_VISITA_PROYEC"));
                 prospecto.setFec_reserva(resultado.getString("FEC_RESERVA"));
@@ -875,8 +875,8 @@ public class GestionDAO extends DAO {
                 prospecto.setCargo(resultado.getString("CARGO"));
                 prospecto.setEstado(resultado.getString(17));
                 prospecto.setMotivo(resultado.getString(18));
-                prospecto.setCodestado(resultado.getString("GESTION.ESTADO"));
-                prospecto.setCodmotivo(resultado.getString("GESTION.MOTIVO"));
+                prospecto.setCodestado(resultado.getString("gestion.ESTADO"));
+                prospecto.setCodmotivo(resultado.getString("gestion.MOTIVO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
@@ -887,8 +887,8 @@ public class GestionDAO extends DAO {
                 prospecto.setFecharetiro(resultado.getString("FECHARETIRO"));
                 prospecto.setEncola(resultado.getString("ENCOLA"));
                 prospecto.setCondipago(resultado.getString("CONDIPAGO"));
-                prospecto.setAsesor(resultado.getString("concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS)"));
-                prospecto.setImgasesor(resultado.getString("ASESORES.IMG"));
+                prospecto.setAsesor(resultado.getString("concat(asesores.NOMBRES,' ',asesores.APELLIDOS)"));
+                prospecto.setImgasesor(resultado.getString("asesores.IMG"));
                 lista.add(prospecto);
             }
             return lista;
@@ -908,15 +908,15 @@ public class GestionDAO extends DAO {
             this.Conectar();
             dao = new EstadosDAO();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, "
-                    + "FECHA_CONTACTO, GESTION.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
-                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO , GESTION.ESTADO, GESTION.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
+                    + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, "
+                    + "FECHA_CONTACTO, gestion.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
+                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO , gestion.ESTADO, gestion.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
                     + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO, SUBSTR(FECHA_PROSPECTO,1,10), "
-                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, PROSPECTOS.CORREO, ORIGEN, CARGO, PROSPECTOS.FECHARETIRO, ENCOLA, concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS), ASESORES.IMG "
-                    + "FROM GESTION inner join PROSPECTOS on GESTION.cod_prospecto = PROSPECTOS.codigo "
-                    + "INNER JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                    + "INNER JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
-                    + "INNER JOIN ASESORES ON GESTION.COD_ASESOR = ASESORES.CORREO "
+                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, prospectos.CORREO, ORIGEN, CARGO, prospectos.FECHARETIRO, ENCOLA, concat(asesores.NOMBRES,' ',asesores.APELLIDOS), asesores.IMG "
+                    + "FROM gestion inner join prospectos on gestion.cod_prospecto = prospectos.codigo "
+                    + "INNER JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                    + "INNER JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
+                    + "INNER JOIN asesores ON gestion.COD_ASESOR = asesores.CORREO "
                     + "where prospectos.fecharetiro is null "
                     + "and prospectos.reiterasolicitud = 'TRUE' "
                     + "order by 7");
@@ -928,10 +928,10 @@ public class GestionDAO extends DAO {
                 prospecto.setCodigo(resultado.getString(1));
                 prospecto.setCod_asesor(resultado.getString("COD_ASESOR"));
                 prospecto.setEstatus_venta(resultado.getString("ESTATUS_VENTA"));
-                prospecto.setComentario(resultado.getString("GESTION.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("gestion.COMENTARIO"));
                 prospecto.setAgendo_cita(resultado.getString("AGENDO_CITA"));
                 prospecto.setFecha_contacto(resultado.getString("FECHA_CONTACTO"));
-                prospecto.setFecha_ultimo_contac(resultado.getString("GESTION.FECHA_ULTIMO_CONTAC"));
+                prospecto.setFecha_ultimo_contac(resultado.getString("gestion.FECHA_ULTIMO_CONTAC"));
                 prospecto.setFec_visita_ofic(resultado.getString("FEC_VISITA_OFIC"));
                 prospecto.setFec_visita_proyec(resultado.getString("FEC_VISITA_PROYEC"));
                 prospecto.setFec_reserva(resultado.getString("FEC_RESERVA"));
@@ -961,8 +961,8 @@ public class GestionDAO extends DAO {
                 prospecto.setCargo(resultado.getString("CARGO"));
                 prospecto.setEstado(resultado.getString(17));
                 prospecto.setMotivo(resultado.getString(18));
-                prospecto.setCodestado(resultado.getString("GESTION.ESTADO"));
-                prospecto.setCodmotivo(resultado.getString("GESTION.MOTIVO"));
+                prospecto.setCodestado(resultado.getString("gestion.ESTADO"));
+                prospecto.setCodmotivo(resultado.getString("gestion.MOTIVO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
@@ -973,8 +973,8 @@ public class GestionDAO extends DAO {
                 prospecto.setFecharetiro(resultado.getString("FECHARETIRO"));
                 prospecto.setEncola(resultado.getString("ENCOLA"));
                 prospecto.setCondipago(resultado.getString("CONDIPAGO"));
-                prospecto.setAsesor(resultado.getString("concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS)"));
-                prospecto.setImgasesor(resultado.getString("ASESORES.IMG"));
+                prospecto.setAsesor(resultado.getString("concat(asesores.NOMBRES,' ',asesores.APELLIDOS)"));
+                prospecto.setImgasesor(resultado.getString("asesores.IMG"));
                 lista.add(prospecto);
             }
             return lista;
@@ -995,15 +995,15 @@ public class GestionDAO extends DAO {
             this.Conectar();
             dao = new EstadosDAO();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, \n"
-                    + "FECHA_CONTACTO, GESTION.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, \n"
-                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO , GESTION.ESTADO, GESTION.MOTIVO, PARCELA, LOTE, DIAFPAGO, \n"
+                    + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, \n"
+                    + "FECHA_CONTACTO, gestion.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, \n"
+                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO , gestion.ESTADO, gestion.MOTIVO, PARCELA, LOTE, DIAFPAGO, \n"
                     + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO, SUBSTR(FECHA_PROSPECTO,1,10), \n"
-                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, PROSPECTOS.CORREO, ORIGEN, CARGO, PROSPECTOS.FECHARETIRO, ENCOLA, concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS), ASESORES.IMG \n"
-                    + "FROM GESTION inner join PROSPECTOS on GESTION.cod_prospecto = PROSPECTOS.codigo \n"
-                    + "INNER JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO \n"
-                    + "INNER JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT \n"
-                    + "INNER JOIN ASESORES ON GESTION.COD_ASESOR = ASESORES.CORREO \n"
+                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, prospectos.CORREO, ORIGEN, CARGO, prospectos.FECHARETIRO, ENCOLA, concat(asesores.NOMBRES,' ',asesores.APELLIDOS), asesores.IMG \n"
+                    + "FROM gestion inner join prospectos on gestion.cod_prospecto = prospectos.codigo \n"
+                    + "INNER JOIN estados ON gestion.ESTADO = estados.CODIGO \n"
+                    + "INNER JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT \n"
+                    + "INNER JOIN asesores ON gestion.COD_ASESOR = asesores.CORREO \n"
                     + "where cod_asesor = ?\n"
                     + "and prospectos.fecharetiro is null \n"
                     + "and estatus_venta = 'PRO' \n"
@@ -1022,10 +1022,10 @@ public class GestionDAO extends DAO {
                 prospecto.setCodigo(resultado.getString(1));
                 prospecto.setCod_asesor(resultado.getString("COD_ASESOR"));
                 prospecto.setEstatus_venta(resultado.getString("ESTATUS_VENTA"));
-                prospecto.setComentario(resultado.getString("GESTION.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("gestion.COMENTARIO"));
                 prospecto.setAgendo_cita(resultado.getString("AGENDO_CITA"));
                 prospecto.setFecha_contacto(resultado.getString("FECHA_CONTACTO"));
-                prospecto.setFecha_ultimo_contac(resultado.getString("GESTION.FECHA_ULTIMO_CONTAC"));
+                prospecto.setFecha_ultimo_contac(resultado.getString("gestion.FECHA_ULTIMO_CONTAC"));
                 prospecto.setFec_visita_ofic(resultado.getString("FEC_VISITA_OFIC"));
                 prospecto.setFec_visita_proyec(resultado.getString("FEC_VISITA_PROYEC"));
                 prospecto.setFec_reserva(resultado.getString("FEC_RESERVA"));
@@ -1055,20 +1055,20 @@ public class GestionDAO extends DAO {
                 prospecto.setCargo(resultado.getString("CARGO"));
                 prospecto.setEstado(resultado.getString(17));
                 prospecto.setMotivo(resultado.getString(18));
-                prospecto.setCodestado(resultado.getString("GESTION.ESTADO"));
-                prospecto.setCodmotivo(resultado.getString("GESTION.MOTIVO"));
+                prospecto.setCodestado(resultado.getString("gestion.ESTADO"));
+                prospecto.setCodmotivo(resultado.getString("gestion.MOTIVO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
                 prospecto.setTelefono2(resultado.getString("TELEFONO2"));
-                prospecto.setCorreo(resultado.getString("PROSPECTOS.CORREO"));
+                prospecto.setCorreo(resultado.getString("prospectos.CORREO"));
                 prospecto.setOrigen(resultado.getString("ORIGEN"));
                 prospecto.setCargo(resultado.getString("CARGO"));
-                prospecto.setFecharetiro(resultado.getString("PROSPECTOS.FECHARETIRO"));
+                prospecto.setFecharetiro(resultado.getString("prospectos.FECHARETIRO"));
                 prospecto.setEncola(resultado.getString("ENCOLA"));
                 prospecto.setCondipago(resultado.getString("CONDIPAGO"));
-                prospecto.setAsesor(resultado.getString("concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS)"));
-                prospecto.setImgasesor(resultado.getString("ASESORES.IMG"));
+                prospecto.setAsesor(resultado.getString("concat(asesores.NOMBRES,' ',asesores.APELLIDOS)"));
+                prospecto.setImgasesor(resultado.getString("asesores.IMG"));
                 lista.add(prospecto);
             }
             return lista;
@@ -1089,15 +1089,15 @@ public class GestionDAO extends DAO {
             this.Conectar();
             dao = new EstadosDAO();
             declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, "
-                    + "substr(FECHA_CONTACTO,1,10), substr(GESTION.FECHA_ULTIMO_CONTAC,1,10), FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
-                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO , GESTION.ESTADO, GESTION.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
+                    + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, "
+                    + "substr(FECHA_CONTACTO,1,10), substr(gestion.FECHA_ULTIMO_CONTAC,1,10), FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
+                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO , gestion.ESTADO, gestion.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
                     + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO, SUBSTR(FECHA_PROSPECTO,1,10), "
-                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, PROSPECTOS.CORREO, ORIGEN, CARGO, PROSPECTOS.FECHARETIRO, ENCOLA, NOMBRES, IMG "
-                    + " FROM GESTION INNER JOIN PROSPECTOS ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                    + "INNER JOIN ASESORES ON GESTION.COD_ASESOR = ASESORES.CORREO "
-                    + "INNER JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                    + "INNER JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
+                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, prospectos.CORREO, ORIGEN, CARGO, prospectos.FECHARETIRO, ENCOLA, NOMBRES, IMG "
+                    + " FROM gestion INNER JOIN prospectos ON gestion.COD_PROSPECTO = prospectos.CODIGO "
+                    + "INNER JOIN asesores ON gestion.COD_ASESOR = asesores.CORREO "
+                    + "INNER JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                    + "INNER JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
                     + " WHERE PROCESO_ESTATUS IS NOT NULL");
 
             resultado = declaracion.executeQuery();
@@ -1108,7 +1108,7 @@ public class GestionDAO extends DAO {
                 prospecto.setCodigo(resultado.getString(1));
                 prospecto.setCod_asesor(resultado.getString("COD_ASESOR"));
                 prospecto.setEstatus_venta(resultado.getString("ESTATUS_VENTA"));
-                prospecto.setComentario(resultado.getString("GESTION.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("gestion.COMENTARIO"));
                 prospecto.setAgendo_cita(resultado.getString("AGENDO_CITA"));
                 prospecto.setFecha_contacto(resultado.getString(7));
                 prospecto.setFecha_ultimo_contac(resultado.getString(8));
@@ -1136,13 +1136,13 @@ public class GestionDAO extends DAO {
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
                 prospecto.setTelefono2(resultado.getString("TELEFONO2"));
-                prospecto.setCorreo(resultado.getString("PROSPECTOS.CORREO"));
+                prospecto.setCorreo(resultado.getString("prospectos.CORREO"));
                 prospecto.setOrigen(resultado.getString("ORIGEN"));
                 prospecto.setCargo(resultado.getString("CARGO"));
                 prospecto.setEstado(resultado.getString(17));
                 prospecto.setMotivo(resultado.getString(18));
-                prospecto.setCodestado(resultado.getString("GESTION.ESTADO"));
-                prospecto.setCodmotivo(resultado.getString("GESTION.MOTIVO"));
+                prospecto.setCodestado(resultado.getString("gestion.ESTADO"));
+                prospecto.setCodmotivo(resultado.getString("gestion.MOTIVO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
@@ -1150,7 +1150,7 @@ public class GestionDAO extends DAO {
                 prospecto.setCorreo(resultado.getString("CORREO"));
                 prospecto.setOrigen(resultado.getString("ORIGEN"));
                 prospecto.setCargo(resultado.getString("CARGO"));
-                prospecto.setFecharetiro(resultado.getString("PROSPECTOS.FECHARETIRO"));
+                prospecto.setFecharetiro(resultado.getString("prospectos.FECHARETIRO"));
                 prospecto.setEncola(resultado.getString("ENCOLA"));
                 prospecto.setCondipago(resultado.getString("CONDIPAGO"));
                 prospecto.setAsesor(resultado.getString("NOMBRES"));
@@ -1174,17 +1174,17 @@ public class GestionDAO extends DAO {
             this.Conectar();
             dao = new EstadosDAO();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, "
-                    + "FECHA_CONTACTO, GESTION.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
-                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO , GESTION.ESTADO, GESTION.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
+                    + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, "
+                    + "FECHA_CONTACTO, gestion.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
+                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO , gestion.ESTADO, gestion.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
                     + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO, SUBSTR(FECHA_PROSPECTO,1,10), "
-                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, PROSPECTOS.CORREO, ORIGEN, CARGO, PROSPECTOS.FECHARETIRO, ENCOLA, concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS), ASESORES.IMG "
-                    + " FROM GESTION INNER JOIN PROSPECTOS ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                    + "INNER JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                    + "INNER JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
-                    + "INNER JOIN ASESORES ON GESTION.COD_ASESOR = ASESORES.CORREO"
-                    + " WHERE PROSPECTOS.FECHARETIRO is null"
-                    + " AND GESTION.COD_ASESOR = ?"
+                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, prospectos.CORREO, ORIGEN, CARGO, prospectos.FECHARETIRO, ENCOLA, concat(asesores.NOMBRES,' ',asesores.APELLIDOS), asesores.IMG "
+                    + " FROM gestion INNER JOIN prospectos ON gestion.COD_PROSPECTO = prospectos.CODIGO "
+                    + "INNER JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                    + "INNER JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
+                    + "INNER JOIN asesores ON gestion.COD_ASESOR = asesores.CORREO"
+                    + " WHERE prospectos.FECHARETIRO is null"
+                    + " AND gestion.COD_ASESOR = ?"
                     + " AND FECHA_DESCARTE is null"
                     + " ORDER BY 14");
             declaracion.setString(1, asesor.getCorreo());
@@ -1196,7 +1196,7 @@ public class GestionDAO extends DAO {
                 prospecto.setCodigo(resultado.getString(1));
                 prospecto.setCod_asesor(resultado.getString("COD_ASESOR"));
                 prospecto.setEstatus_venta(resultado.getString("ESTATUS_VENTA"));
-                prospecto.setComentario(resultado.getString("GESTION.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("gestion.COMENTARIO"));
                 prospecto.setAgendo_cita(resultado.getString("AGENDO_CITA"));
                 prospecto.setFecha_contacto(resultado.getString(7));
                 prospecto.setFecha_ultimo_contac(resultado.getString(8));
@@ -1224,13 +1224,13 @@ public class GestionDAO extends DAO {
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
                 prospecto.setTelefono2(resultado.getString("TELEFONO2"));
-                prospecto.setCorreo(resultado.getString("PROSPECTOS.CORREO"));
+                prospecto.setCorreo(resultado.getString("prospectos.CORREO"));
                 prospecto.setOrigen(resultado.getString("ORIGEN"));
                 prospecto.setCargo(resultado.getString("CARGO"));
                 prospecto.setEstado(resultado.getString(17));
                 prospecto.setMotivo(resultado.getString(18));
-                prospecto.setCodestado(resultado.getString("GESTION.ESTADO"));
-                prospecto.setCodmotivo(resultado.getString("GESTION.MOTIVO"));
+                prospecto.setCodestado(resultado.getString("gestion.ESTADO"));
+                prospecto.setCodmotivo(resultado.getString("gestion.MOTIVO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
@@ -1238,11 +1238,11 @@ public class GestionDAO extends DAO {
                 prospecto.setCorreo(resultado.getString("CORREO"));
                 prospecto.setOrigen(resultado.getString("ORIGEN"));
                 prospecto.setCargo(resultado.getString("CARGO"));
-                prospecto.setFecharetiro(resultado.getString("PROSPECTOS.FECHARETIRO"));
+                prospecto.setFecharetiro(resultado.getString("prospectos.FECHARETIRO"));
                 prospecto.setEncola(resultado.getString("ENCOLA"));
                 prospecto.setCondipago(resultado.getString("CONDIPAGO"));
-                prospecto.setAsesor(resultado.getString("concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS)"));
-                prospecto.setImgasesor(resultado.getString("ASESORES.IMG"));
+                prospecto.setAsesor(resultado.getString("concat(asesores.NOMBRES,' ',asesores.APELLIDOS)"));
+                prospecto.setImgasesor(resultado.getString("asesores.IMG"));
                 lista.add(prospecto);
             }
 
@@ -1262,15 +1262,15 @@ public class GestionDAO extends DAO {
             this.Conectar();
             dao = new EstadosDAO();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, "
-                    + "substr(FECHA_CONTACTO,1,10), substr(GESTION.FECHA_ULTIMO_CONTAC,1,10), FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
-                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO , GESTION.ESTADO, GESTION.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
+                    + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, "
+                    + "substr(FECHA_CONTACTO,1,10), substr(gestion.FECHA_ULTIMO_CONTAC,1,10), FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, "
+                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO , gestion.ESTADO, gestion.MOTIVO, PARCELA, LOTE, DIAFPAGO, "
                     + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO, SUBSTR(FECHA_PROSPECTO,1,10), "
-                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, FECHARETIRO, ENCOLA, concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS), ASESORES.IMG "
-                    + " FROM GESTION INNER JOIN PROSPECTOS ON GESTION.COD_PROSPECTO = PROSPECTOS.CODIGO "
-                    + " INNER JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO "
-                    + " INNER JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT "
-                    + " INNER JOIN ASESORES ON GESTION.COD_ASESOR = ASESORES.CORREO "
+                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, CORREO, ORIGEN, CARGO, FECHARETIRO, ENCOLA, concat(asesores.NOMBRES,' ',asesores.APELLIDOS), asesores.IMG "
+                    + " FROM gestion INNER JOIN prospectos ON gestion.COD_PROSPECTO = prospectos.CODIGO "
+                    + " INNER JOIN estados ON gestion.ESTADO = estados.CODIGO "
+                    + " INNER JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT "
+                    + " INNER JOIN asesores ON gestion.COD_ASESOR = asesores.CORREO "
                     + " WHERE COD_ASESOR = ? "
                     + " AND ESTATUS_VENTA <> 'PEN'");
             declaracion.setString(1, asesor);
@@ -1282,7 +1282,7 @@ public class GestionDAO extends DAO {
                 prospecto.setCodigo(resultado.getString(1));
                 prospecto.setCod_asesor(resultado.getString("COD_ASESOR"));
                 prospecto.setEstatus_venta(resultado.getString("ESTATUS_VENTA"));
-                prospecto.setComentario(resultado.getString("GESTION.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("gestion.COMENTARIO"));
                 prospecto.setAgendo_cita(resultado.getString("AGENDO_CITA"));
                 prospecto.setFecha_contacto(resultado.getString(7));
                 prospecto.setFecha_ultimo_contac(resultado.getString(8));
@@ -1315,8 +1315,8 @@ public class GestionDAO extends DAO {
                 prospecto.setCargo(resultado.getString("CARGO"));
                 prospecto.setEstado(resultado.getString(17));
                 prospecto.setMotivo(resultado.getString(18));
-                prospecto.setCodestado(resultado.getString("GESTION.ESTADO"));
-                prospecto.setCodmotivo(resultado.getString("GESTION.MOTIVO"));
+                prospecto.setCodestado(resultado.getString("gestion.ESTADO"));
+                prospecto.setCodmotivo(resultado.getString("gestion.MOTIVO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
@@ -1327,8 +1327,8 @@ public class GestionDAO extends DAO {
                 prospecto.setFecharetiro(resultado.getString("FECHARETIRO"));
                 prospecto.setEncola(resultado.getString("ENCOLA"));
                 prospecto.setCondipago(resultado.getString("CONDIPAGO"));
-                prospecto.setAsesor(resultado.getString("concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS)"));
-                prospecto.setImgasesor(resultado.getString("ASESORES.IMG"));
+                prospecto.setAsesor(resultado.getString("concat(asesores.NOMBRES,' ',asesores.APELLIDOS)"));
+                prospecto.setImgasesor(resultado.getString("asesores.IMG"));
                 lista.add(prospecto);
             }
 
@@ -1346,7 +1346,7 @@ public class GestionDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE GESTION set COD_ASESOR = ? WHERE CODIGO = ? AND COD_ASESOR = ?");
+                    + "UPDATE gestion set COD_ASESOR = ? WHERE CODIGO = ? AND COD_ASESOR = ?");
 
             declaracion.setString(1, asesor);
             declaracion.setString(2, gestion.getCodigo());
@@ -1372,7 +1372,7 @@ public class GestionDAO extends DAO {
             this.Conectar();
 
             PreparedStatement actulalizaprospecto = this.getConexion().prepareStatement(""
-                    + "UPDATE PROSPECTOS set REITERASOLICITUD = 'FALSE' WHERE CODIGO = ?");
+                    + "UPDATE prospectos set REITERASOLICITUD = 'FALSE' WHERE CODIGO = ?");
 
             actulalizaprospecto.setString(1, gestion.getCod_prospecto());
 
@@ -1398,19 +1398,19 @@ public class GestionDAO extends DAO {
             dao = new EstadosDAO();
 
             declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT GESTION.CODIGO, GESTION.COD_PROSPECTO, GESTION.COD_ASESOR, GESTION.ESTATUS_VENTA, GESTION.COMENTARIO, GESTION.AGENDO_CITA, "
-                    + "GESTION.FECHA_CONTACTO, GESTION.FECHA_ULTIMO_CONTAC, GESTION.FEC_VISITA_OFIC, GESTION.FEC_VISITA_PROYEC, GESTION.FEC_RESERVA, GESTION.FEC_CONTRATO, "
-                    + "GESTION.PROCESO_ESTATUS, GESTION.FECHA_ASIGNACION, GESTION.FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO , "
-                    + "GESTION.ESTADO, GESTION.MOTIVO, GESTION.PARCELA, GESTION.LOTE, GESTION.DIAFPAGO, "
-                    + "GESTION.MESFPAGO, GESTION.MONTOFPAGO, GESTION.PRECIOLOTE, GESTION.MONTOINILOTE, GESTION.NCUOLOTE, GESTION.MONTOCUO, GESTION.CONDIPAGO, SUBSTR(PROSPECTOS.FECHA_PROSPECTO,1,10), "
-                    + "SUBSTR(PROSPECTOS.FECHA_INGRESO,1,10), PROSPECTOS.NOMBREAPELLIDO, PROSPECTOS.TELEFONO1, PROSPECTOS.TELEFONO2, PROSPECTOS.CORREO, PROSPECTOS.ORIGEN, PROSPECTOS.CARGO, PROSPECTOS.FECHARETIRO, "
-                    + "PROSPECTOS.ENCOLA, concat(b.NOMBRES,' ',b.APELLIDOS), b.IMG, asesores.NOMBRES  FROM PROSPECTOS "
-                    + "LEFT JOIN  fbleads on  PROSPECTOS.codigo = fbleads.id "
-                    + "left join  GESTION on  PROSPECTOS.codigo = GESTION.cod_prospecto "
-                    + "left join estados on GESTION.estado = estados.codigo "
-                    + "left join motivos on GESTION.estado = motivos.ESTADO and GESTION.motivo = motivos.codmot "
+                    + "SELECT gestion.CODIGO, gestion.COD_PROSPECTO, gestion.COD_ASESOR, gestion.ESTATUS_VENTA, gestion.COMENTARIO, gestion.AGENDO_CITA, "
+                    + "gestion.FECHA_CONTACTO, gestion.FECHA_ULTIMO_CONTAC, gestion.FEC_VISITA_OFIC, gestion.FEC_VISITA_PROYEC, gestion.FEC_RESERVA, gestion.FEC_CONTRATO, "
+                    + "gestion.PROCESO_ESTATUS, gestion.FECHA_ASIGNACION, gestion.FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO , "
+                    + "gestion.ESTADO, gestion.MOTIVO, gestion.PARCELA, gestion.LOTE, gestion.DIAFPAGO, "
+                    + "gestion.MESFPAGO, gestion.MONTOFPAGO, gestion.PRECIOLOTE, gestion.MONTOINILOTE, gestion.NCUOLOTE, gestion.MONTOCUO, gestion.CONDIPAGO, SUBSTR(prospectos.FECHA_PROSPECTO,1,10), "
+                    + "SUBSTR(prospectos.FECHA_INGRESO,1,10), prospectos.NOMBREAPELLIDO, prospectos.TELEFONO1, prospectos.TELEFONO2, prospectos.CORREO, prospectos.ORIGEN, prospectos.CARGO, prospectos.FECHARETIRO, "
+                    + "prospectos.ENCOLA, concat(b.NOMBRES,' ',b.APELLIDOS), b.IMG, asesores.NOMBRES  FROM prospectos "
+                    + "LEFT JOIN  fbleads on  prospectos.codigo = fbleads.id "
+                    + "left join  gestion on  prospectos.codigo = gestion.cod_prospecto "
+                    + "left join estados on gestion.estado = estados.codigo "
+                    + "left join motivos on gestion.estado = motivos.ESTADO and gestion.motivo = motivos.codmot "
                     + "left join asesores on fbleads.sup_encargado = asesores.correo "
-                    + "left join asesores b on GESTION.cod_asesor = b.correo "
+                    + "left join asesores b on gestion.cod_asesor = b.correo "
                     + "where NOMBREAPELLIDO like ? "
                     + "and TELEFONO1 like ? "
                     + "and prospectos.CORREO like ? ");
@@ -1423,49 +1423,49 @@ public class GestionDAO extends DAO {
             lista = new ArrayList<>();
             while (resultado.next()) {
                 Gestion prospecto = new Gestion();
-                prospecto.setCodigo(resultado.getString("GESTION.CODIGO"));
-                prospecto.setCod_prospecto(resultado.getString("GESTION.COD_PROSPECTO"));
-                prospecto.setCod_asesor(resultado.getString("GESTION.COD_ASESOR"));
-                prospecto.setEstatus_venta(resultado.getString("GESTION.ESTATUS_VENTA"));
-                prospecto.setComentario(resultado.getString("GESTION.COMENTARIO"));
-                prospecto.setAgendo_cita(resultado.getString("GESTION.AGENDO_CITA"));
-                prospecto.setFecha_contacto(resultado.getString("GESTION.FECHA_CONTACTO"));
-                prospecto.setFecha_ultimo_contac(resultado.getString("GESTION.FECHA_ULTIMO_CONTAC"));
-                prospecto.setFec_visita_ofic(resultado.getString("GESTION.FEC_VISITA_OFIC"));
-                prospecto.setFec_visita_proyec(resultado.getString("GESTION.FEC_VISITA_PROYEC"));
-                prospecto.setFec_reserva(resultado.getString("GESTION.FEC_RESERVA"));
-                prospecto.setFec_contrato(resultado.getString("GESTION.FEC_CONTRATO"));
-                prospecto.setProceso_estatus(resultado.getString("GESTION.PROCESO_ESTATUS"));
-                prospecto.setFecha_asignacion(resultado.getString("GESTION.FECHA_ASIGNACION"));
-                prospecto.setFecha_descarte(resultado.getString("GESTION.FECHA_DESCARTE"));
+                prospecto.setCodigo(resultado.getString("gestion.CODIGO"));
+                prospecto.setCod_prospecto(resultado.getString("gestion.COD_PROSPECTO"));
+                prospecto.setCod_asesor(resultado.getString("gestion.COD_ASESOR"));
+                prospecto.setEstatus_venta(resultado.getString("gestion.ESTATUS_VENTA"));
+                prospecto.setComentario(resultado.getString("gestion.COMENTARIO"));
+                prospecto.setAgendo_cita(resultado.getString("gestion.AGENDO_CITA"));
+                prospecto.setFecha_contacto(resultado.getString("gestion.FECHA_CONTACTO"));
+                prospecto.setFecha_ultimo_contac(resultado.getString("gestion.FECHA_ULTIMO_CONTAC"));
+                prospecto.setFec_visita_ofic(resultado.getString("gestion.FEC_VISITA_OFIC"));
+                prospecto.setFec_visita_proyec(resultado.getString("gestion.FEC_VISITA_PROYEC"));
+                prospecto.setFec_reserva(resultado.getString("gestion.FEC_RESERVA"));
+                prospecto.setFec_contrato(resultado.getString("gestion.FEC_CONTRATO"));
+                prospecto.setProceso_estatus(resultado.getString("gestion.PROCESO_ESTATUS"));
+                prospecto.setFecha_asignacion(resultado.getString("gestion.FECHA_ASIGNACION"));
+                prospecto.setFecha_descarte(resultado.getString("gestion.FECHA_DESCARTE"));
                 prospecto.setTipobjecion(resultado.getString("TIPOBJECION"));
-                prospecto.setEstado(resultado.getString("ESTADOS.ESTADO"));
-                prospecto.setMotivo(resultado.getString("MOTIVOS.MOTIVO"));
-                prospecto.setParcela(resultado.getString("GESTION.PARCELA"));
-                prospecto.setLote(resultado.getString("GESTION.LOTE"));
-                prospecto.setDiafpago(resultado.getString("GESTION.DIAFPAGO"));
-                prospecto.setMesfpago(resultado.getString("GESTION.MESFPAGO"));
-                prospecto.setMontofpago(resultado.getString("GESTION.MONTOFPAGO"));
-                prospecto.setPreciolote(resultado.getString("GESTION.PRECIOLOTE"));
-                prospecto.setMontoinilote(resultado.getString("GESTION.MONTOINILOTE"));
-                prospecto.setNcuolote(resultado.getString("GESTION.NCUOLOTE"));
-                prospecto.setMontocuo(resultado.getString("GESTION.MONTOCUO"));
-                prospecto.setFecha_prospecto(resultado.getString("SUBSTR(PROSPECTOS.FECHA_PROSPECTO,1,10)"));
-                prospecto.setFecha_ingreso(resultado.getString("SUBSTR(PROSPECTOS.FECHA_INGRESO,1,10)"));
-                prospecto.setNombreapellido(resultado.getString("PROSPECTOS.NOMBREAPELLIDO"));
-                prospecto.setTelefono1(resultado.getString("PROSPECTOS.TELEFONO1"));
-                prospecto.setTelefono2(resultado.getString("PROSPECTOS.TELEFONO2"));
-                prospecto.setCorreo(resultado.getString("PROSPECTOS.CORREO"));
-                prospecto.setOrigen(resultado.getString("PROSPECTOS.ORIGEN"));
-                prospecto.setCargo(resultado.getString("PROSPECTOS.CARGO"));
-                prospecto.setEstado(resultado.getString("ESTADOS.ESTADO"));
-                prospecto.setMotivo(resultado.getString("MOTIVOS.MOTIVO"));
-                prospecto.setCodestado(resultado.getString("GESTION.ESTADO"));
-                prospecto.setCodmotivo(resultado.getString("GESTION.MOTIVO"));
+                prospecto.setEstado(resultado.getString("estados.ESTADO"));
+                prospecto.setMotivo(resultado.getString("motivos.MOTIVO"));
+                prospecto.setParcela(resultado.getString("gestion.PARCELA"));
+                prospecto.setLote(resultado.getString("gestion.LOTE"));
+                prospecto.setDiafpago(resultado.getString("gestion.DIAFPAGO"));
+                prospecto.setMesfpago(resultado.getString("gestion.MESFPAGO"));
+                prospecto.setMontofpago(resultado.getString("gestion.MONTOFPAGO"));
+                prospecto.setPreciolote(resultado.getString("gestion.PRECIOLOTE"));
+                prospecto.setMontoinilote(resultado.getString("gestion.MONTOINILOTE"));
+                prospecto.setNcuolote(resultado.getString("gestion.NCUOLOTE"));
+                prospecto.setMontocuo(resultado.getString("gestion.MONTOCUO"));
+                prospecto.setFecha_prospecto(resultado.getString("SUBSTR(prospectos.FECHA_PROSPECTO,1,10)"));
+                prospecto.setFecha_ingreso(resultado.getString("SUBSTR(prospectos.FECHA_INGRESO,1,10)"));
+                prospecto.setNombreapellido(resultado.getString("prospectos.NOMBREAPELLIDO"));
+                prospecto.setTelefono1(resultado.getString("prospectos.TELEFONO1"));
+                prospecto.setTelefono2(resultado.getString("prospectos.TELEFONO2"));
+                prospecto.setCorreo(resultado.getString("prospectos.CORREO"));
+                prospecto.setOrigen(resultado.getString("prospectos.ORIGEN"));
+                prospecto.setCargo(resultado.getString("prospectos.CARGO"));
+                prospecto.setEstado(resultado.getString("estados.ESTADO"));
+                prospecto.setMotivo(resultado.getString("motivos.MOTIVO"));
+                prospecto.setCodestado(resultado.getString("gestion.ESTADO"));
+                prospecto.setCodmotivo(resultado.getString("gestion.MOTIVO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
-                prospecto.setFecharetiro(resultado.getString("PROSPECTOS.FECHARETIRO"));
-                prospecto.setEncola(resultado.getString("PROSPECTOS.ENCOLA"));
-                prospecto.setCondipago(resultado.getString("GESTION.CONDIPAGO"));
+                prospecto.setFecharetiro(resultado.getString("prospectos.FECHARETIRO"));
+                prospecto.setEncola(resultado.getString("prospectos.ENCOLA"));
+                prospecto.setCondipago(resultado.getString("gestion.CONDIPAGO"));
                 prospecto.setAsesor(resultado.getString("concat(b.NOMBRES,' ',b.APELLIDOS)"));
                 prospecto.setImgasesor(resultado.getString("b.IMG"));
                 prospecto.setSup_encargado(resultado.getString("asesores.NOMBRES"));
@@ -1489,15 +1489,15 @@ public class GestionDAO extends DAO {
             this.Conectar();
             dao = new EstadosDAO();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT GESTION.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, GESTION.COMENTARIO, AGENDO_CITA, \n"
-                    + "FECHA_CONTACTO, GESTION.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, \n"
-                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, ESTADOS.ESTADO, MOTIVOS.MOTIVO , GESTION.ESTADO, GESTION.MOTIVO, PARCELA, LOTE, DIAFPAGO, \n"
+                    + "SELECT gestion.CODIGO, COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, gestion.COMENTARIO, AGENDO_CITA, \n"
+                    + "FECHA_CONTACTO, gestion.FECHA_ULTIMO_CONTAC, FEC_VISITA_OFIC, FEC_VISITA_PROYEC, FEC_RESERVA, FEC_CONTRATO, \n"
+                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, FECHA_DESCARTE, TIPOBJECION, estados.ESTADO, motivos.MOTIVO , gestion.ESTADO, gestion.MOTIVO, PARCELA, LOTE, DIAFPAGO, \n"
                     + "MESFPAGO, MONTOFPAGO, PRECIOLOTE, MONTOINILOTE, NCUOLOTE, MONTOCUO, CONDIPAGO, SUBSTR(FECHA_PROSPECTO,1,10), \n"
-                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, PROSPECTOS.CORREO, ORIGEN, CARGO, PROSPECTOS.FECHARETIRO, ENCOLA, concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS), ASESORES.IMG \n"
-                    + "FROM GESTION inner join PROSPECTOS on GESTION.cod_prospecto = PROSPECTOS.codigo \n"
-                    + "INNER JOIN ESTADOS ON GESTION.ESTADO = ESTADOS.CODIGO \n"
-                    + "INNER JOIN MOTIVOS ON GESTION.ESTADO =  MOTIVOS.ESTADO AND GESTION.MOTIVO = MOTIVOS.CODMOT \n"
-                    + "INNER JOIN ASESORES ON GESTION.COD_ASESOR = ASESORES.CORREO \n"
+                    + "SUBSTR(FECHA_INGRESO,1,10), NOMBREAPELLIDO, TELEFONO1, TELEFONO2, prospectos.CORREO, ORIGEN, CARGO, prospectos.FECHARETIRO, ENCOLA, concat(asesores.NOMBRES,' ',asesores.APELLIDOS), asesores.IMG \n"
+                    + "FROM gestion inner join prospectos on gestion.cod_prospecto = prospectos.codigo \n"
+                    + "INNER JOIN estados ON gestion.ESTADO = estados.CODIGO \n"
+                    + "INNER JOIN motivos ON gestion.ESTADO =  motivos.ESTADO AND gestion.MOTIVO = motivos.CODMOT \n"
+                    + "INNER JOIN asesores ON gestion.COD_ASESOR = asesores.CORREO \n"
                     + "where cod_asesor = ?\n"
                     + "and prospectos.fecharetiro is null \n"
                     + "ORDER BY 7");
@@ -1510,10 +1510,10 @@ public class GestionDAO extends DAO {
                 prospecto.setCodigo(resultado.getString(1));
                 prospecto.setCod_asesor(resultado.getString("COD_ASESOR"));
                 prospecto.setEstatus_venta(resultado.getString("ESTATUS_VENTA"));
-                prospecto.setComentario(resultado.getString("GESTION.COMENTARIO"));
+                prospecto.setComentario(resultado.getString("gestion.COMENTARIO"));
                 prospecto.setAgendo_cita(resultado.getString("AGENDO_CITA"));
                 prospecto.setFecha_contacto(resultado.getString("FECHA_CONTACTO"));
-                prospecto.setFecha_ultimo_contac(resultado.getString("GESTION.FECHA_ULTIMO_CONTAC"));
+                prospecto.setFecha_ultimo_contac(resultado.getString("gestion.FECHA_ULTIMO_CONTAC"));
                 prospecto.setFec_visita_ofic(resultado.getString("FEC_VISITA_OFIC"));
                 prospecto.setFec_visita_proyec(resultado.getString("FEC_VISITA_PROYEC"));
                 prospecto.setFec_reserva(resultado.getString("FEC_RESERVA"));
@@ -1543,20 +1543,20 @@ public class GestionDAO extends DAO {
                 prospecto.setCargo(resultado.getString("CARGO"));
                 prospecto.setEstado(resultado.getString(17));
                 prospecto.setMotivo(resultado.getString(18));
-                prospecto.setCodestado(resultado.getString("GESTION.ESTADO"));
-                prospecto.setCodmotivo(resultado.getString("GESTION.MOTIVO"));
+                prospecto.setCodestado(resultado.getString("gestion.ESTADO"));
+                prospecto.setCodmotivo(resultado.getString("gestion.MOTIVO"));
                 prospecto.setColorestado(dao.colorestado(prospecto.getEstado()));
                 prospecto.setNombreapellido(resultado.getString("NOMBREAPELLIDO"));
                 prospecto.setTelefono1(resultado.getString("TELEFONO1"));
                 prospecto.setTelefono2(resultado.getString("TELEFONO2"));
-                prospecto.setCorreo(resultado.getString("PROSPECTOS.CORREO"));
+                prospecto.setCorreo(resultado.getString("prospectos.CORREO"));
                 prospecto.setOrigen(resultado.getString("ORIGEN"));
                 prospecto.setCargo(resultado.getString("CARGO"));
-                prospecto.setFecharetiro(resultado.getString("PROSPECTOS.FECHARETIRO"));
+                prospecto.setFecharetiro(resultado.getString("prospectos.FECHARETIRO"));
                 prospecto.setEncola(resultado.getString("ENCOLA"));
                 prospecto.setCondipago(resultado.getString("CONDIPAGO"));
-                prospecto.setAsesor(resultado.getString("concat(ASESORES.NOMBRES,' ',ASESORES.APELLIDOS)"));
-                prospecto.setImgasesor(resultado.getString("ASESORES.IMG"));
+                prospecto.setAsesor(resultado.getString("concat(asesores.NOMBRES,' ',asesores.APELLIDOS)"));
+                prospecto.setImgasesor(resultado.getString("asesores.IMG"));
                 lista.add(prospecto);
             }
             return lista;

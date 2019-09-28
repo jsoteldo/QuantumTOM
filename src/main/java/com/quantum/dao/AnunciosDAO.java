@@ -18,7 +18,7 @@ public class AnunciosDAO extends DAO {
         Mensaje validosesion;
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO ANUNCIOS (CODIGO, DESCRIPCION, URLIMG, URLFB) VALUES (?,?,?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO anuncios (CODIGO, DESCRIPCION, URLIMG, URLFB) VALUES (?,?,?,?)");
             declaracion.setString(1, anuncios.getCodigo());
             declaracion.setString(2, anuncios.getDescripcion());
             declaracion.setString(3, anuncios.getUrlimg());
@@ -41,7 +41,7 @@ public class AnunciosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CODIGO, DESCRIPCION, URLIMG, URLFB FROM ANUNCIOS");
+                    + "SELECT CODIGO, DESCRIPCION, URLIMG, URLFB FROM anuncios");
 
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -68,7 +68,7 @@ public class AnunciosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CODIGO, DESCRIPCION, URLIMG, URLFB FROM ANUNCIOS "
+                    + "SELECT CODIGO, DESCRIPCION, URLIMG, URLFB FROM anuncios "
                     + "WHERE CODIGO = ?");
             declaracion.setString(1, idanuncio);
 
@@ -92,7 +92,7 @@ public class AnunciosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM ANUNCIOS WHERE CODIGO = ?");
+                    + "DELETE FROM anuncios WHERE CODIGO = ?");
             declaracion.setString(1, anuncios.getCodigo());
             declaracion.executeUpdate();
         } catch (Exception e) {
@@ -110,7 +110,7 @@ public class AnunciosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE ANUNCIOS set URLIMG = ?, URLFB = ? WHERE CODIGO = ?");
+                    + "UPDATE anuncios set URLIMG = ?, URLFB = ? WHERE CODIGO = ?");
 
             declaracion.setString(1, anuncios.getUrlimg());
             declaracion.setString(2, anuncios.getUrlfb());

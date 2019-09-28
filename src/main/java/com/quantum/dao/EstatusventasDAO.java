@@ -19,7 +19,7 @@ public class EstatusventasDAO extends DAO{
         
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO ESTATUSVENTAS (CODIGO, ESTATUS) VALUES (?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO estatusventas (CODIGO, ESTATUS) VALUES (?,?)");
             declaracion.setString(1,estatus.getCodigo());
             declaracion.setString(2,estatus.getEstatus());
             declaracion.executeUpdate();
@@ -40,7 +40,7 @@ public class EstatusventasDAO extends DAO{
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CODIGO, ESTATUS FROM ESTATUSVENTAS");
+                    + "SELECT CODIGO, ESTATUS FROM estatusventas");
             
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -64,7 +64,7 @@ public class EstatusventasDAO extends DAO{
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM ESTATUSVENTAS WHERE CODIGO = ?");
+                    + "DELETE FROM estatusventas WHERE CODIGO = ?");
             declaracion.setString(1, estatus.getCodigo());
             declaracion.executeUpdate();
         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class EstatusventasDAO extends DAO{
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE ESTATUSVENTAS set ESTATUS = ? WHERE CODIGO = ?");
+                    + "UPDATE estatusventas set ESTATUS = ? WHERE CODIGO = ?");
 
             declaracion.setString(1, estatus.getEstatus());
             declaracion.setString(2, estatus.getCodigo());

@@ -18,7 +18,7 @@ public class CampanasDAO extends DAO {
         Mensaje validosesion;
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO CAMPANAS (CODIGO, NOMBRE, DESCRIPCION) VALUES (?,?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO campanas (CODIGO, NOMBRE, DESCRIPCION) VALUES (?,?,?)");
             declaracion.setString(1, campanas.getCodigo());
             declaracion.setString(2, campanas.getNombre());
             declaracion.setString(3, campanas.getDescripcion());
@@ -40,7 +40,7 @@ public class CampanasDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CODIGO, NOMBRE, DESCRIPCION FROM CAMPANAS");
+                    + "SELECT CODIGO, NOMBRE, DESCRIPCION FROM campanas");
 
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -66,7 +66,7 @@ public class CampanasDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CODIGO, NOMBRE, DESCRIPCION FROM CAMPANAS "
+                    + "SELECT CODIGO, NOMBRE, DESCRIPCION FROM campanas "
                     + "WHERE CODIGO = ?");
             declaracion.setString(1, idcampana);
 
@@ -89,7 +89,7 @@ public class CampanasDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM CAMPANAS WHERE CODIGO = ?");
+                    + "DELETE FROM campanas WHERE CODIGO = ?");
             declaracion.setString(1, campanas.getCodigo());
             declaracion.executeUpdate();
         } catch (Exception e) {
@@ -107,7 +107,7 @@ public class CampanasDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE CAMPANAS set DESCRIPCION = ?, NOMBRE = ?  WHERE CODIGO = ?");
+                    + "UPDATE campanas set DESCRIPCION = ?, NOMBRE = ?  WHERE CODIGO = ?");
 
             declaracion.setString(1, campanas.getDescripcion());
             declaracion.setString(2, campanas.getNombre());

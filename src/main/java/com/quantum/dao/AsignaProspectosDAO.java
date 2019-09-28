@@ -47,7 +47,7 @@ public class AsignaProspectosDAO extends DAO {
                 return this.validaUsuario(asesores);
             } else {
                 this.Conectar();
-                PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO ASESORES (CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, ROL) VALUES (?,?,?,?,?,?,?,?,?)");
+                PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO asesores (CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, ROL) VALUES (?,?,?,?,?,?,?,?,?)");
                 declaracion.setString(1, asesores.getCorreo());
                 declaracion.setString(2, this.hashPassword(asesores.getNombres()));
                 declaracion.setString(3, asesores.getApellidos());
@@ -80,7 +80,7 @@ public class AsignaProspectosDAO extends DAO {
         this.Conectar();
         PreparedStatement declaracion = this.getConexion().prepareStatement(""
                 + "SELECT CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, FECHARETIRO, ROL "
-                + "FROM ASESORES "
+                + "FROM asesores "
                 + "WHERE CORREO like ? "
                 + "AND FECHARETIRO is null");
         declaracion.setString(1, asesores.getCorreo());
@@ -117,7 +117,7 @@ public class AsignaProspectosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, ROL FROM ASESORES"
+                    + "SELECT CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, ROL FROM asesores"
                     + " WHERE FECHARETIRO is NULL");
 
             resultado = declaracion.executeQuery();
@@ -149,7 +149,7 @@ public class AsignaProspectosDAO extends DAO {
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE ASESORES set FECHARETIRO = ? WHERE CORREO = ?");
+                    + "UPDATE asesores set FECHARETIRO = ? WHERE CORREO = ?");
             declaracion.setString(1, asesor.getFecharetiro());
             declaracion.setString(2, asesor.getCorreo());
             declaracion.executeUpdate();
@@ -169,7 +169,7 @@ public class AsignaProspectosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement("UPDATE"
-                    + " ASESORES set NOMBRES = ?, APELLIDOS = ?, "
+                    + " asesores set NOMBRES = ?, APELLIDOS = ?, "
                     + " EDAD = ?, SEXO = ?, TELEFONO = ?, TELEFONO_ASIG = ?, ROL = ? WHERE CORREO = ?");
 
             declaracion.setString(1, asesores.getNombres());

@@ -20,7 +20,7 @@ public class IconosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT ICON FROM ICONS");
+                    + "SELECT ICON FROM icons");
             
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();

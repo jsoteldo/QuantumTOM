@@ -18,7 +18,7 @@ public class TipocampoDAO extends DAO {
          Mensaje validosesion;
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO TIPOCAMPO (TIPO, VALOR) VALUES (?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO tipocampo (TIPO, VALOR) VALUES (?,?)");
             declaracion.setString(1,tipo.getTipo());
             declaracion.setString(2,tipo.getValor());
             declaracion.executeUpdate();
@@ -39,7 +39,7 @@ public class TipocampoDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT TIPO, VALOR FROM TIPOCAMPO");
+                    + "SELECT TIPO, VALOR FROM tipocampo");
             
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -63,7 +63,7 @@ public class TipocampoDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM TIPOCAMPO WHERE TIPO = ?");
+                    + "DELETE FROM tipocampo WHERE TIPO = ?");
             declaracion.setString(1, tipo.getTipo());
             declaracion.executeUpdate();
             validosesion = new Mensaje("", "Eliminado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
@@ -83,7 +83,7 @@ public class TipocampoDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE TIPOCAMPO set VALOR = ? WHERE TIPO = ?");
+                    + "UPDATE tipocampo set VALOR = ? WHERE TIPO = ?");
 
             declaracion.setString(1, tipo.getValor());
             declaracion.setString(2, tipo.getTipo());

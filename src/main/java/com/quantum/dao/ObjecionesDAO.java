@@ -20,7 +20,7 @@ public class ObjecionesDAO extends DAO {
         
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO OBJECIONES (TIPOBJECION, CODIGO, OBJECION) VALUES (?,?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO objeciones (TIPOBJECION, CODIGO, OBJECION) VALUES (?,?,?)");
             declaracion.setString(1,objeciones.getTipobjecion());
             declaracion.setString(2,objeciones.getCodigo());
             declaracion.setString(3,objeciones.getObjecion());
@@ -41,7 +41,7 @@ public class ObjecionesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT TIPOBJECION, CODIGO, OBJECION FROM OBJECIONES");
+                    + "SELECT TIPOBJECION, CODIGO, OBJECION FROM objeciones");
             
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -66,7 +66,7 @@ public class ObjecionesDAO extends DAO {
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM OBJECIONES WHERE CODIGO = ? and TIPOBJECION = ?");
+                    + "DELETE FROM objeciones WHERE CODIGO = ? and TIPOBJECION = ?");
             declaracion.setString(1, objecion.getCodigo());
             declaracion.setString(2, objecion.getTipobjecion());
             declaracion.executeUpdate();
@@ -85,7 +85,7 @@ public class ObjecionesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE OBJECIONES set OBJECION = ? WHERE CODIGO = ? and TIPOBJECION = ?");
+                    + "UPDATE objeciones set OBJECION = ? WHERE CODIGO = ? and TIPOBJECION = ?");
 
             declaracion.setString(1, objecion.getObjecion());
             declaracion.setString(3, objecion.getTipobjecion());
@@ -107,7 +107,7 @@ public class ObjecionesDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT TIPOBJECION, CODIGO, OBJECION FROM OBJECIONES " 
+                    + "SELECT TIPOBJECION, CODIGO, OBJECION FROM objeciones " 
                     + "WHERE TIPOBJECION = ? ");
             declaracion.setString(1, opcion);
             resultado = declaracion.executeQuery();

@@ -19,7 +19,7 @@ public class MotivosDAO extends DAO {
         
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO MOTIVOS (ESTADO, CODMOT, MOTIVO, PERMITELLAMAR, REUNIONOFICINA, VISITAPROYECTO) VALUES (?,?,?,?,?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO motivos (ESTADO, CODMOT, MOTIVO, PERMITELLAMAR, REUNIONOFICINA, VISITAPROYECTO) VALUES (?,?,?,?,?,?)");
             declaracion.setString(1,motivos.getEstado());
             declaracion.setString(2,motivos.getCodmot());
             declaracion.setString(3,motivos.getMotivo());
@@ -43,7 +43,7 @@ public class MotivosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT ESTADO, CODMOT, MOTIVO, PERMITELLAMAR, REUNIONOFICINA, VISITAPROYECTO FROM MOTIVOS");
+                    + "SELECT ESTADO, CODMOT, MOTIVO, PERMITELLAMAR, REUNIONOFICINA, VISITAPROYECTO FROM motivos");
             
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -72,7 +72,7 @@ public class MotivosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT ESTADO, CODMOT, MOTIVO, PERMITELLAMAR, REUNIONOFICINA, VISITAPROYECTO FROM MOTIVOS "
+                    + "SELECT ESTADO, CODMOT, MOTIVO, PERMITELLAMAR, REUNIONOFICINA, VISITAPROYECTO FROM motivos "
                     + "WHERE ESTADO = ? ");
             declaracion.setString(1, opcion);
             resultado = declaracion.executeQuery();
@@ -101,7 +101,7 @@ public class MotivosDAO extends DAO {
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM MOTIVOS WHERE CODMOT = ? and ESTADO = ? ");
+                    + "DELETE FROM motivos WHERE CODMOT = ? and ESTADO = ? ");
             declaracion.setString(1, proceso.getCodmot());
             declaracion.setString(2, proceso.getEstado());
             declaracion.executeUpdate();
@@ -119,7 +119,7 @@ public class MotivosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE MOTIVOS set MOTIVO = ?, PERMITELLAMAR = ?, REUNIONOFICINA = ?"
+                    + "UPDATE motivos set MOTIVO = ?, PERMITELLAMAR = ?, REUNIONOFICINA = ?"
                     + ", VISITAPROYECTO = ? WHERE CODMOT = ? and ESTADO = ?");
 
             declaracion.setString(1, proceso.getMotivo());
@@ -145,7 +145,7 @@ public class MotivosDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT ESTADO, CODMOT, MOTIVO, PERMITELLAMAR, REUNIONOFICINA, VISITAPROYECTO FROM MOTIVOS "
+                    + "SELECT ESTADO, CODMOT, MOTIVO, PERMITELLAMAR, REUNIONOFICINA, VISITAPROYECTO FROM motivos "
                     + " WHERE CODMOT = ? "
                     + " AND ESTADO = ? ");
             declaracion.setString(1, codigo);

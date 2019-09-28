@@ -18,7 +18,7 @@ public class MenuDAO extends DAO {
         Mensaje validosesion;
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO MENU (NOMBRE, DESCRIPCION, ICO, LINK, TYPE, CODIGO, PADRE, CHECKED) VALUES (?,?,?,?,?,?,?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO menu (NOMBRE, DESCRIPCION, ICO, LINK, TYPE, CODIGO, PADRE, CHECKED) VALUES (?,?,?,?,?,?,?,?)");
             declaracion.setString(1, menu.getNombre());
             declaracion.setString(2, menu.getDescripcion());
             declaracion.setString(3, menu.getIco());
@@ -45,7 +45,7 @@ public class MenuDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT NOMBRE, DESCRIPCION, ICO, LINK, TYPE, CODIGO, PADRE, CHECKED FROM MENU"
+                    + "SELECT NOMBRE, DESCRIPCION, ICO, LINK, TYPE, CODIGO, PADRE, CHECKED FROM menu"
                     + " WHERE TYPE in  ('M','I')");
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -75,7 +75,7 @@ public class MenuDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT NOMBRE, DESCRIPCION, ICO, LINK, TYPE, CODIGO, PADRE, CHECKED FROM MENU"
+                    + "SELECT NOMBRE, DESCRIPCION, ICO, LINK, TYPE, CODIGO, PADRE, CHECKED FROM menu"
                     + " WHERE TYPE in  ('M')");
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -105,7 +105,7 @@ public class MenuDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT NOMBRE, DESCRIPCION, ICO, LINK, TYPE, CODIGO, PADRE, CHECKED FROM MENU"
+                    + "SELECT NOMBRE, DESCRIPCION, ICO, LINK, TYPE, CODIGO, PADRE, CHECKED FROM menu"
                     + " WHERE TYPE not in  ('M','I')");
 
             resultado = declaracion.executeQuery();
@@ -136,7 +136,7 @@ public class MenuDAO extends DAO {
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM MENU WHERE NOMBRE = ?");
+                    + "DELETE FROM menu WHERE NOMBRE = ?");
             declaracion.setString(1, menu.getNombre());
             declaracion.executeUpdate();
         } catch (Exception e) {
@@ -154,7 +154,7 @@ public class MenuDAO extends DAO {
         ;
         try {
             this.Conectar();
-            StringBuilder query = new StringBuilder("SELECT NOMBRE, DESCRIPCION, ICO, LINK, TYPE, CODIGO, PADRE, CHECKED FROM MENU"
+            StringBuilder query = new StringBuilder("SELECT NOMBRE, DESCRIPCION, ICO, LINK, TYPE, CODIGO, PADRE, CHECKED FROM menu"
                     + " WHERE TYPE in  ('M','I')"
                     + " AND CODIGO IN (");
 
@@ -197,7 +197,7 @@ public class MenuDAO extends DAO {
         try {
             this.Conectar();
 
-            StringBuilder query = new StringBuilder("SELECT NOMBRE, DESCRIPCION, ICO, LINK, TYPE, CODIGO, PADRE, CHECKED FROM MENU"
+            StringBuilder query = new StringBuilder("SELECT NOMBRE, DESCRIPCION, ICO, LINK, TYPE, CODIGO, PADRE, CHECKED FROM menu"
                     + " WHERE TYPE not in  ('M','I')"
                     + " AND CODIGO IN (");
 
@@ -245,14 +245,14 @@ public class MenuDAO extends DAO {
             this.Conectar();
             if (tipo.equals("S")) {
                 declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT CODIGO FROM MENU "
+                        + "SELECT CODIGO FROM menu "
                         + "WHERE TYPE NOT IN ('M','I') "
                         + "AND PADRE = ?"
                         + "ORDER BY CODIGO DESC");
                 declaracion.setString(1, padre);
             } else {
                 declaracion = this.getConexion().prepareStatement(""
-                        + "SELECT CODIGO FROM MENU "
+                        + "SELECT CODIGO FROM menu "
                         + "WHERE TYPE IN ('M','I') "
                         + "ORDER BY CODIGO DESC");
             }

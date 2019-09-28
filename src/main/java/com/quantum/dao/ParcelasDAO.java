@@ -20,7 +20,7 @@ public class ParcelasDAO extends DAO{
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT PARCELA FROM PARCELAS");
+                    + "SELECT PARCELA FROM parcelas");
             
             resultado = declaracion.executeQuery();
             lista = new ArrayList<>();
@@ -43,7 +43,7 @@ public class ParcelasDAO extends DAO{
         
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO PARCELAS (PARCELA) VALUES (?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO parcelas (PARCELA) VALUES (?)");
             declaracion.setString(1,parcela.getParcela());
             declaracion.executeUpdate();
             validosesion = new Mensaje("", "Registrado Exitosamente.","mdi-checkbox-marked-circle-outline","success");
@@ -61,7 +61,7 @@ public class ParcelasDAO extends DAO{
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM PARCELAS WHERE PARCELA = ?");
+                    + "DELETE FROM parcelas WHERE PARCELA = ?");
             declaracion.setString(1, parcela.getParcela());
             declaracion.executeUpdate();
         } catch (Exception e) {

@@ -21,7 +21,7 @@ public class CamposDAO extends DAO {
         Mensaje validosesion;
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO CAMPOS (NOMBRE, DESCRIPCION, TIPO, CAPACIDAD, PRIORIDAD) VALUES (?,?,?,?,?)");
+            PreparedStatement declaracion = this.getConexion().prepareStatement("INSERT INTO campos (NOMBRE, DESCRIPCION, TIPO, CAPACIDAD, PRIORIDAD) VALUES (?,?,?,?,?)");
             declaracion.setString(1, campo.getNombre());
             declaracion.setString(2, campo.getDescripcion());
             declaracion.setString(3, campo.getTipo());
@@ -46,7 +46,7 @@ public class CamposDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT NOMBRE, DESCRIPCION, TIPO, CAPACIDAD, PRIORIDAD FROM CAMPOS "
+                    + "SELECT NOMBRE, DESCRIPCION, TIPO, CAPACIDAD, PRIORIDAD FROM campos "
                     + "ORDER BY PRIORIDAD");
 
             resultado = declaracion.executeQuery();
@@ -75,7 +75,7 @@ public class CamposDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "SELECT NOMBRE, DESCRIPCION, TIPO, CAPACIDAD, PRIORIDAD FROM CAMPOS "
+                    + "SELECT NOMBRE, DESCRIPCION, TIPO, CAPACIDAD, PRIORIDAD FROM campos "
                     + "WHERE PRIORIDAD = 'ALTA' "
                     + "ORDER BY PRIORIDAD");
 
@@ -98,7 +98,7 @@ public class CamposDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "DELETE FROM CAMPOS WHERE NOMBRE = ?");
+                    + "DELETE FROM campos WHERE NOMBRE = ?");
             declaracion.setString(1, campo.getNombre());
             declaracion.executeUpdate();
             this.editfblead("borrar", campo, null);
@@ -121,7 +121,7 @@ public class CamposDAO extends DAO {
         try {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                    + "UPDATE CAMPOS set NOMBRE = ?, DESCRIPCION = ?, TIPO = ?, CAPACIDAD = ?, PRIORIDAD = ?  WHERE NOMBRE = ?");
+                    + "UPDATE campos set NOMBRE = ?, DESCRIPCION = ?, TIPO = ?, CAPACIDAD = ?, PRIORIDAD = ?  WHERE NOMBRE = ?");
 
             declaracion.setString(1, campo.getNombre());
             declaracion.setString(2, campo.getDescripcion());
