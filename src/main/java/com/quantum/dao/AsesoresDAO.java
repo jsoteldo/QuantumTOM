@@ -78,9 +78,9 @@ public class AsesoresDAO extends DAO {
         Mensaje validosesion;
         this.Conectar();
         PreparedStatement declaracion = this.getConexion().prepareStatement(""
-                + "SELECT CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, FECHARETIRO, asesores.ROL, ROLES.DESCRIPCION, IMG, EMPL_CARGO "
+                + "SELECT CORREO, NOMBRES, APELLIDOS, CONTRASENA, EDAD, SEXO, TELEFONO, TELEFONO_ASIG, FECHARETIRO, asesores.ROL, roles.DESCRIPCION, IMG, EMPL_CARGO "
                 + "FROM asesores "
-                + "INNER JOIN ROLES ON asesores.ROL = ROLES.ROL "
+                + "INNER JOIN roles ON asesores.ROL = roles.ROL "
                 + "WHERE CORREO = ? "
                 + "AND FECHARETIRO is null");
         declaracion.setString(1, asesores.getCorreo());
