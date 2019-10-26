@@ -5,11 +5,13 @@
  */
 package com.quantum.modelos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author QUANTUM
  */
-public class Tipocampo {
+public class Tipocampo implements Serializable{
 
     private String tipo;
     private String valor;

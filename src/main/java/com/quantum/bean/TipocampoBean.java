@@ -1,7 +1,6 @@
 package com.quantum.bean;
 
 import com.quantum.dao.CamposDAO;
-import com.quantum.dao.ObjecionesDAO;
 import com.quantum.dao.TipocampoDAO;
 import com.quantum.modelos.Campos;
 import com.quantum.modelos.Mensaje;
@@ -11,9 +10,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
 import net.bootsfaces.utils.FacesMessages;
 
@@ -21,7 +20,7 @@ import net.bootsfaces.utils.FacesMessages;
  *
  * @author QUANTUM
  */
-@Named("tipocampoBean")
+@ManagedBean
 @ViewScoped
 public class TipocampoBean implements Serializable {
 

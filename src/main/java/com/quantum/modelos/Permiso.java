@@ -1,8 +1,10 @@
 
 package com.quantum.modelos;
 
+import java.io.Serializable;
 
-public class Permiso {
+
+public class Permiso implements Serializable{
    
     private String codMenu;
     

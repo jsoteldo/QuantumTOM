@@ -1,5 +1,6 @@
 package com.quantum.modelos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -8,7 +9,7 @@ import java.util.logging.Logger;
  *
  * @author QUANTUM
  */
-public class Prospectocrystal {
+public class Prospectocrystal implements Serializable{
 
     private String codigo;
     private String nombres;

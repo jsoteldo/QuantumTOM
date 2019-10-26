@@ -1,11 +1,13 @@
 
 package com.quantum.modelos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author QUANTUM
  */
-public class Fbleads {
+public class Fbleads implements Serializable{
     
     private String id;
     private String created_time;

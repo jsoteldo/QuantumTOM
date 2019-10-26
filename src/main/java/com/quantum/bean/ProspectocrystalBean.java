@@ -5,15 +5,15 @@ import com.quantum.dao.ProspectocrystalDAO;
 import com.quantum.modelos.Mensaje;
 import com.quantum.modelos.Prospectocrystal;
 import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author QUANTUM
  */
-@Named("prospectocrystalBean")
+@ManagedBean
 @ViewScoped
 public class ProspectocrystalBean implements Serializable {
 

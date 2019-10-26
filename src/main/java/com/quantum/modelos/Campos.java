@@ -5,11 +5,13 @@
  */
 package com.quantum.modelos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author RIO CASMA
  */
-public class Campos {
+public class Campos implements Serializable{
 
     private String nombre;
     private String descripcion;

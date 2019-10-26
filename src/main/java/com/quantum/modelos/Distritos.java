@@ -1,11 +1,13 @@
 
 package com.quantum.modelos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author QUANTUM
  */
-public class Distritos {
+public class Distritos implements Serializable{
     private String codigo;
     private String distrito;
 

@@ -4,14 +4,14 @@ import com.quantum.dao.IconosDAO;
 import com.quantum.modelos.Iconos;
 import java.io.Serializable;
 import java.util.List;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author QUANTUM
  */
-@Named("iconosBean")
+@ManagedBean
 @ViewScoped
 public class IconosBean implements Serializable {
 

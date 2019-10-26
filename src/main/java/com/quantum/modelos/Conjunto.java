@@ -5,11 +5,13 @@
  */
 package com.quantum.modelos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author RIO CASMA
  */
-public class Conjunto {
+public class Conjunto implements Serializable{
     
     private String id;
     private String descripcion;

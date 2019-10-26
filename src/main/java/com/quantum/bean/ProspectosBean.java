@@ -20,18 +20,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.component.UIOutput;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author QUANTUM
  */
-@Named("prospectosBean")
+@ManagedBean
 @ViewScoped
 public class ProspectosBean implements Serializable {
 

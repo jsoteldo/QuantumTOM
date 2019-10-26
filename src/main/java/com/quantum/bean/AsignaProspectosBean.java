@@ -10,16 +10,16 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author QUANTUM
  */
-@Named("asignaprospectosBean")
+@ManagedBean
 @ViewScoped
 public class AsignaProspectosBean implements Serializable {
 

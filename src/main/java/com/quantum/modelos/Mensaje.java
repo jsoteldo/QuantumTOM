@@ -5,11 +5,13 @@
  */
 package com.quantum.modelos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author QUANTUM
  */
-public class Mensaje {
+public class Mensaje implements Serializable{
     private boolean valida;
     private String display = "none !important"; 
     private String mensaje ;

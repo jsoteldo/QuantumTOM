@@ -8,15 +8,15 @@ import com.quantum.modelos.Prospectos;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author QUANTUM
  */
-@Named("asesoresviewBean")
+@ManagedBean
 @ViewScoped
 public class AsesoresviewBean implements Serializable {
     

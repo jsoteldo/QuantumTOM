@@ -1,6 +1,7 @@
 
 package com.quantum.modelos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  *
  * @author QUANTUM
  */
-public class Roles {
+public class Roles implements Serializable{
     
     private String rol;
     private String descripcion;

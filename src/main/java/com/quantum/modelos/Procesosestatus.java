@@ -5,11 +5,13 @@
  */
 package com.quantum.modelos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author QUANTUM
  */
-public class Procesosestatus {
+public class Procesosestatus implements Serializable{
 
     private String estatus;
     private String codpro;

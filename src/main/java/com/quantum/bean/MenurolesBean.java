@@ -19,7 +19,7 @@ import javax.faces.bean.ViewScoped;
  *
  * @author RIO CASMA
  */
-@ManagedBean(name = "menuRolesBean")
+@ManagedBean
 @ViewScoped
 public class MenurolesBean implements Serializable {
 

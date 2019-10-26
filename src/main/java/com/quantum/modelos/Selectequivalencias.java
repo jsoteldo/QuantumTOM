@@ -1,11 +1,13 @@
 
 package com.quantum.modelos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author QUANTUM
  */
-public class Selectequivalencias {
+public class Selectequivalencias implements Serializable{
     
     private int posicion;
     

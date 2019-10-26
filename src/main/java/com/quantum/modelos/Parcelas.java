@@ -5,11 +5,13 @@
  */
 package com.quantum.modelos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author RIO CASMA
  */
-public class Parcelas {
+public class Parcelas implements Serializable{
     
     private String parcela;
 

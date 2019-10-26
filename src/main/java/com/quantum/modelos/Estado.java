@@ -1,11 +1,13 @@
 
 package com.quantum.modelos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author QUANTUM
  */
-public class Estado {
+public class Estado implements Serializable{
     private String codigo;
     private String estado;
     private String permitellamar;

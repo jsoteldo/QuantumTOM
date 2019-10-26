@@ -1,11 +1,13 @@
 
 package com.quantum.modelos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author QUANTUM
  */
-public class Prospectos {
+public class Prospectos implements Serializable{
     
     private String codigo;
     private String codigoGestion;

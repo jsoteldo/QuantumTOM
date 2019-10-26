@@ -5,11 +5,13 @@
  */
 package com.quantum.modelos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author QUANTUM
  */
-public class Objeciones {
+public class Objeciones implements Serializable{
     
     private String tipobjecion;
     private String codigo;

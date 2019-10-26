@@ -23,17 +23,12 @@ public class DAO {
 
     public void Conectar() throws IOException, Exception {
         try {
-            Properties prop = new Properties();
-            System.out.println("\n\n=======================\nJDBC Connector Test ");
-            System.out.println("User home directory: " + System.getProperty("user.home"));
+            Class.forName("org.mariadb.jdbc.Driver");
             
-            prop.load(new java.io.FileInputStream(System.getProperty("user.home") + "/mydb.cfg"));
-            
-            
-            Class.forName(prop.getProperty("driver").toString());
-            
-            conexion = DriverManager.getConnection(prop.getProperty("host").toString(), prop.getProperty("username").toString(), prop.getProperty("password").toString());
-
+            /*conexion = DriverManager.getConnection("jdbc:mariadb://node48103-env-3675608.jl.serv.net.mx/test", 
+                                                   "flamencos", 
+                                                   "$flamencosQuantum");*/
+            conexion = DriverManager.getConnection("jdbc:mariadb://localhost:3306/test", "flamencos", "$flamencosQuantum");
         
             //conexion = DriverManager.getConnection("jdbc:mariadb://192.168.3.17:3306/test", "flamencos", "$flamencosQuantum");
             //conexion = DriverManager.getConnection("jdbc:mariadb://node48103-env-3675608.jl.serv.net.mx/test", "flamencos", "$flamencosQuantum");

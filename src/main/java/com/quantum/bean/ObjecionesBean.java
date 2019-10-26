@@ -9,8 +9,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import net.bootsfaces.utils.FacesMessages;
@@ -19,7 +20,7 @@ import net.bootsfaces.utils.FacesMessages;
  *
  * @author QUANTUM
  */
-@Named("objecionesBean")
+@ManagedBean
 @ViewScoped
 public class ObjecionesBean implements Serializable {
 

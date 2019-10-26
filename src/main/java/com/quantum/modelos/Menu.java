@@ -1,11 +1,13 @@
 
 package com.quantum.modelos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author QUANTUM
  */
-public class Menu {
+public class Menu implements Serializable{
     
     private String nombre;
     private String descripcion;

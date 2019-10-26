@@ -15,18 +15,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author QUANTUM
  */
-@Named("asesoresBean")
+@ManagedBean
 @ViewScoped
 public class AsesoresBean implements Serializable {
 
@@ -37,10 +37,10 @@ public class AsesoresBean implements Serializable {
     private List<Asesores> lstAsesores;
     private List<Asesores> lstsupervisores;
     private List<Asesores> lstasesor;
-    
+
     private Map<String, Boolean> asesoresChecked = new HashMap<>();
     private Map<String, Boolean> supervisoresChecked = new HashMap<>();
-    
+
     private List<Roles> lstRoles;
 
     private String boton;
@@ -52,7 +52,7 @@ public class AsesoresBean implements Serializable {
     public void setAsesores(Asesores asesores) {
         this.asesores = asesores;
     }
-
+    
     public List<Asesores> getLstAsesores() {
         return lstAsesores;
     }
@@ -149,7 +149,7 @@ public class AsesoresBean implements Serializable {
         Mensaje mensaje;
 
         try {
-            
+
             List<String> supervisores = new ArrayList<String>();
 
             for (Map.Entry<String, Boolean> entry : supervisoresChecked.entrySet()) {
@@ -162,7 +162,7 @@ public class AsesoresBean implements Serializable {
                     }
                 }
             }
-            
+
             List<String> asesorescargo = new ArrayList<String>();
 
             for (Map.Entry<String, Boolean> entry : asesoresChecked.entrySet()) {
@@ -176,7 +176,7 @@ public class AsesoresBean implements Serializable {
                 }
             }
             asesores.setEmpl_cargo(asesorescargo);
-            
+
             dao = new AsesoresDAO();
             mensaje = dao.registrar(asesores);
             this.limpiar();
@@ -193,7 +193,7 @@ public class AsesoresBean implements Serializable {
         try {
             dao = new AsesoresDAO();
             lstAsesores = dao.listar();
-            
+
         } catch (Exception e) {
             throw e;
         }
@@ -202,7 +202,7 @@ public class AsesoresBean implements Serializable {
     public void leerID(Asesores asesor, HttpSession session) throws IOException {
         FacesContext contex = FacesContext.getCurrentInstance();
         session.setAttribute("asesorparam", asesor);
-        contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath()+"/template/asesores.xhtml");
+        contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/asesores.xhtml");
     }
 
     public void modificar() throws Exception {
@@ -215,7 +215,7 @@ public class AsesoresBean implements Serializable {
             this.limpiar();
             message = mensaje;
             FacesContext contex = FacesContext.getCurrentInstance();
-            contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath()+"/template/listaAsesores.xhtml");
+            contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/listaAsesores.xhtml");
         } catch (Exception e) {
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
@@ -233,14 +233,13 @@ public class AsesoresBean implements Serializable {
             throw e;
         }
     }
-
+    
     public void capturarasesor(HttpSession session) {
         RolesDAO dao;
         AsesoresDAO daoase;
         try {
             dao = new RolesDAO();
-            daoase = new AsesoresDAO()
-                    ;
+            daoase = new AsesoresDAO();  
             if (session.getAttribute("asesorparam") != null) {
                 asesores = (Asesores) session.getAttribute("asesorparam");
                 session.removeAttribute("asesorparam");
@@ -260,13 +259,13 @@ public class AsesoresBean implements Serializable {
             Logger.getLogger(AsesoresBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void verprospectos(Asesores asesor, HttpSession session) throws IOException {
         FacesContext contex = FacesContext.getCurrentInstance();
         session.setAttribute("prospectodeasesor", asesor);
         contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/listaProspectosAsesor.xhtml");
     }
-    
+
     public void muestradependientes(AjaxBehaviorEvent e) throws Exception {
         String opcion = (String) ((UIOutput) e.getSource()).getValue();
         AsesoresDAO dao;

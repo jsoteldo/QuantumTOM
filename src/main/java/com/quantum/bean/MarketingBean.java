@@ -14,16 +14,17 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIOutput;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 
 /**
  *
  * @author QUANTUM
  */
-@Named("marketingBean")
+@ManagedBean
 @ViewScoped
 public class MarketingBean implements Serializable {
 
