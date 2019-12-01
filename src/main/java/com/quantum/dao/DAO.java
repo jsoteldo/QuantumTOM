@@ -25,10 +25,7 @@ public class DAO {
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             
-            /*conexion = DriverManager.getConnection("jdbc:mariadb://node48103-env-3675608.jl.serv.net.mx/test", 
-                                                   "flamencos", 
-                                                   "$flamencosQuantum");*/
-            conexion = DriverManager.getConnection("jdbc:mariadb://localhost:3306/test", "flamencos", "$flamencosQuantum");
+             conexion = DriverManager.getConnection("jdbc:mariadb://173.82.238.24:3306/test", "flamencos", "$flamencosQuantum");
         
             //conexion = DriverManager.getConnection("jdbc:mariadb://192.168.3.17:3306/test", "flamencos", "$flamencosQuantum");
             //conexion = DriverManager.getConnection("jdbc:mariadb://node48103-env-3675608.jl.serv.net.mx/test", "flamencos", "$flamencosQuantum");

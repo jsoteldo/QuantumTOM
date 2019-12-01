@@ -24,11 +24,17 @@
 
             <ui:define name="content">
 
-                <f:event type="preRenderView" listener="#{asignaprospectosBean.listar()}"/>
+                <f:event type="preRenderView" listener="#{asignaProspectosBean.listar()}"/>
                 <form j:id="formasig" class="forms-sample">
                 <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin" style="margin-bottom: 10px;">
-                        <div class="card">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin" style="margin-bottom: 10px;padding: 0.5rem 1.5rem !important;">
+                        <div class="media">
+                                    <i class="mdi mdi-account-multiple-plus icon-md text-primary d-flex align-self-start mr-2"></i>
+                                    <div class="media-body">
+                                        <p class="card-text"><h3 class="card-title">Asignación de Prospectos</h3></p>
+                                    </div>
+                                </div>
+                      <!-- <div class="card">
                             <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
                                 <div class="media">
                                     <i class="mdi mdi-account-multiple-plus icon-md text-primary d-flex align-self-start mr-2"></i>
@@ -37,7 +43,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="col-xs-3 col-sm-6 col-md-6 col-lg-6 col-xl-6 grid-margin stretch-card" style="margin-bottom: 10px;">
                         <div class="card card-statistics">
@@ -94,7 +100,7 @@
                                                 </tr>
                                             </tfoot>
                                             <tbody>
-                                                <ui:repeat value="#{asignaprospectosBean.lstDistribucion}" var="asesor">
+                                                <ui:repeat value="#{asignaProspectosBean.lstDistribucion}" var="asesor">
                                                     <tr>
                                                         <td>#{asesor.nombre} #{asesor.apellido}</td>
                                                         <td >
@@ -112,7 +118,7 @@
                                                 </ui:repeat>
                                             </tbody>
                                         </table>
-                                        <button type="submit" class="btn btn-success mr-2" j:actionListener="#{asignaprospectosBean.operar()}" > 
+                                        <button type="submit" class="btn btn-success mr-2" j:actionListener="#{asignaProspectosBean.operar()}" > 
                                             Asignar
                                         </button>
                                     </div>
@@ -146,7 +152,7 @@
                     });
                 </script>
                 <script>
-                    var disponibles = #{asignaprospectosBean.prospectospAsignar};
+                    var disponibles = #{asignaProspectosBean.prospectospAsignar};
                     var cantidad;
                     var porcentaje;
 
@@ -188,7 +194,7 @@
                     }
                 </script>
                 <script>
-                    var disponibles = #{asignaprospectosBean.prospectospAsignar};
+                    var disponibles = #{asignaProspectosBean.prospectospAsignar};
                     var cantidad;
                     var porcentaje;
                     var psa = 0, pa = 0;
@@ -222,7 +228,7 @@
 
                 </script>
                 <script>
-                    var disponibles = #{asignaprospectosBean.prospectospAsignar};
+                    var disponibles = #{asignaProspectosBean.prospectospAsignar};
                     var total = 0;
                     $(".cantidad").each(function () {
                         total += parseFloat($(this).val()) || 0;

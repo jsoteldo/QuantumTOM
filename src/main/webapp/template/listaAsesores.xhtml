@@ -21,7 +21,13 @@
                 <div class="container-fluid">
 
                     <div class="row flex-grow">
-                        <div class="card col-12 d-flex align-items-stretch" style="margin-bottom: 10px;">
+                        <div class="media  col-12 d-flex align-items-stretch" style="padding: 0.5rem 1.5rem !important;">
+                            <i class="mdi mdi-clipboard-account icon-md text-primary d-flex align-self-start mr-2"></i>
+                            <div class="media-body">
+                                <p class="card-text"><h2 class="card-title">Listado de Asesores</h2></p>
+                            </div>
+                        </div>
+                        <!--<div class="card col-12 d-flex align-items-stretch" style="margin-bottom: 10px;">
                             <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
                                 <div class="media">
                                     <i class="mdi mdi-clipboard-account icon-md text-primary d-flex align-self-start mr-2"></i>
@@ -30,7 +36,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="row flex-grow">
                         <div class="card col-12 d-flex align-items-stretch grid-margin">
@@ -67,26 +73,26 @@
                                                     <td>#{asesor.nombres} #{asesor.apellidos}</td>
                                                     <td>
                                                         <form j:id="formedit" method="post" class="col-4">  
-                                                                <a class="nav-link" j:action="#{asesoresBean.leerID(asesor,session)}">
-                                                                    <i class="mdi mdi-account-edit text-dark mdi-18px"></i>
-                                                                </a>
-                                                            </form>
+                                                            <a class="nav-link" j:action="#{asesoresBean.leerID(asesor,session)}">
+                                                                <i class="mdi mdi-account-edit text-dark mdi-18px"></i>
+                                                            </a>
+                                                        </form>
                                                     </td>
                                                     <td>
                                                         <form j:id="formdelete" method="post" class="col-4">  
-                                                                <a class="nav-link" j:actionListener="#{asesoresBean.borrar(asesor)}">
-                                                                    <i class="mdi mdi-delete-empty text-dark mdi-18px"></i>
-                                                                </a>
-                                                            </form> 
+                                                            <a class="nav-link" j:actionListener="#{asesoresBean.borrar(asesor)}">
+                                                                <i class="mdi mdi-delete-empty text-dark mdi-18px"></i>
+                                                            </a>
+                                                        </form> 
                                                     </td>
                                                     <td>
                                                         <form j:id="formprospectos" method="post" class="col-4">  
-                                                                <a class="nav-link" j:actionListener="#{prospectosBean.verprospectos(asesor,session)}">
-                                                                    <i class="mdi mdi-account-multiple text-dark mdi-18px"></i>
-                                                                </a>
-                                                            </form>
+                                                            <a class="nav-link" j:actionListener="#{prospectosBean.verprospectos(asesor,session)}">
+                                                                <i class="mdi mdi-account-multiple text-dark mdi-18px"></i>
+                                                            </a>
+                                                        </form>
                                                     </td>
-                                                    
+
                                                 </tr>
                                             </ui:repeat>
                                         </tbody>

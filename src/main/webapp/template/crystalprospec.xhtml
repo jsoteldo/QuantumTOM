@@ -26,7 +26,13 @@
             <ui:define name="content">
                 <div class="container-fluid">
                     <div class="row flex-grow">
-                        <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-7 col-xl-6  d-flex align-items-stretch" style="margin-bottom: 10px;">
+                        <div class="media col-xs-12 col-sm-12 col-md-12 col-lg-7 col-xl-6  d-flex align-items-stretch" style="padding: 0.5rem 1.5rem !important;">
+                            <i class="mdi mdi-account  icon-md text-primary d-flex align-self-start mr-2"></i>
+                            <div class="media-body">
+                                <p class="card-text"><h3 class="card-title">CrystalBeach Resort</h3></p>
+                            </div>
+                        </div>
+                        <!--<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-7 col-xl-6  d-flex align-items-stretch" style="margin-bottom: 10px;">
                             <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
                                 <div class="media">
                                     <i class="mdi mdi-account  icon-md text-primary d-flex align-self-start mr-2"></i>
@@ -35,7 +41,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="row flex-grow">
                         <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-7 col-xl-6 d-flex align-items-stretch grid-margin">
@@ -50,7 +56,7 @@
                                             <span class="font-weight-medium text-right">#{prospectocrystalBean.message.mensaje}</span>
                                         </div>
                                     </div>
-                                    
+
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         <li class="nav-item">
                                             <a class="nav-link active" style="padding: 0.5rem 0.5rem !important;" data-toggle="tab" href="#panelprospecto" role="tab" >Prospecto</a>
@@ -63,7 +69,7 @@
                                         </li>
 
                                     </ul>
-                                    
+
                                     <div class="tab-pane fade show active" id="panelprospecto" role="tabprospecto">
                                         <div class="card">
                                             <div class="card-body" style="padding: 1.2rem !important; ">
@@ -252,7 +258,7 @@
 
 
 
-                                   
+
 
 
                                 </form>
@@ -267,24 +273,23 @@
 
                     $(document).ready(function () {
 
-                        setTimeout(function () {
-                            $("#mensaje").fadeOut(1500);
-                        }, 3000);
+                    setTimeout(function () {
+                    $("#mensaje").fadeOut(1500);
+                    }, 3000);
                     });
                 </script>
                 <script>
                     $(document).ready(function () {
-                        var fecha = "#{prospectosBean.prospectos.fecha_ingreso}";
-                        var now = new Date();
-                        var day = ("0" + now.getDate()).slice(-2);
-                        var month = ("0" + (now.getMonth() + 1)).slice(-2);
-                        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+                    var fecha = "#{prospectosBean.prospectos.fecha_ingreso}";
+                    var now = new Date();
+                    var day = ("0" + now.getDate()).slice( - 2);
+                    var month = ("0" + (now.getMonth() + 1)).slice( - 2);
+                    var today = now.getFullYear() + "-" + (month) + "-" + (day);
+                    if (fecha !== "") {
 
-                        if (fecha !== "") {
-
-                        } else {
-                            $('#formProspectos\\:fecreg').val(today);
-                        }
+                    } else {
+                    $('#formProspectos\\:fecreg').val(today);
+                    }
 
 
 
@@ -292,117 +297,101 @@
                 </script>
                 <script type="text/javascript">
                     jQuery(function ($) {
-                        // init the state from the input
-                        $(".image-checkbox").each(function () {
-                            if ($(this).find('input[type="checkbox"]').first().attr("checked")) {
-                                $(this).addClass('image-checkbox-checked');
-                            } else {
-                                $(this).removeClass('image-checkbox-checked');
-                            }
-                        });
+                    // init the state from the input
+                    $(".image-checkbox").each(function () {
+                    if ($(this).find('input[type="checkbox"]').first().attr("checked")) {
+                    $(this).addClass('image-checkbox-checked');
+                    } else {
+                    $(this).removeClass('image-checkbox-checked');
+                    }
+                    });
+                    // sync the state to the input
+                    $(".image-checkbox").on("click", function (e) {
+                    if ($(this).hasClass('image-checkbox-checked')) {
+                    $(this).removeClass('image-checkbox-checked');
+                    $(this).find('input[type="checkbox"]').first().removeAttr("checked");
+                    } else {
+                    $(this).addClass('image-checkbox-checked');
+                    $(this).find('input[type="checkbox"]').first().attr("checked", "checked");
+                    }
 
-                        // sync the state to the input
-                        $(".image-checkbox").on("click", function (e) {
-                            if ($(this).hasClass('image-checkbox-checked')) {
-                                $(this).removeClass('image-checkbox-checked');
-                                $(this).find('input[type="checkbox"]').first().removeAttr("checked");
-                            } else {
-                                $(this).addClass('image-checkbox-checked');
-                                $(this).find('input[type="checkbox"]').first().attr("checked", "checked");
-                            }
-
-                            e.preventDefault();
-                        });
+                    e.preventDefault();
+                    });
                     });
                 </script>
                 <script>
                     $(function () {
 
 
-                        $('#prospectoContinue').click(function (e) {
-                            var nombre = $('#nombres').val().length
-                                    , apellido = $('#apellidos').val().length
-                                    , ocupacion = $('#ocupacion').val().length
-                                    , edad = $('#edad').val().length
-                                    , edociv = $('#formProspectos\\:edociv').val().length
-                                    , distrito = $('#distrito').val().length
-                                    , telefono = $('#telefono1').val().length - 1;
+                    $('#prospectoContinue').click(function (e) {
+                    var nombre = $('#nombres').val().length
+                            , apellido = $('#apellidos').val().length
+                            , ocupacion = $('#ocupacion').val().length
+                            , edad = $('#edad').val().length
+                            , edociv = $('#formProspectos\\:edociv').val().length
+                            , distrito = $('#distrito').val().length
+                            , telefono = $('#telefono1').val().length - 1;
+                    var edocivil = $('#formProspectos\\:edociv').val();
+                    var arr = [ "nombres", "apellidos", "ocupacion", "edad", "formProspectos\\:edociv", "distrito", "telefono1" ];
+                    if (nombre != 0 & amp; & amp; apellido != 0 & amp; & amp; ocupacion != 0 & amp; & amp; edad != 0 & amp; & amp; edociv != 0 & amp; & amp; distrito != 0 & amp; & amp; telefono != 0) {
 
-                            var edocivil = $('#formProspectos\\:edociv').val();        
-                            var arr = [ "nombres", "apellidos", "ocupacion", "edad", "formProspectos\\:edociv", "distrito", "telefono1" ];
-                            
-                            if (nombre != 0 &amp;&amp; apellido != 0 &amp;&amp; ocupacion != 0 &amp;&amp; edad != 0 &amp;&amp; edociv != 0 &amp;&amp; distrito != 0 &amp;&amp; telefono != 0) {
-                                
-                                jQuery.each( arr, function( i, val ) {
-                                    $('#'+val).removeClass("form-control-error");
-                                });
-                                
-                                e.preventDefault();
-                                 if(edocivil == 'C' || edocivil == 'CV'){
-                                     $('#myTab a[href="#panelpareja"]').tab('show');
-                                     $('#panelprospecto').css("display", "none");
-                                     $('#panelpareja').css("display", "block");
-                                     
-                                 }else{
-                                     $('#myTab a[href="#panelfinan"]').tab('show');
-                                     $('#panelprospecto').css("display", "none");
-                                     $('#panelfinan').css("display", "block");
-                                 }
-                                
-                                
-                                
-                            }else{
-                                e.preventDefault();
-                                jQuery.each( arr, function( i, val ) {
-                                    if(val=='telefono1'){
-                                        if($('#'+val).val().length === 1){
-                                        $('#'+val).addClass("form-control-error");
-                                    }
-                                    }else{
-                                        if($('#'+val).val().length === 0){
-                                        $('#'+val).addClass("form-control-error");
-                                    }
-                                    }
-                                    
-                                });
-                            }
-                        });
+                    jQuery.each(arr, function(i, val) {
+                    $('#' + val).removeClass("form-control-error");
+                    });
+                    e.preventDefault();
+                    if (edocivil == 'C' || edocivil == 'CV'){
+                    $('#myTab a[href="#panelpareja"]').tab('show');
+                    $('#panelprospecto').css("display", "none");
+                    $('#panelpareja').css("display", "block");
+                    } else{
+                    $('#myTab a[href="#panelfinan"]').tab('show');
+                    $('#panelprospecto').css("display", "none");
+                    $('#panelfinan').css("display", "block");
+                    }
 
-                        $('#parejaContinue').click(function (e) {
-                            e.preventDefault();
-                            $('#myTab a[href="#panelfinan"]').tab('show');
-                            $('#panelfinan').css("display", "block");
-                            $('#panelpareja').css("display", "none");
-                        });
 
-                        $('#anterirprospecto').click(function (e) {
-                            e.preventDefault();
-                            $('#myTab a[href="#panelprospecto"]').tab('show');
-                            $('#panelpareja').css("display", "none");
-                            $('#panelprospecto').css("display", "block");
-                        });
 
-                        $('#anterirpareja').click(function (e) {
-                            e.preventDefault();
-                            
-                            var edocivil = $('#formProspectos\\:edociv').val();        
-                            if(edocivil == 'C' || edocivil == 'CV'){
-                                     $('#myTab a[href="#panelpareja"]').tab('show');
-                                     $('#panelpareja').css("display", "block");
-                                     $('#panelfinan').css("display", "none");
-                                 }else{
-                                     $('#myTab a[href="#panelprospecto"]').tab('show');
-                                     $('#panelprospecto').css("display", "block");
-                                     $('#panelfinan').css("display", "none");
-                                 }
-                        });
+                    } else{
+                    e.preventDefault();
+                    jQuery.each(arr, function(i, val) {
+                    if (val == 'telefono1'){
+                    if ($('#' + val).val().length === 1){
+                    $('#' + val).addClass("form-control-error");
+                    }
+                    } else{
+                    if ($('#' + val).val().length === 0){
+                    $('#' + val).addClass("form-control-error");
+                    }
+                    }
 
-                        
-                        
-                        
-                        
-                    
-                        
+                    });
+                    }
+                    });
+                    $('#parejaContinue').click(function (e) {
+                    e.preventDefault();
+                    $('#myTab a[href="#panelfinan"]').tab('show');
+                    $('#panelfinan').css("display", "block");
+                    $('#panelpareja').css("display", "none");
+                    });
+                    $('#anterirprospecto').click(function (e) {
+                    e.preventDefault();
+                    $('#myTab a[href="#panelprospecto"]').tab('show');
+                    $('#panelpareja').css("display", "none");
+                    $('#panelprospecto').css("display", "block");
+                    });
+                    $('#anterirpareja').click(function (e) {
+                    e.preventDefault();
+                    var edocivil = $('#formProspectos\\:edociv').val();
+                    if (edocivil == 'C' || edocivil == 'CV'){
+                    $('#myTab a[href="#panelpareja"]').tab('show');
+                    $('#panelpareja').css("display", "block");
+                    $('#panelfinan').css("display", "none");
+                    } else{
+                    $('#myTab a[href="#panelprospecto"]').tab('show');
+                    $('#panelprospecto').css("display", "block");
+                    $('#panelfinan').css("display", "none");
+                    }
+                    });
                     });
 
                 </script>

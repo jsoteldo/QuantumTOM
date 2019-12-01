@@ -47,7 +47,8 @@ public class SubeprospectosBean {
 
     private Mensaje message = new Mensaje(false, "none !important", "");
     private Part file;
-    private String folder = "C:\\Temp";
+    private String folder = "/tmp";
+    
     private formatoDeFechas fechas = new formatoDeFechas();
     private List<Distribucion> lstDistribucion;
     private List<Asesores> lstasesores;
@@ -151,12 +152,12 @@ public class SubeprospectosBean {
             String fileName = file.getSubmittedFileName();
             Files.copy(input, new File(folder, fileName).toPath());
             //mensaje = this.manejaArchivoTest(folder + "\\" + fileName);
-            this.manejaArchivoTest(folder + "\\" + fileName);
+            this.manejaArchivoTest(folder + "/" + fileName);
 
             //message = mensaje;
             this.lstcampos = daocampo.lstcampos();
 
-            archivo = new Archivo(fileName, fechas.convertirFechaString(new Date(), fechas.FORMATO_FECHA_HORA), folder + "\\" + fileName, "false");
+            archivo = new Archivo(fileName, fechas.convertirFechaString(new Date(), fechas.FORMATO_FECHA_HORA), folder + "/" + fileName, "false");
             daoarchivo.registrar(archivo);
 
         } catch (IOException e) {

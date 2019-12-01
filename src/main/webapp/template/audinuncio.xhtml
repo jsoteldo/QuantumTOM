@@ -20,7 +20,13 @@
                 <f:event type="preRenderView" listener="#{marketingBean.listar()}"/>
                 <div class="container-fluid">
                     <div class="row flex-grow">
-                        <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-stretch" style="margin-bottom: 10px;">
+                        <div class="media col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-stretch" style="padding: 0.5rem 1.5rem !important;">
+                                    <i class="mdi mdi-facebook icon-md text-primary d-flex align-self-start mr-2"></i>
+                                    <div class="media-body">
+                                        <p class="card-text"><h3 class="card-title">Publicidad de Facebook</h3></p>
+                                    </div>
+                                </div>
+                        <!--<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-stretch" style="margin-bottom: 10px;">
                             <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
                                 <div class="media">
                                     <i class="mdi mdi-facebook icon-md text-primary d-flex align-self-start mr-2"></i>
@@ -29,7 +35,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
                         <div class="col-md-12 mb-0 pl-1 pr-1 mt-0"  style="display: #{marketingBean.message.display}">
                             <div class="from-group">

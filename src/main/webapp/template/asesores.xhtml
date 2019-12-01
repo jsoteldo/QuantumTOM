@@ -30,7 +30,13 @@
 
                     <!-- Breadcrumbs-->
                     <div class="row flex-grow">
-                        <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-5 d-flex align-items-stretch" style="margin-bottom: 10px;">
+                        <div class="media col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-5 d-flex align-items-stretch" style="padding: 0.5rem 1.5rem !important;">
+                                    <i class="mdi mdi-account icon-md text-primary d-flex align-self-start mr-2"></i>
+                                    <div class="media-body">
+                                        <p class="card-text"><h3 class="card-title">Registro de Asesores</h3></p>
+                                    </div>
+                                </div>
+                        <!--<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-5 d-flex align-items-stretch" style="margin-bottom: 10px;">
                             <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
                                 <div class="media">
                                     <i class="mdi mdi-account icon-md text-primary d-flex align-self-start mr-2"></i>
@@ -39,7 +45,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <form j:id="formasesores" class="forms-sample">
                         <div class="row flex-grow">
@@ -144,7 +150,7 @@
                                                 <label for="superencar">Supervisor</label>
                                                 <h:selectOneMenu id="superencar" class="form-control" value="#{asesoresBean.asesores.sup_encargado}">
                                                     <f:selectItem itemLabel="Seleccione un Supervisor" itemValue="" />
-                                                    <f:selectItems value="#{asesoresBean.lstsupervisores}" var="super" itemLabel="#{super.nombres}" itemValue="#{super.correo}"/>
+                                                    <f:selectItems value="#{asesoresBean.lstsupervisores}" var="supervisor" itemLabel="#{supervisor.nombres}" itemValue="#{supervisor.correo}"/>
                                                     <f:ajax event="change" listener="#{asesoresBean.muestradependientes}" render="motivo permitemotivo permitellamar permitelote parcela permitefpago permitecasa checkSlide" execute="@this" />
                                                 </h:selectOneMenu>
                                             </div>
@@ -154,10 +160,10 @@
                                             <label for="supervisor">Supervisor</label>
 
                                             <div class="form-group row">
-                                                <ui:repeat value="#{asesoresBean.lstsupervisores}" var="super">
+                                                <ui:repeat value="#{asesoresBean.lstsupervisores}" var="supervisor">
                                                     <div class="form-check">
                                                         <label class="form-check-inline">
-                                                            <input type="checkbox" checked="true" class="form-check-input" id="check-#{super.correo}" j:value="#{asesoresBean.supervisoresChecked[super.correo]}" /> #{super.nombres}  
+                                                            <input type="checkbox" checked="true" class="form-check-input" id="check-#{supervisor.correo}" j:value="#{asesoresBean.supervisoresChecked[supervisor.correo]}" /> #{supervisor.nombres}  
                                                             <i class="input-helper"></i>
                                                         </label>
                                                     </div>
