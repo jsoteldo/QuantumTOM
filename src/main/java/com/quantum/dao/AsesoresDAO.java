@@ -1,5 +1,6 @@
 package com.quantum.dao;
 
+import com.quantum.bean.ObjecionesBean;
 import com.quantum.modelos.Asesores;
 import com.quantum.modelos.Distribucion;
 import com.quantum.modelos.Mensaje;
@@ -10,6 +11,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.context.FacesContext;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -17,6 +19,9 @@ import javax.faces.context.FacesContext;
  */
 public class AsesoresDAO extends DAO {
 
+    private org.slf4j.Logger log = LoggerFactory.getLogger(AsesoresDAO.class);   
+    
+    
     public Mensaje validaUsuario(Asesores asesores) throws Exception {
         Mensaje validosesion = null;
         ResultSet resultado;
@@ -83,6 +88,7 @@ public class AsesoresDAO extends DAO {
                 + "INNER JOIN roles ON asesores.ROL = roles.ROL "
                 + "WHERE CORREO = ? "
                 + "AND FECHARETIRO is null");
+        log.info(asesores.toString());
         declaracion.setString(1, asesores.getCorreo());
         resultado = declaracion.executeQuery();
         if (resultado.next()) {

@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,6 +24,9 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class MenurolesBean implements Serializable {
 
+    private org.slf4j.Logger log = LoggerFactory.getLogger(MenurolesBean.class);   
+    
+    
     private Mensaje message = new Mensaje(false, "none !important", "");
 
     //private MenuRoles menurol = new MenuRoles();

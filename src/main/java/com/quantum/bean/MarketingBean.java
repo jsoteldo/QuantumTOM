@@ -19,6 +19,7 @@ import javax.faces.component.UIOutput;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -28,6 +29,9 @@ import javax.inject.Named;
 @ViewScoped
 public class MarketingBean implements Serializable {
 
+    private org.slf4j.Logger log = LoggerFactory.getLogger(MarketingBean.class);   
+    
+    
     private Mensaje message = new Mensaje(false, "none !important", "");
     private formatoDeFechas fechas = new formatoDeFechas();
 

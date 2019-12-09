@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -22,6 +23,9 @@ import javax.servlet.http.HttpSession;
 @ViewScoped
 public class EstadosBean implements Serializable {
 
+    private org.slf4j.Logger log = LoggerFactory.getLogger(EstadosBean.class);      
+    
+    
     private Mensaje message = new Mensaje(false, "none !important", "");
 
     private Estado estados = new Estado();

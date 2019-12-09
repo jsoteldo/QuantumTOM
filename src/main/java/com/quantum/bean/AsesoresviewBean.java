@@ -11,6 +11,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.bean.ViewScoped;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -19,6 +20,9 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class AsesoresviewBean implements Serializable {
+    
+    private org.slf4j.Logger log = LoggerFactory.getLogger(AsesoresviewBean.class);      
+    
     
     private Mensaje message = new Mensaje(false, "none !important", "");
 

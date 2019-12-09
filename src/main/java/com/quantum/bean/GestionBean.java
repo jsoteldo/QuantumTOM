@@ -38,6 +38,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -46,6 +47,9 @@ import javax.servlet.http.HttpSession;
 @ManagedBean
 @ViewScoped
 public class GestionBean implements Serializable {
+    
+    private org.slf4j.Logger log = LoggerFactory.getLogger(GestionBean.class);      
+    
 
     private Mensaje message = new Mensaje(false, "none !important", "");
     private formatoDeFechas fechas = new formatoDeFechas();

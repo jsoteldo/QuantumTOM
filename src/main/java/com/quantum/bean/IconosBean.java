@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -15,6 +16,8 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class IconosBean implements Serializable {
 
+    private org.slf4j.Logger log = LoggerFactory.getLogger(IconosBean.class);   
+    
     private Iconos iconos = new Iconos();
     private List<Iconos> lstIconos;
 

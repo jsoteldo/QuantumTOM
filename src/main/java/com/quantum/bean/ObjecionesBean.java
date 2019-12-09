@@ -15,6 +15,7 @@ import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import net.bootsfaces.utils.FacesMessages;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -24,6 +25,9 @@ import net.bootsfaces.utils.FacesMessages;
 @ViewScoped
 public class ObjecionesBean implements Serializable {
 
+    private org.slf4j.Logger log = LoggerFactory.getLogger(ObjecionesBean.class);   
+    
+    
     private Mensaje message = new Mensaje(false, "none !important", "a");
 
     private Objeciones objeciones = new Objeciones();

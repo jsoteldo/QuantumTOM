@@ -16,6 +16,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -25,6 +26,8 @@ import javax.servlet.http.HttpSession;
 @ViewScoped
 public class MenuBean implements Serializable {
 
+    private org.slf4j.Logger log = LoggerFactory.getLogger(MenuBean.class);   
+    
     private Mensaje message = new Mensaje(false, "none !important", "");
     private formatoDeFechas fechas = new formatoDeFechas();
 

@@ -1,9 +1,11 @@
 package com.quantum.dao;
 
+import com.quantum.bean.ObjecionesBean;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -12,6 +14,8 @@ import java.util.Properties;
 public class DAO {
 
     private Connection conexion;
+    private org.slf4j.Logger log = LoggerFactory.getLogger(DAO.class);   
+    
 
     public Connection getConexion() {
         return conexion;
@@ -31,6 +35,7 @@ public class DAO {
             //conexion = DriverManager.getConnection("jdbc:mariadb://node48103-env-3675608.jl.serv.net.mx/test", "flamencos", "$flamencosQuantum");
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }

@@ -18,6 +18,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -27,6 +29,8 @@ import javax.servlet.http.HttpSession;
 @SessionScoped
 public class UsuariosBean implements Serializable {
 
+    private Logger log = LoggerFactory.getLogger(UsuariosBean.class);  
+    
     private Asesores asesores = new Asesores();
     private Asesores asesorVali = new Asesores();
     private List<Gestion> lstpendientes;
@@ -176,7 +180,7 @@ public class UsuariosBean implements Serializable {
         AsesoresDAO dao;
         GestionDAO daogestion;
         Mensaje mensaje;
-
+        log.info("Estamnos aqui");
         try {
             dao = new AsesoresDAO();
             daogestion = new GestionDAO();
@@ -190,12 +194,14 @@ public class UsuariosBean implements Serializable {
                 contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/inicio.xhtml");
             } else {
                 message = mensaje;
+                log.info(message.toString());
             }
 
         } catch (Exception e) {
             FacesContext contex = FacesContext.getCurrentInstance();
             contex.getExternalContext().invalidateSession();
             contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/500.xhtml");
+            log.info(e.getMessage());
             throw e;
         }
 
@@ -240,8 +246,21 @@ public class UsuariosBean implements Serializable {
 
     public void finalSession() throws Exception {
         FacesContext contex = FacesContext.getCurrentInstance();
+        log.info( contex.getExternalContext().getApplicationContextPath().toString());
+        contex.getExternalContext().redirect("../Login.xhtml");
         contex.getExternalContext().invalidateSession();
-        contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath());
+        
+        /*FacesContext context = FacesContext.getCurrentInstance();
+
+        ExternalContext externalContext = context.getExternalContext();
+
+        Object session = externalContext.getSession(false);
+
+        HttpSession httpSession = (HttpSession) session;
+
+        httpSession.invalidate();
+        */
+        
     }
 
     public void cambiocontrasena() {
