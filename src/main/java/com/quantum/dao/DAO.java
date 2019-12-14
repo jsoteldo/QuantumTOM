@@ -48,6 +48,7 @@ public class DAO {
                 }
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }

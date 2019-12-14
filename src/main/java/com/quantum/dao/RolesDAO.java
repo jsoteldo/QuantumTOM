@@ -1,12 +1,13 @@
 package com.quantum.dao;
 
-import com.quantum.modelos.Estatusventas;
 import com.quantum.modelos.Mensaje;
 import com.quantum.modelos.Roles;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -14,6 +15,9 @@ import java.util.List;
  */
 public class RolesDAO extends DAO {
 
+    
+    private Logger log = LoggerFactory.getLogger(TipocampoDAO.class);  
+    
     public Mensaje registrar(Roles rol) throws Exception {
         Mensaje validosesion;
 
@@ -27,6 +31,7 @@ public class RolesDAO extends DAO {
             validosesion = new Mensaje("", "Registrado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -53,6 +58,7 @@ public class RolesDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -69,7 +75,8 @@ public class RolesDAO extends DAO {
             declaracion.setString(1, rol.getRol());
             declaracion.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
+            
 
         } finally {
             this.Cancelar();
@@ -92,6 +99,7 @@ public class RolesDAO extends DAO {
             validosesion = new Mensaje("", "Actualizado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -120,6 +128,7 @@ public class RolesDAO extends DAO {
                 return null;
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();

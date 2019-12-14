@@ -1,19 +1,16 @@
 
 package com.quantum.dao;
 
-import com.quantum.modelos.Mensaje;
-import com.quantum.modelos.Roles;
-import java.sql.Clob;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author QUANTUM
  */
 public class MenuRolesDAO extends DAO{
+    private Logger log = LoggerFactory.getLogger(MenuRolesDAO.class);  
     
   /*  public Mensaje registrar(MenuRoles  menurol) throws Exception {
         Mensaje validosesion;

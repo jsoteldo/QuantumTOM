@@ -1,16 +1,12 @@
 package com.quantum.dao;
 
-import com.quantum.bean.ObjecionesBean;
 import com.quantum.modelos.Asesores;
-import com.quantum.modelos.Distribucion;
 import com.quantum.modelos.Mensaje;
-import com.quantum.modelos.Prospectos;
 import com.quantum.servicios.BCrypt;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.context.FacesContext;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -37,6 +33,7 @@ public class AsesoresDAO extends DAO {
                 return validosesion;
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -70,6 +67,7 @@ public class AsesoresDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -148,6 +146,7 @@ public class AsesoresDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -166,8 +165,8 @@ public class AsesoresDAO extends DAO {
             declaracion.executeUpdate();
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-
+            log.info(e.getMessage());
+            
         } finally {
             this.Cancelar();
         }
@@ -195,6 +194,7 @@ public class AsesoresDAO extends DAO {
             validosesion = new Mensaje("", "Actualizado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -243,6 +243,7 @@ public class AsesoresDAO extends DAO {
 
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             validacambio = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validacambio;
         } finally {
@@ -272,6 +273,7 @@ public class AsesoresDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -308,6 +310,7 @@ public class AsesoresDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -343,6 +346,7 @@ public class AsesoresDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -378,6 +382,7 @@ public class AsesoresDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -450,6 +455,7 @@ public class AsesoresDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();

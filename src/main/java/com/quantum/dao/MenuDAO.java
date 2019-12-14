@@ -6,7 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.context.FacesContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -14,6 +15,8 @@ import javax.faces.context.FacesContext;
  */
 public class MenuDAO extends DAO {
 
+    private Logger log = LoggerFactory.getLogger(MenuDAO.class); 
+    
     public Mensaje registrar(Menu menu) throws Exception {
         Mensaje validosesion;
         try {
@@ -32,6 +35,7 @@ public class MenuDAO extends DAO {
             return validosesion;
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -62,6 +66,7 @@ public class MenuDAO extends DAO {
                 lista.add(item);
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -92,6 +97,7 @@ public class MenuDAO extends DAO {
                 lista.add(item);
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -124,6 +130,7 @@ public class MenuDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -140,8 +147,8 @@ public class MenuDAO extends DAO {
             declaracion.setString(1, menu.getNombre());
             declaracion.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-
+            log.info(e.getMessage());
+            
         } finally {
             this.Cancelar();
         }
@@ -184,6 +191,7 @@ public class MenuDAO extends DAO {
                 lista.add(item);
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -228,6 +236,7 @@ public class MenuDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -268,6 +277,7 @@ public class MenuDAO extends DAO {
             nextcod = this.codigo(tipo, codigoanterior);
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();

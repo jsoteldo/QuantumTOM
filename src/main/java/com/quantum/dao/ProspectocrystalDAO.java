@@ -8,12 +8,17 @@ import com.quantum.servicios.formatoDeFechas;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author QUANTUM
  */
 public class ProspectocrystalDAO extends DAO {
+    
+    
+    private Logger log = LoggerFactory.getLogger(ProspectocrystalDAO.class);  
     
     private formatoDeFechas fechas = new formatoDeFechas();
     
@@ -56,6 +61,7 @@ public class ProspectocrystalDAO extends DAO {
             validosesion = new Mensaje("", "Registrado Exitosamente.","mdi-checkbox-marked-circle-outline","success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(),"mdi-close-circle-outline","danger");
             return validosesion;
         } finally {
@@ -77,6 +83,7 @@ public class ProspectocrystalDAO extends DAO {
             }
             return cant;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();

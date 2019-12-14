@@ -18,7 +18,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIOutput;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.bean.ViewScoped;
-import javax.inject.Named;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -179,6 +178,7 @@ public class MarketingBean implements Serializable {
             boton= "Guardar";
             
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -191,6 +191,7 @@ public class MarketingBean implements Serializable {
             message = mensaje;
             this.limpiar();
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -203,6 +204,7 @@ public class MarketingBean implements Serializable {
             message = mensaje;
             this.limpiar();
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -215,6 +217,7 @@ public class MarketingBean implements Serializable {
             message = mensaje;
             this.limpiar();
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -272,6 +275,7 @@ public class MarketingBean implements Serializable {
                 campana = campanaajax;
 
             } catch (Exception ex) {
+                log.info(ex.getMessage());
                 throw ex;
             }
         }
@@ -289,6 +293,7 @@ public class MarketingBean implements Serializable {
                 conjunto = conjuntoajax;
 
             } catch (Exception ex) {
+                log.info(ex.getMessage());
                 throw ex;
             }
         }
@@ -306,6 +311,7 @@ public class MarketingBean implements Serializable {
                 anuncio = anuncioajax;
 
             } catch (Exception ex) {
+                log.info(ex.getMessage());
                 throw ex;
             }
         }

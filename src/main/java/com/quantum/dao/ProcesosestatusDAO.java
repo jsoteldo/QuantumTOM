@@ -7,12 +7,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author QUANTUM
  */
 public class ProcesosestatusDAO extends DAO {
+    
+    private Logger log = LoggerFactory.getLogger(ProcesosestatusDAO.class);  
+    
     
     public Mensaje registrar(Procesosestatus procesosestatus) throws Exception {
         Mensaje validosesion;
@@ -27,6 +32,7 @@ public class ProcesosestatusDAO extends DAO {
             validosesion = new Mensaje("", "Registrado Exitosamente.","mdi-checkbox-marked-circle-outline","success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(),"mdi-close-circle-outline","danger");
             return validosesion;
         } finally {
@@ -53,6 +59,7 @@ public class ProcesosestatusDAO extends DAO {
             }
             
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -80,6 +87,7 @@ public class ProcesosestatusDAO extends DAO {
             }
             
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -97,8 +105,8 @@ public class ProcesosestatusDAO extends DAO {
             declaracion.setString(2, proceso.getEstatus());
             declaracion.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-
+            log.info(e.getMessage());
+            
         } finally {
             this.Cancelar();
         }
@@ -119,6 +127,7 @@ public class ProcesosestatusDAO extends DAO {
             validosesion = new Mensaje("", "Actualizado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {

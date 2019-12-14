@@ -7,12 +7,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author QUANTUM
  */
 public class TipocampoDAO extends DAO {
+    
+     private Logger log = LoggerFactory.getLogger(RolesDAO.class);  
+    
     
     public Mensaje registrar(Tipocampo tipo) throws Exception {
          Mensaje validosesion;
@@ -25,6 +30,7 @@ public class TipocampoDAO extends DAO {
             validosesion = new Mensaje("", "Registrado Exitosamente.","mdi-checkbox-marked-circle-outline","success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(),"mdi-close-circle-outline","danger");
             return validosesion;
         } finally {
@@ -51,6 +57,7 @@ public class TipocampoDAO extends DAO {
             }
             
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -69,6 +76,7 @@ public class TipocampoDAO extends DAO {
             validosesion = new Mensaje("", "Eliminado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -91,6 +99,7 @@ public class TipocampoDAO extends DAO {
             validosesion = new Mensaje("", "Actualizado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {

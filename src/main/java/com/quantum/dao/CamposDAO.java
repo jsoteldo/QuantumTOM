@@ -5,11 +5,11 @@ import com.quantum.modelos.Mensaje;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -17,6 +17,8 @@ import java.util.logging.Logger;
  */
 public class CamposDAO extends DAO {
 
+    private org.slf4j.Logger log = LoggerFactory.getLogger(CamposDAO.class);
+    
     public Mensaje registrar(Campos campo) throws Exception {
         Mensaje validosesion;
         try {
@@ -32,6 +34,7 @@ public class CamposDAO extends DAO {
             validosesion = new Mensaje("", "Registrado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -62,7 +65,8 @@ public class CamposDAO extends DAO {
             }
 
         } catch (Exception e) {
-            throw e;
+           log.info(e.getMessage());
+             throw e;
         } finally {
             this.Cancelar();
         }
@@ -86,6 +90,7 @@ public class CamposDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -105,6 +110,7 @@ public class CamposDAO extends DAO {
             validosesion = new Mensaje("", "Registrado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -135,6 +141,7 @@ public class CamposDAO extends DAO {
             validosesion = new Mensaje("", "Actualizado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -169,8 +176,10 @@ public class CamposDAO extends DAO {
             alter.execute();
             System.out.println("Saliendo");
         } catch (SQLException ex) {
+            log.info(ex.getMessage());
             Logger.getLogger(CamposDAO.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
+            
+  
         }
     }
 }

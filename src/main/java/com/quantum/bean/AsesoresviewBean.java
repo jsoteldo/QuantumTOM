@@ -74,6 +74,7 @@ public class AsesoresviewBean implements Serializable {
             message = mensaje;
             
         } catch (Exception e) {
+            log.info( e.getMessage());
             message = new Mensaje("", e.getMessage(),"mdi-close-circle-outline","danger");
         }
     }
@@ -85,6 +86,7 @@ public class AsesoresviewBean implements Serializable {
             dao = new AsesoresDAO();
             lstAsesores = dao.listar();
         } catch (Exception e) {
+            log.info( e.getMessage());
             throw e;
         }
     }

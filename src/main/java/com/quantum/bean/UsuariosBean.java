@@ -29,8 +29,8 @@ import org.slf4j.LoggerFactory;
 @SessionScoped
 public class UsuariosBean implements Serializable {
 
-    private Logger log = LoggerFactory.getLogger(UsuariosBean.class);  
-    
+    private Logger log = LoggerFactory.getLogger(UsuariosBean.class);
+
     private Asesores asesores = new Asesores();
     private Asesores asesorVali = new Asesores();
     private List<Gestion> lstpendientes;
@@ -172,6 +172,7 @@ public class UsuariosBean implements Serializable {
             dao.registrar(asesores);
             this.limpiar();
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -236,6 +237,7 @@ public class UsuariosBean implements Serializable {
                 pa = Integer.parseInt(daodistribucion.cantprospectos(usuariosBean.asesorVali));//usuariosBean
                 repeat = daodistribucion.repeat();
             } catch (Exception e) {
+                log.info(e.getMessage());
                 throw e;
             }
         } else {
@@ -246,10 +248,10 @@ public class UsuariosBean implements Serializable {
 
     public void finalSession() throws Exception {
         FacesContext contex = FacesContext.getCurrentInstance();
-        log.info( contex.getExternalContext().getApplicationContextPath().toString());
+        log.info(contex.getExternalContext().getApplicationContextPath().toString());
         contex.getExternalContext().redirect("../Login.xhtml");
         contex.getExternalContext().invalidateSession();
-        
+
         /*FacesContext context = FacesContext.getCurrentInstance();
 
         ExternalContext externalContext = context.getExternalContext();
@@ -259,8 +261,7 @@ public class UsuariosBean implements Serializable {
         HttpSession httpSession = (HttpSession) session;
 
         httpSession.invalidate();
-        */
-        
+         */
     }
 
     public void cambiocontrasena() {
@@ -274,6 +275,7 @@ public class UsuariosBean implements Serializable {
             this.limpiar();
             message = mensaje;
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -307,9 +309,11 @@ public class UsuariosBean implements Serializable {
             }
 
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+           log.info(e.getMessage());
+
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
+
         }
     }
 

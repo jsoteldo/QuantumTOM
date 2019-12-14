@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -16,6 +18,9 @@ import java.util.List;
  */
 public class ProspectosDAO extends DAO {
 
+    
+     private Logger log = LoggerFactory.getLogger(ProspectosDAO.class);  
+    
     formatoDeFechas formatos = new formatoDeFechas();
 
     public String maxcodigo(String origen) {
@@ -42,7 +47,8 @@ public class ProspectosDAO extends DAO {
 
             return codigo;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
+            
         }
 
         return null;
@@ -78,6 +84,7 @@ public class ProspectosDAO extends DAO {
             return validosesion;
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -104,6 +111,7 @@ public class ProspectosDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -127,6 +135,7 @@ public class ProspectosDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -192,6 +201,7 @@ public class ProspectosDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -260,6 +270,7 @@ public class ProspectosDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -303,6 +314,7 @@ public class ProspectosDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -346,6 +358,7 @@ public class ProspectosDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -414,6 +427,7 @@ public class ProspectosDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -456,6 +470,7 @@ public class ProspectosDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -497,6 +512,7 @@ public class ProspectosDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -514,7 +530,7 @@ public class ProspectosDAO extends DAO {
             declaracion.setString(2, prospecto.getCodigo());
             declaracion.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
 
         } finally {
             this.Cancelar();
@@ -572,6 +588,7 @@ public class ProspectosDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -613,6 +630,7 @@ public class ProspectosDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -661,6 +679,7 @@ public class ProspectosDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -708,6 +727,7 @@ public class ProspectosDAO extends DAO {
             }
             return lista;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -753,6 +773,7 @@ public class ProspectosDAO extends DAO {
             }
             return lista;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -803,6 +824,7 @@ public class ProspectosDAO extends DAO {
             }
             return lista;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();

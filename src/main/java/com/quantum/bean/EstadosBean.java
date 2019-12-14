@@ -93,6 +93,8 @@ public class EstadosBean implements Serializable {
                 this.modificar();
             }
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -105,6 +107,8 @@ public class EstadosBean implements Serializable {
                 this.modificarmotivo();
             }
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -135,6 +139,8 @@ public class EstadosBean implements Serializable {
             message = mensaje;
 
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
 
         }
@@ -150,6 +156,8 @@ public class EstadosBean implements Serializable {
             message = mensaje;
 
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
 
         }
@@ -165,6 +173,8 @@ public class EstadosBean implements Serializable {
             lstEstados = dao.listar();
             lstMotivos = daopro.listar();
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -175,6 +185,8 @@ public class EstadosBean implements Serializable {
             dao = new EstadosDAO();
             lstEstados = dao.listar();
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -203,6 +215,8 @@ public class EstadosBean implements Serializable {
             FacesContext contex = FacesContext.getCurrentInstance();
             contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath()+"/template/listaEstados.xhtml");
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -219,6 +233,8 @@ public class EstadosBean implements Serializable {
             FacesContext contex = FacesContext.getCurrentInstance();
             contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath()+"/template/listaMotivos.xhtml");
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -231,6 +247,8 @@ public class EstadosBean implements Serializable {
             dao.borrar(estados);
             this.listar();
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -243,6 +261,8 @@ public class EstadosBean implements Serializable {
             dao.borrar(motivo);
             this.listar();
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             throw e;
         }
     }

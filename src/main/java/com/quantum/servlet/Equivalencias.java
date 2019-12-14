@@ -6,6 +6,7 @@
 package com.quantum.servlet;
 
 import com.google.gson.Gson;
+import com.quantum.bean.AsesoresviewBean;
 import com.quantum.bean.SubeprospectosBean;
 import com.quantum.dao.ArchivoDAO;
 import com.quantum.modelos.Archivo;
@@ -20,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -28,6 +30,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Equivalencias", urlPatterns = {"/Equivalencias"})
 public class Equivalencias extends HttpServlet {
 
+    private org.slf4j.Logger log = LoggerFactory.getLogger(Equivalencias.class);      
+    
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -102,7 +107,7 @@ public class Equivalencias extends HttpServlet {
             response(resp, gson.toJson(msj));
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
         }
 
     }

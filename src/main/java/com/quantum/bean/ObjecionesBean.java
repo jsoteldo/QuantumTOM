@@ -128,6 +128,7 @@ public class ObjecionesBean implements Serializable {
                 this.modificarobjecion();
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -142,6 +143,7 @@ public class ObjecionesBean implements Serializable {
             }
             this.limpiar();
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -167,6 +169,7 @@ public class ObjecionesBean implements Serializable {
             this.limpiar();
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -181,6 +184,7 @@ public class ObjecionesBean implements Serializable {
             message = mensaje;
             this.limpiar();
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -202,6 +206,7 @@ public class ObjecionesBean implements Serializable {
             lstTipobjecion = tipdao.listar();
             //boton = "Agregar";
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -212,6 +217,7 @@ public class ObjecionesBean implements Serializable {
             dao = new TipobjecionesDAO();
             lstTipobjecion = dao.listar();
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -244,6 +250,7 @@ public class ObjecionesBean implements Serializable {
             // FacesContext contex = FacesContext.getCurrentInstance();
             // contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath()+"/template/listaObjeciones.xhtml");
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -261,6 +268,7 @@ public class ObjecionesBean implements Serializable {
             FacesContext contex = FacesContext.getCurrentInstance();
             contex.getExternalContext().redirect("/Quantum/template/listaObjeciones.xhtml");
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -281,6 +289,7 @@ public class ObjecionesBean implements Serializable {
             this.limpiar();
             this.listar();
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -293,6 +302,7 @@ public class ObjecionesBean implements Serializable {
             dao.borrar(objecion);
             this.listar();
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }

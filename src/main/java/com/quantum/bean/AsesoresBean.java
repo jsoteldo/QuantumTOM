@@ -144,6 +144,7 @@ public class AsesoresBean implements Serializable {
                 this.modificar();
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -187,6 +188,7 @@ public class AsesoresBean implements Serializable {
             message = mensaje;
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -199,6 +201,7 @@ public class AsesoresBean implements Serializable {
             lstAsesores = dao.listar();
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -221,6 +224,7 @@ public class AsesoresBean implements Serializable {
             FacesContext contex = FacesContext.getCurrentInstance();
             contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/listaAsesores.xhtml");
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -234,6 +238,7 @@ public class AsesoresBean implements Serializable {
             dao.borrar(asesor);
             this.listar();
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -260,6 +265,7 @@ public class AsesoresBean implements Serializable {
 
             }
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             Logger.getLogger(AsesoresBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

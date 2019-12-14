@@ -8,6 +8,7 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.bean.ViewScoped;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -16,7 +17,8 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class ProspectocrystalBean implements Serializable {
-
+    private org.slf4j.Logger log = LoggerFactory.getLogger(ProspectocrystalBean.class);   
+    
     private Prospectocrystal prospecto = new Prospectocrystal();
     
     private Mensaje message = new Mensaje(false, "none !important", "");
@@ -58,6 +60,7 @@ public class ProspectocrystalBean implements Serializable {
             this.limpiar();
            
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(),"mdi-close-circle-outline","danger");
             
         }

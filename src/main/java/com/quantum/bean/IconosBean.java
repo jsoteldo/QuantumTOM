@@ -44,6 +44,7 @@ public class IconosBean implements Serializable {
             dao = new IconosDAO();
             lstIconos = dao.listar();
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }

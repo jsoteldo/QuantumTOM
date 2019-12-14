@@ -40,10 +40,12 @@ import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.LoggerFactory;
 
 @ManagedBean
 @ViewScoped
 public class SubeprospectosBean {
+    private org.slf4j.Logger log = LoggerFactory.getLogger(SubeprospectosBean.class);
 
     private Mensaje message = new Mensaje(false, "none !important", "");
     private Part file;
@@ -161,6 +163,8 @@ public class SubeprospectosBean {
             daoarchivo.registrar(archivo);
 
         } catch (IOException e) {
+            log.info(e.getMessage());
+
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             e.printStackTrace();
         }
@@ -241,8 +245,12 @@ public class SubeprospectosBean {
             campos = cabecera;
 
         } catch (FileNotFoundException e) {
+            log.info(e.getMessage());
+
             System.out.println(e.getMessage().toString());
         } catch (IOException e) {
+            log.info(e.getMessage());
+
             System.out.println(e.getMessage().toString());
         }
     }
@@ -396,9 +404,13 @@ public class SubeprospectosBean {
             Files.deleteIfExists(Paths.get(archivo));
             
         } catch (FileNotFoundException e) {
+            log.info(e.getMessage());
+
             mensaje = new Mensaje("",e.getMessage(), "mdi-close-circle-outline", "danger");
             
         } catch (IOException e) {
+            log.info(e.getMessage());
+
             mensaje = new Mensaje("",e.getMessage(), "mdi-close-circle-outline", "danger");
         }
         return mensaje;
@@ -618,10 +630,14 @@ public class SubeprospectosBean {
             Files.deleteIfExists(Paths.get(archivo));
             return mensaje;
         } catch (FileNotFoundException e) {
+            log.info(e.getMessage());
+
             mensaje = new Mensaje("", e.toString(), "mdi-close-circle-outline", "danger");
 
             return mensaje;
         } catch (IOException e) {
+            log.info(e.getMessage());
+
             mensaje = new Mensaje("", e.toString(), "mdi-close-circle-outline", "danger");
             e.printStackTrace();
             return mensaje;
@@ -641,6 +657,8 @@ public class SubeprospectosBean {
                 lstDistribucion = dao.listarsup();
                 prospectospAsignar = dao.cantprospectos(usuariosBean.getAsesorVali());
             } catch (Exception e) {
+                log.info(e.getMessage());
+
                 throw e;
             }
         } else {
@@ -663,6 +681,8 @@ public class SubeprospectosBean {
                 prospectospAsignar = dao.cantprospectossa(usuariosBean.getAsesorVali());
                 lstprospectosrepetidos = dao.listarrepetidos();
             } catch (Exception e) {
+                log.info(e.getMessage());
+
                 throw e;
             }
         } else {
@@ -679,6 +699,8 @@ public class SubeprospectosBean {
             message = mensaje;
             //dao.actualizarprospectos();
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             throw e;
         }
@@ -702,7 +724,8 @@ public class SubeprospectosBean {
             session.setAttribute("viene", "subeprospectos");
             contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/gestion.xhtml");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
+
             throw e;
         }
 
@@ -719,7 +742,8 @@ public class SubeprospectosBean {
 
             lstasesores = daoasesor.listarporasignar(prospectomodal.getCod_asesor());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
+
             throw e;
         }
 
@@ -735,6 +759,8 @@ public class SubeprospectosBean {
             message = dao.actualizasesor(prospectomodal, newasesor);
             newasesor = null;
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             throw e;
         }
@@ -751,6 +777,8 @@ public class SubeprospectosBean {
             message = dao.checkokasesor(prospecto);
             newasesor = null;
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             throw e;
         }

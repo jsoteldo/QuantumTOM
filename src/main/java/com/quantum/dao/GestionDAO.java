@@ -10,13 +10,16 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author QUANTUM
  */
 public class GestionDAO extends DAO {
-
+    private Logger log = LoggerFactory.getLogger(GestionDAO.class); 
+    
     private formatoDeFechas fechas = new formatoDeFechas();
 
     public Mensaje modificar(Gestion gestion) throws Exception {
@@ -64,7 +67,7 @@ public class GestionDAO extends DAO {
             validosesion = new Mensaje("", "Actualizado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -112,6 +115,7 @@ public class GestionDAO extends DAO {
             declaracion.setString(27, gestion.getCondipago());
             declaracion.executeUpdate();
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -180,6 +184,7 @@ public class GestionDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -260,6 +265,7 @@ public class GestionDAO extends DAO {
                 prospecto.setImgasesor(resultado.getString("asesores.IMG"));
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
         return prospecto;
@@ -282,6 +288,7 @@ public class GestionDAO extends DAO {
             }
             return cant;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -307,6 +314,7 @@ public class GestionDAO extends DAO {
             }
             return cant;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -334,6 +342,7 @@ public class GestionDAO extends DAO {
             }
             return cant;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -358,6 +367,7 @@ public class GestionDAO extends DAO {
             }
             return cant;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -389,6 +399,7 @@ public class GestionDAO extends DAO {
             }
             return cant;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -499,6 +510,7 @@ public class GestionDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -606,6 +618,7 @@ public class GestionDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -714,6 +727,7 @@ public class GestionDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -805,6 +819,7 @@ public class GestionDAO extends DAO {
             }
             return lista;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -893,6 +908,7 @@ public class GestionDAO extends DAO {
             }
             return lista;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -979,6 +995,7 @@ public class GestionDAO extends DAO {
             }
             return lista;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -1073,6 +1090,7 @@ public class GestionDAO extends DAO {
             }
             return lista;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -1159,6 +1177,7 @@ public class GestionDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -1247,6 +1266,7 @@ public class GestionDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -1333,6 +1353,7 @@ public class GestionDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -1357,7 +1378,7 @@ public class GestionDAO extends DAO {
             validosesion = this.checkokasesor(gestion);
             return validosesion;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -1380,7 +1401,7 @@ public class GestionDAO extends DAO {
             validosesion = new Mensaje("", "Actualizado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -1473,6 +1494,7 @@ public class GestionDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -1561,6 +1583,7 @@ public class GestionDAO extends DAO {
             }
             return lista;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();

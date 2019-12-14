@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -19,7 +20,8 @@ import javax.servlet.http.HttpSession;
 @ManagedBean
 @ViewScoped
 public class OrigenesBean implements Serializable {
-
+    private org.slf4j.Logger log = LoggerFactory.getLogger(OrigenesBean.class);   
+    
     private Origenes origenes = new Origenes();
     private List<Origenes> lstOrigenes;
 
@@ -73,6 +75,8 @@ public class OrigenesBean implements Serializable {
                 this.modificar();
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
+            
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -88,6 +92,8 @@ public class OrigenesBean implements Serializable {
             this.limpiar();
            
         } catch (Exception e) {
+            log.info(e.getMessage());
+            
             message = new Mensaje("", e.getMessage(),"mdi-close-circle-outline","danger");
             
         }
@@ -100,6 +106,8 @@ public class OrigenesBean implements Serializable {
             dao = new OrigenesDAO();
             lstOrigenes = dao.listar();
         } catch (Exception e) {
+            log.info(e.getMessage());
+            
             throw e;
         }
     }
@@ -122,6 +130,8 @@ public class OrigenesBean implements Serializable {
             FacesContext contex = FacesContext.getCurrentInstance();
             contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath()+"/template/listaOrigenes.xhtml");
         } catch (Exception e) {
+            log.info(e.getMessage());
+            
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -134,6 +144,8 @@ public class OrigenesBean implements Serializable {
             dao.borrar(origen);
             this.listar();
         } catch (Exception e) {
+            log.info(e.getMessage());
+            
             throw e;
         }
     }

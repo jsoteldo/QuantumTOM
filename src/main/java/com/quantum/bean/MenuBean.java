@@ -96,6 +96,7 @@ public class MenuBean implements Serializable {
 
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -126,6 +127,7 @@ public class MenuBean implements Serializable {
             this.limpiar();
             message = mensaje;
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -137,6 +139,7 @@ public class MenuBean implements Serializable {
             lstMenu = dao.listarMenu();
             lstSubmenu = dao.listarSubmenu();
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -151,6 +154,7 @@ public class MenuBean implements Serializable {
                 dao = new MenuDAO();
                 lstMenu = dao.listaMenu();
             } catch (Exception ex) {
+                log.info(ex.getMessage());
                 throw ex;
             }
         }
@@ -180,6 +184,7 @@ public class MenuBean implements Serializable {
             dao.borrar(menu);
             this.listar();
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }

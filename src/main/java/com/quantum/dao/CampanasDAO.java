@@ -1,12 +1,12 @@
 package com.quantum.dao;
 
 import com.quantum.modelos.Campanas;
-import com.quantum.modelos.Conjunto;
 import com.quantum.modelos.Mensaje;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class CampanasDAO extends DAO {
 
+    private org.slf4j.Logger log = LoggerFactory.getLogger(CampanasDAO.class);
+    
     public Mensaje registrar(Campanas campanas) throws Exception {
         Mensaje validosesion;
         try {
@@ -26,6 +28,7 @@ public class CampanasDAO extends DAO {
             validosesion = new Mensaje("", "Registrado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -53,6 +56,7 @@ public class CampanasDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -78,6 +82,7 @@ public class CampanasDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -93,8 +98,8 @@ public class CampanasDAO extends DAO {
             declaracion.setString(1, campanas.getCodigo());
             declaracion.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-
+            log.info(e.getMessage());
+            
         } finally {
             this.Cancelar();
         }
@@ -116,6 +121,7 @@ public class CampanasDAO extends DAO {
             validosesion = new Mensaje("", "Actualizado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -143,6 +149,7 @@ public class CampanasDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();

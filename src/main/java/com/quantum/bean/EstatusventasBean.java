@@ -97,6 +97,8 @@ public class EstatusventasBean implements Serializable {
                 this.modificar();
             }
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -109,6 +111,8 @@ public class EstatusventasBean implements Serializable {
                 this.modificarproceso();
             }
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -133,6 +137,8 @@ public class EstatusventasBean implements Serializable {
             message = mensaje;
 
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
 
         }
@@ -148,6 +154,8 @@ public class EstatusventasBean implements Serializable {
             message = mensaje;
 
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
 
         }
@@ -163,6 +171,8 @@ public class EstatusventasBean implements Serializable {
             lstEstatus = dao.listar();
             lstProcesos = daopro.listar();
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -173,6 +183,8 @@ public class EstatusventasBean implements Serializable {
             dao = new EstatusventasDAO();
             lstEstatus = dao.listar();
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -203,6 +215,8 @@ public class EstatusventasBean implements Serializable {
             FacesContext contex = FacesContext.getCurrentInstance();
             contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath()+"/template/listaEstatus.xhtml");
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -219,6 +233,8 @@ public class EstatusventasBean implements Serializable {
             FacesContext contex = FacesContext.getCurrentInstance();
             contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath()+"/template/listaEstatus.xhtml");
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -231,6 +247,8 @@ public class EstatusventasBean implements Serializable {
             dao.borrar(estatus);
             this.listar();
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -243,6 +261,8 @@ public class EstatusventasBean implements Serializable {
             dao.borrar(proceso);
             this.listar();
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             throw e;
         }
     }

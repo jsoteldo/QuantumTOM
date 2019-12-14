@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
 import net.bootsfaces.utils.FacesMessages;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,6 +24,8 @@ import net.bootsfaces.utils.FacesMessages;
 @ManagedBean
 @ViewScoped
 public class TipocampoBean implements Serializable {
+
+    private org.slf4j.Logger log = LoggerFactory.getLogger(TipocampoBean.class);
 
     private Mensaje message = new Mensaje(false, "none !important", "a");
 
@@ -144,6 +147,8 @@ public class TipocampoBean implements Serializable {
                 this.modificarcampo();
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -158,6 +163,8 @@ public class TipocampoBean implements Serializable {
             }
             this.limpiar();
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -186,6 +193,8 @@ public class TipocampoBean implements Serializable {
             this.limpiar();
 
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -201,6 +210,8 @@ public class TipocampoBean implements Serializable {
             this.notificacion(message);
             this.limpiar();
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -222,6 +233,8 @@ public class TipocampoBean implements Serializable {
             lstTipocampo = tipdao.listar();
             //boton = "Agregar";
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             throw e;
         }
     }
@@ -232,6 +245,8 @@ public class TipocampoBean implements Serializable {
             dao = new TipocampoDAO();
             lstTipocampo = dao.listar();
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             throw e;
         }
     }
@@ -275,6 +290,8 @@ public class TipocampoBean implements Serializable {
             // FacesContext contex = FacesContext.getCurrentInstance();
             // contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath()+"/template/listaObjeciones.xhtml");
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -292,6 +309,8 @@ public class TipocampoBean implements Serializable {
             // FacesContext contex = FacesContext.getCurrentInstance();
             // contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath()+"/template/listaObjeciones.xhtml");
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -313,6 +332,8 @@ public class TipocampoBean implements Serializable {
             this.limpiar();
             this.listar();
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             throw e;
         }
     }
@@ -329,6 +350,8 @@ public class TipocampoBean implements Serializable {
             this.limpiar();
             this.listar();
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             throw e;
         }
     }

@@ -17,6 +17,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpSession;
 public class RolesBean implements Serializable {
 
     private Mensaje message = new Mensaje(false, "none !important", "");
+    private org.slf4j.Logger log = LoggerFactory.getLogger(RolesBean.class);
 
     private Roles rol = new Roles();
     private List<Roles> lstRoles;
@@ -113,6 +115,8 @@ public class RolesBean implements Serializable {
                 this.modificar();
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -149,6 +153,8 @@ public class RolesBean implements Serializable {
             message = mensaje;
 
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
 
         }
@@ -156,11 +162,13 @@ public class RolesBean implements Serializable {
     }
 
     public void listar() throws Exception {
-        RolesDAO dao= new RolesDAO();
+        RolesDAO dao = new RolesDAO();
         try {
             lstRoles = dao.listar();
 
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             throw e;
         }
     }
@@ -174,6 +182,8 @@ public class RolesBean implements Serializable {
             lstMenu = daomenu.listarMenu();
             lstSubmenu = daomenu.listarSubmenu();
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             throw e;
         }
     }
@@ -182,7 +192,7 @@ public class RolesBean implements Serializable {
 
         FacesContext contex = FacesContext.getCurrentInstance();
         session.setAttribute("rolparam", rol);
-        contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath()+"/template/roles.xhtml");
+        contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/roles.xhtml");
     }
 
     public void modificar() throws Exception {
@@ -209,8 +219,10 @@ public class RolesBean implements Serializable {
             this.limpiar();
             message = mensaje;
             FacesContext contex = FacesContext.getCurrentInstance();
-            contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath()+"/template/listaRoles.xhtml");
+            contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/listaRoles.xhtml");
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -223,13 +235,15 @@ public class RolesBean implements Serializable {
             dao.borrar(rol);
             this.listar();
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             throw e;
         }
     }
-    
+
     public void capturarrol(HttpSession session) {
         MenuDAO daomenu;
-        
+
         lstMenu = null;
         lstSubmenu = null;
 
@@ -242,26 +256,25 @@ public class RolesBean implements Serializable {
                 session.removeAttribute("rolparam");
 
                 lstMenu = daomenu.listarMenu();
-                
-                for(Menu item : lstMenu){
-                    for(String permiso : rol.getPermiso()){
-                        if(item.getCodigo().equals(permiso.trim())){
+
+                for (Menu item : lstMenu) {
+                    for (String permiso : rol.getPermiso()) {
+                        if (item.getCodigo().equals(permiso.trim())) {
                             item.setCheck("true");
                         }
                     }
                 }
-                
-                lstSubmenu= daomenu.listarSubmenu();
-                
-                for(Menu item : lstSubmenu){
-                    for(String permiso : rol.getPermiso()){
-                        if(item.getCodigo().equals(permiso.trim())){
+
+                lstSubmenu = daomenu.listarSubmenu();
+
+                for (Menu item : lstSubmenu) {
+                    for (String permiso : rol.getPermiso()) {
+                        if (item.getCodigo().equals(permiso.trim())) {
                             item.setCheck("true");
                         }
                     }
                 }
-                
-                
+
                 boton = "Actualizar";
             } else {
                 rol = new Roles();
@@ -270,6 +283,8 @@ public class RolesBean implements Serializable {
                 lstSubmenu = daomenu.listarSubmenu();
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }

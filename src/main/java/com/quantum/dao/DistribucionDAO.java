@@ -12,12 +12,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author QUANTUM
  */
 public class DistribucionDAO extends DAO {
+
+    private org.slf4j.Logger log = LoggerFactory.getLogger(DistribucionDAO.class);
 
     formatoDeFechas formatos = new formatoDeFechas();
 
@@ -119,6 +122,7 @@ public class DistribucionDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -151,6 +155,7 @@ public class DistribucionDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -185,6 +190,7 @@ public class DistribucionDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -211,6 +217,7 @@ public class DistribucionDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -240,6 +247,7 @@ public class DistribucionDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -266,6 +274,7 @@ public class DistribucionDAO extends DAO {
 
             return String.valueOf(total);
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -287,6 +296,7 @@ public class DistribucionDAO extends DAO {
             }
             return cant;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -325,6 +335,7 @@ public class DistribucionDAO extends DAO {
             return msg;
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             msg = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return msg;
         } finally {
@@ -385,6 +396,7 @@ public class DistribucionDAO extends DAO {
             return msg;
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             msg = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return msg;
         } finally {
@@ -398,7 +410,7 @@ public class DistribucionDAO extends DAO {
         ProspectosDAO daoprospect = new ProspectosDAO();
         Calendar fecha = Calendar.getInstance();
         String codprospecto = daoprospect.retornacodigo(prospecto.getCorreo());
-            
+
         try {
 
             this.Conectar();
@@ -432,7 +444,7 @@ public class DistribucionDAO extends DAO {
             return msg;
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
             msg = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return msg;
         } finally {
@@ -471,6 +483,7 @@ public class DistribucionDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -492,6 +505,7 @@ public class DistribucionDAO extends DAO {
             validosesion = new Mensaje("", "Asignados Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -572,6 +586,7 @@ public class DistribucionDAO extends DAO {
             return msg;
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             msg = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return msg;
         } finally {

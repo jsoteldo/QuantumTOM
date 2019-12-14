@@ -9,12 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author QUANTUM
  */
 public class FbleadsDAO extends DAO {
+
+    private org.slf4j.Logger log = LoggerFactory.getLogger(FbleadsDAO.class);
 
     public Mensaje registrar(String campos, StringBuilder query) throws Exception {
 
@@ -27,6 +30,7 @@ public class FbleadsDAO extends DAO {
             validoregistrro = new Mensaje("", "Leads Insertados.", "mdi-checkbox-marked-circle-outline", "success");
             return validoregistrro;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validoregistrro = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validoregistrro;
         } finally {
@@ -48,8 +52,10 @@ public class FbleadsDAO extends DAO {
             actualizaad.executeUpdate();
 
         } catch (SQLException ex) {
+            log.info(ex.getMessage());
             Logger.getLogger(FbleadsDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             Logger.getLogger(FbleadsDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             this.Cancelar();
@@ -79,12 +85,12 @@ public class FbleadsDAO extends DAO {
                 mensaje = new Mensaje("", "No hay anuncios nuevos.", "mdi-checkbox-marked-circle-outline", "success");
             }
 
-            
-
         } catch (SQLException ex) {
+            log.info(ex.getMessage());
             mensaje = new Mensaje("", ex.getMessage(), "mdi-close-circle-outline", "danger");
             return mensaje;
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             mensaje = new Mensaje("", ex.getMessage(), "mdi-close-circle-outline", "danger");
             return mensaje;
         } finally {
@@ -106,14 +112,14 @@ public class FbleadsDAO extends DAO {
                     contador++;
                 }
             }
-            if(contador==0){
+            if (contador == 0) {
                 mensaje = new Mensaje("", "No hay anuncios nuevos.", "mdi-checkbox-marked-circle-outline", "success");
-            }else{
+            } else {
                 mensaje = new Mensaje("", "Se insertaron <b>" + contador + "</b> anuncios.", "mdi-checkbox-marked-circle-outline", "success");
             }
-            
 
         } catch (SQLException ex) {
+            log.info(ex.getMessage());
             mensaje = new Mensaje("", ex.getMessage(), "mdi-close-circle-outline", "danger");
 
         }
@@ -143,8 +149,10 @@ public class FbleadsDAO extends DAO {
             }
 
         } catch (SQLException ex) {
+            log.info(ex.getMessage());
             mensaje = new Mensaje("", ex.getMessage(), "mdi-close-circle-outline", "danger");
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             mensaje = new Mensaje("", ex.getMessage(), "mdi-close-circle-outline", "danger");
         }
         return mensaje;
@@ -164,16 +172,15 @@ public class FbleadsDAO extends DAO {
                 }
 
             }
-            
-            if(contador==0){
+
+            if (contador == 0) {
                 mensaje = new Mensaje("", "No hay conjuntos nuevos.", "mdi-checkbox-marked-circle-outline", "success");
-            }else{
+            } else {
                 mensaje = new Mensaje("", "Se insertaron <b>" + contador + "</b> conjuntos.", "mdi-checkbox-marked-circle-outline", "success");
             }
-            
-            
 
         } catch (SQLException ex) {
+            log.info(ex.getMessage());
             mensaje = new Mensaje("", ex.getMessage(), "mdi-close-circle-outline", "danger");
         }
         return mensaje;
@@ -198,6 +205,7 @@ public class FbleadsDAO extends DAO {
             validoinsercion = new Mensaje("", "Prospectos Insertados.", "mdi-checkbox-marked-circle-outline", "success");
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             validoinsercion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
 
         } finally {
@@ -258,6 +266,7 @@ public class FbleadsDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -363,6 +372,7 @@ public class FbleadsDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -396,6 +406,7 @@ public class FbleadsDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -427,6 +438,7 @@ public class FbleadsDAO extends DAO {
             }
              */
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -509,7 +521,7 @@ public class FbleadsDAO extends DAO {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
         } finally {
             this.Cancelar();
         }

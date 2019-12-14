@@ -115,6 +115,7 @@ public class MenurolesBean implements Serializable {
                 this.modificar();
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -147,6 +148,7 @@ public class MenurolesBean implements Serializable {
             this.limpiar();
           //  message = mensaje;
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
 
         }
@@ -160,6 +162,7 @@ public class MenurolesBean implements Serializable {
             lstRoles = dao.listar();*/
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -176,6 +179,7 @@ public class MenurolesBean implements Serializable {
             lstMenu = daomenu.listarMenu();
             lstSubmenu = daomenu.listarSubmenu();
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -192,6 +196,7 @@ public class MenurolesBean implements Serializable {
             FacesContext contex = FacesContext.getCurrentInstance();
             contex.getExternalContext().redirect("/Quantum/template/listaRoles.xhtml");*/
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }

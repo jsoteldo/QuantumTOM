@@ -2,11 +2,12 @@
 package com.quantum.dao;
 
 import com.quantum.modelos.Iconos;
-import com.quantum.modelos.Origenes;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -14,6 +15,7 @@ import java.util.List;
  */
 public class IconosDAO extends DAO {
     
+    private Logger log = LoggerFactory.getLogger(IconosDAO.class); 
     public List<Iconos> listar() throws Exception {
         List<Iconos> lista;
         ResultSet resultado;
@@ -31,6 +33,7 @@ public class IconosDAO extends DAO {
             }
             
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();

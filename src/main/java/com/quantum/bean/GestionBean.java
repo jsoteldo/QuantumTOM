@@ -386,7 +386,9 @@ public class GestionBean implements Serializable {
             //this.limpiar();
             message = mensaje;
         } catch (Exception e) {
-            System.out.println("aqui " + e.getLocalizedMessage());
+            
+            log.info(e.getMessage());
+            log.info(e.getLocalizedMessage());
             throw e;
         }
     }
@@ -413,6 +415,7 @@ public class GestionBean implements Serializable {
             //this.pedirnuevo();
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -492,6 +495,7 @@ public class GestionBean implements Serializable {
 
             }
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             Logger.getLogger(GestionBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -557,6 +561,7 @@ public class GestionBean implements Serializable {
 
             }
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             Logger.getLogger(GestionBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -664,6 +669,7 @@ public class GestionBean implements Serializable {
             }
 
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             Logger.getLogger(AsesoresBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -725,6 +731,7 @@ public class GestionBean implements Serializable {
                 muestramotivos = true;
             }
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             Logger.getLogger(AsesoresBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -775,6 +782,7 @@ public class GestionBean implements Serializable {
             lstorigenes = daori.listar();
 
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             Logger.getLogger(AsesoresBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -822,6 +830,7 @@ public class GestionBean implements Serializable {
             }
 
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             throw ex;
         }
 
@@ -858,6 +867,7 @@ public class GestionBean implements Serializable {
                 }
 
             } catch (Exception ex) {
+                log.info(ex.getMessage());
                 throw ex;
             }
         }
@@ -890,6 +900,7 @@ public class GestionBean implements Serializable {
                 }
 
             } catch (Exception ex) {
+                log.info(ex.getMessage());
                 throw ex;
             }
         }
@@ -903,6 +914,7 @@ public class GestionBean implements Serializable {
                 dao = new LotesDAO();
                 lstlotes = dao.lotesporparcelas(opcion);
             } catch (Exception ex) {
+                log.info(ex.getMessage());
                 throw ex;
             }
         }
@@ -962,7 +974,7 @@ public class GestionBean implements Serializable {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
         }
     }
 }

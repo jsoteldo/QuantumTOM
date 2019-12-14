@@ -25,6 +25,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -36,6 +37,7 @@ public class ProspectosBean implements Serializable {
 
     UsuariosBean user;
     Asesores ase;
+    private org.slf4j.Logger log = LoggerFactory.getLogger(ProspectosBean.class);
 
     private Mensaje message = new Mensaje(false, "none !important", "");
     private formatoDeFechas fechas = new formatoDeFechas();
@@ -56,7 +58,7 @@ public class ProspectosBean implements Serializable {
     private List<Gestion> lstProspectosdescar;
     private List<Gestion> lstProspectosgestion;
     private List<Gestion> lstresultados;
-    
+
     private OrigenesDAO origenesdao;
     private List<Origenes> lstorigenes;
     private List<Distritos> lstdistritos;
@@ -253,10 +255,6 @@ public class ProspectosBean implements Serializable {
         this.lstresultados = lstresultados;
     }
 
-    
-
-    
-    
     public void limpiar() {
         prospectos.setCargo("");
         prospectos.setCodigo("");
@@ -281,6 +279,7 @@ public class ProspectosBean implements Serializable {
                 this.modificar();
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -302,7 +301,7 @@ public class ProspectosBean implements Serializable {
                     mensajeasignacion = daodistribucion.distribuirdeprospecto(prospectos, asesores);
                     if (mensajeasignacion.getClase().equals("danger")) {
                         message = mensajeasignacion;
-                    }   
+                    }
                 }
             } else {
                 message = mensaje;
@@ -311,6 +310,7 @@ public class ProspectosBean implements Serializable {
             this.limpiar();
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -346,6 +346,7 @@ public class ProspectosBean implements Serializable {
                 lstorigenes = daori.listar();*/
 
             } catch (Exception e) {
+                log.info(e.getMessage());
                 throw e;
             }
         } else {
@@ -377,6 +378,7 @@ public class ProspectosBean implements Serializable {
                 lstProspectospendientes = dao.listarpendientes(usuariosBean.getAsesorVali());
 
             } catch (Exception e) {
+                log.info(e.getMessage());
                 throw e;
             }
         } else {
@@ -407,6 +409,7 @@ public class ProspectosBean implements Serializable {
                 lstProspectosdescar = dao.listardescartados(usuariosBean.getAsesorVali());
 
             } catch (Exception e) {
+                log.info(e.getMessage());
                 throw e;
             }
         } else {
@@ -436,6 +439,7 @@ public class ProspectosBean implements Serializable {
                 }
                 lstProspectosporasignar = daoasigna.listarporasignar();
             } catch (Exception e) {
+                log.info(e.getMessage());
                 throw e;
             }
         } else {
@@ -443,7 +447,7 @@ public class ProspectosBean implements Serializable {
         }
 
     }
-    
+
     public void listarporAsignar2(HttpSession session) throws Exception {
 
         GestionDAO daoasigna;
@@ -465,6 +469,7 @@ public class ProspectosBean implements Serializable {
                 }
                 lstresultados = daoasigna.lstvh2();
             } catch (Exception e) {
+                log.info(e.getMessage());
                 throw e;
             }
         } else {
@@ -495,6 +500,7 @@ public class ProspectosBean implements Serializable {
                 lstProspectosgestion = dao.listargestion(usuariosBean.getAsesorVali());
 
             } catch (Exception e) {
+                log.info(e.getMessage());
                 throw e;
             }
         } else {
@@ -530,6 +536,7 @@ public class ProspectosBean implements Serializable {
                 dao = new GestionDAO();
                 lstProspectos = dao.listarprospectosAsesor(asesor);
             } catch (Exception e) {
+                log.info(e.getMessage());
                 throw e;
             }
 
@@ -551,7 +558,7 @@ public class ProspectosBean implements Serializable {
             session.removeAttribute("estado");
 
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            log.info(ex.getMessage());
             Logger.getLogger(ProspectosBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -573,7 +580,7 @@ public class ProspectosBean implements Serializable {
             session.removeAttribute("estado");
 
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            log.info(ex.getMessage());
             Logger.getLogger(ProspectosBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -595,7 +602,7 @@ public class ProspectosBean implements Serializable {
             session.removeAttribute("estado");
 
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            log.info(ex.getMessage());
             Logger.getLogger(ProspectosBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -616,7 +623,7 @@ public class ProspectosBean implements Serializable {
             session.removeAttribute("estado");
 
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            log.info(ex.getMessage());
             Logger.getLogger(ProspectosBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -633,7 +640,7 @@ public class ProspectosBean implements Serializable {
             session.removeAttribute("estado");
 
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            log.info(ex.getMessage());
             Logger.getLogger(ProspectosBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -673,6 +680,8 @@ public class ProspectosBean implements Serializable {
                 lstProspectos = dao.listarmisprospectos(usuariosBean.getAsesorVali().getCorreo());
                 lstorigenes = daori.listar();
             } catch (Exception e) {
+                log.info(e.getMessage());
+
                 throw e;
             }
         } else {
@@ -715,6 +724,8 @@ public class ProspectosBean implements Serializable {
             session.setAttribute("prospectoparam", prospecto);
             contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/prospectos.xhtml");
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             throw e;
         }
 
@@ -750,6 +761,8 @@ public class ProspectosBean implements Serializable {
 
             contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/gestion.xhtml");
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             throw e;
         }
 
@@ -782,6 +795,8 @@ public class ProspectosBean implements Serializable {
 
             contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/gestion.xhtml");
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             throw e;
         }
 
@@ -800,6 +815,8 @@ public class ProspectosBean implements Serializable {
 
             contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/gestion.xhtml");
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             throw e;
         }
 
@@ -827,6 +844,8 @@ public class ProspectosBean implements Serializable {
                 message = mensaje;
                 contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/listaProspectos.xhtml");
             } catch (Exception e) {
+                log.info(e.getMessage());
+
                 message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             }
         } else {
@@ -844,6 +863,8 @@ public class ProspectosBean implements Serializable {
             dao.borrar(prospecto);
             this.listar(session);
         } catch (Exception e) {
+            log.info(e.getMessage());
+
             throw e;
         }
     }
@@ -891,6 +912,7 @@ public class ProspectosBean implements Serializable {
                 this.finalSession();
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
 
         }
 
@@ -956,88 +978,90 @@ public class ProspectosBean implements Serializable {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
         }
     }
-    
-    
+
     public void buscaprospecto(ValueChangeEvent event) throws Exception, IOException {
-        String opcion =  event.getNewValue().toString();
+        String opcion = event.getNewValue().toString();
         lstresultados = null;
-        if(prospectos.getCorreo()==null){
+        if (prospectos.getCorreo() == null) {
             prospectos.setCorreo("");
         }
-        
-        if(prospectos.getTelefono1()==null){
+
+        if (prospectos.getTelefono1() == null) {
             prospectos.setTelefono1("");
         }
-        
+
         prospectos.setNombreapellido(opcion);
         GestionDAO dao;
         System.out.println(opcion);
-        if ( !opcion.equals("")) {
-            try {
-                dao = new GestionDAO();
-                lstresultados = dao.buscapropspecto(prospectos);
-                
-            } catch (Exception ex) {
-                throw ex;
-            }
-        }
-        
-    }
-    
-    public void buscaprospectomail(ValueChangeEvent event) throws Exception, IOException {
-        String opcion =  event.getNewValue().toString();
-        lstresultados = null;
-        if(prospectos.getNombreapellido()==null){
-            prospectos.setNombreapellido("");
-        }
-        
-        if(prospectos.getTelefono1()==null){
-            prospectos.setTelefono1("");
-        }
-        
-        prospectos.setCorreo(opcion);
-        GestionDAO dao;
-        
         if (!opcion.equals("")) {
             try {
                 dao = new GestionDAO();
                 lstresultados = dao.buscapropspecto(prospectos);
-               
+
             } catch (Exception ex) {
+                log.info(ex.getMessage());
+            
                 throw ex;
             }
         }
+
     }
-    
-    
-    public void buscaprospectophone(ValueChangeEvent event) throws Exception, IOException {
-        String opcion =  event.getNewValue().toString();
-       lstresultados = null;
-        if(prospectos.getNombreapellido()==null){
+
+    public void buscaprospectomail(ValueChangeEvent event) throws Exception, IOException {
+        String opcion = event.getNewValue().toString();
+        lstresultados = null;
+        if (prospectos.getNombreapellido() == null) {
             prospectos.setNombreapellido("");
         }
-        
-        if(prospectos.getCorreo()==null){
-            prospectos.setCorreo("");
+
+        if (prospectos.getTelefono1() == null) {
+            prospectos.setTelefono1("");
         }
-        
-        prospectos.setTelefono1(opcion);
+
+        prospectos.setCorreo(opcion);
         GestionDAO dao;
-        if ( !opcion.equals("")) {
+
+        if (!opcion.equals("")) {
             try {
                 dao = new GestionDAO();
                 lstresultados = dao.buscapropspecto(prospectos);
-                
+
             } catch (Exception ex) {
+                log.info(ex.getMessage());
+            
                 throw ex;
             }
         }
-        
     }
-    
-    
+
+    public void buscaprospectophone(ValueChangeEvent event) throws Exception, IOException {
+        String opcion = event.getNewValue().toString();
+        lstresultados = null;
+        if (prospectos.getNombreapellido() == null) {
+            prospectos.setNombreapellido("");
+        }
+
+        if (prospectos.getCorreo() == null) {
+            prospectos.setCorreo("");
+        }
+
+        prospectos.setTelefono1(opcion);
+        GestionDAO dao;
+        if (!opcion.equals("")) {
+            try {
+                dao = new GestionDAO();
+                lstresultados = dao.buscapropspecto(prospectos);
+
+            } catch (Exception ex) {
+                log.info(ex.getMessage());
+            
+                throw ex;
+            }
+        }
+
+    }
 
 }

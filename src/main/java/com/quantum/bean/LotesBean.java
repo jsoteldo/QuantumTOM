@@ -101,6 +101,7 @@ public class LotesBean implements Serializable {
                 this.modificar();
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -113,6 +114,7 @@ public class LotesBean implements Serializable {
                 this.modificar();
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -142,6 +144,7 @@ public class LotesBean implements Serializable {
             message = mensaje;
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
 
         }
@@ -157,6 +160,7 @@ public class LotesBean implements Serializable {
             message = mensaje;
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
 
         }
@@ -172,6 +176,7 @@ public class LotesBean implements Serializable {
             lstLotes = dao.listarTodo();
             lstParcelas = daopro.listar();
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -182,6 +187,7 @@ public class LotesBean implements Serializable {
             dao = new LotesDAO();
             lstLotes = dao.listar();
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -203,6 +209,7 @@ public class LotesBean implements Serializable {
             FacesContext contex = FacesContext.getCurrentInstance();
             contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/listalotesparcelas.xhtml");
         } catch (Exception e) {
+            log.info(e.getMessage());
             message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
     }
@@ -215,6 +222,7 @@ public class LotesBean implements Serializable {
             dao.borrar(lotes);
             this.listarparcela();
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -227,6 +235,7 @@ public class LotesBean implements Serializable {
             dao.borrar(parcela);
             this.listarparcela();
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }
@@ -260,6 +269,7 @@ public class LotesBean implements Serializable {
                 lstParcelas = daopro.listar();
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         }
     }

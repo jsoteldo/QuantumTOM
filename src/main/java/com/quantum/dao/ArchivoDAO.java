@@ -4,8 +4,7 @@ import com.quantum.modelos.Archivo;
 import com.quantum.modelos.Mensaje;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -13,6 +12,8 @@ import java.util.List;
  */
 public class ArchivoDAO extends DAO {
 
+    private org.slf4j.Logger log = LoggerFactory.getLogger(ArchivoDAO.class);
+    
     public Mensaje registrar(Archivo archivo) throws Exception {
         Mensaje validosesion;
         try {
@@ -53,6 +54,7 @@ public class ArchivoDAO extends DAO {
 
             return arch;
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -68,8 +70,8 @@ public class ArchivoDAO extends DAO {
             declaracion.setString(1, archivo.getName());
             declaracion.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-
+           log.info(e.getMessage());
+            
         } finally {
             this.Cancelar();
         }
@@ -88,6 +90,7 @@ public class ArchivoDAO extends DAO {
             declaracion.executeUpdate();
             validosesion = new Mensaje("", "Archivo Procesado.", "mdi-checkbox-marked-circle-outline", "success");
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             
         } finally {

@@ -1,20 +1,22 @@
 package com.quantum.dao;
 
-import com.quantum.modelos.Estado;
 import com.quantum.modelos.Lotes;
 import com.quantum.modelos.Mensaje;
-import com.quantum.modelos.Parcelas;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author QUANTUM
  */
 public class LotesDAO extends DAO {
-
+    
+    private Logger log = LoggerFactory.getLogger(LotesDAO.class); 
+    
     public List<Lotes> listar() throws Exception {
         List<Lotes> lista;
         ResultSet resultado;
@@ -33,6 +35,7 @@ public class LotesDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -59,6 +62,7 @@ public class LotesDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -90,6 +94,7 @@ public class LotesDAO extends DAO {
             validosesion = new Mensaje("", "Actualizado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -124,6 +129,7 @@ public class LotesDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -159,6 +165,7 @@ public class LotesDAO extends DAO {
             }
 
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
@@ -189,6 +196,7 @@ public class LotesDAO extends DAO {
             validosesion = new Mensaje("", "Registrado Exitosamente.", "mdi-checkbox-marked-circle-outline", "success");
             return validosesion;
         } catch (Exception e) {
+            log.info(e.getMessage());
             validosesion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
             return validosesion;
         } finally {
@@ -206,8 +214,8 @@ public class LotesDAO extends DAO {
             declaracion.setString(2, lotes.getLote());
             declaracion.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-
+            log.info(e.getMessage());
+            
         } finally {
             this.Cancelar();
         }

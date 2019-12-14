@@ -24,9 +24,8 @@ import org.slf4j.LoggerFactory;
 @ViewScoped
 public class AsignaProspectosBean implements Serializable {
 
-    private org.slf4j.Logger log = LoggerFactory.getLogger(AsignaProspectosBean.class);      
-    
-    
+    private org.slf4j.Logger log = LoggerFactory.getLogger(AsignaProspectosBean.class);
+
     private Mensaje message = new Mensaje(false, "none !important", "");
     private formatoDeFechas fechas = new formatoDeFechas();
 
@@ -101,10 +100,12 @@ public class AsignaProspectosBean implements Serializable {
             usuariosBean = (UsuariosBean) objeto;
             try {
                 dao = new DistribucionDAO();
-                mensaje = dao.distribuir(lstDistribucion,usuariosBean.getAsesorVali());
+                mensaje = dao.distribuir(lstDistribucion, usuariosBean.getAsesorVali());
                 message = mensaje;
                 //dao.actualizarprospectos();
             } catch (Exception e) {
+
+                log.info(e.getMessage());
                 message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
                 throw e;
             }
@@ -129,6 +130,8 @@ public class AsignaProspectosBean implements Serializable {
                 prospectospAsignar = dao.cantprospectos(usuariosBean.getAsesorVali());
 
             } catch (Exception e) {
+
+                log.info(e.getMessage());
                 throw e;
             }
         } else {
@@ -152,6 +155,8 @@ public class AsignaProspectosBean implements Serializable {
             dao.borrar(asesor);
             this.listar();
         } catch (Exception e) {
+            
+            log.info(e.getMessage());
             throw e;
         }
     }

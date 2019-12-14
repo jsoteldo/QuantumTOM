@@ -2,17 +2,18 @@
 package com.quantum.dao;
 
 import com.quantum.modelos.Casas;
-import com.quantum.modelos.Lotes;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author QUANTUM
  */
 public class CasasDAO extends DAO{
+     private org.slf4j.Logger log = LoggerFactory.getLogger(CasasDAO.class);
     
     public List<Casas> listar() throws Exception {
         List<Casas> lista;
@@ -32,6 +33,7 @@ public class CasasDAO extends DAO{
             }
             
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw e;
         } finally {
             this.Cancelar();
