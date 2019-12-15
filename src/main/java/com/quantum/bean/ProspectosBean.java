@@ -41,7 +41,7 @@ public class ProspectosBean implements Serializable {
 
     private Mensaje message = new Mensaje(false, "none !important", "");
     private formatoDeFechas fechas = new formatoDeFechas();
-
+    private String newasesor;
     private Prospectos prospectos = new Prospectos();
     private Asesores asesores = new Asesores();
     private List<Gestion> lstProspectos;
@@ -52,7 +52,7 @@ public class ProspectosBean implements Serializable {
     private List<Prospectos> lstProspectosgestion;*/
     List<Gestion> lstTest = new ArrayList<>();
     private String stateProspecto;
-
+    private Gestion prospectomodal = null;
     private List<Gestion> lstProspectospendientes;
     private List<Prospectos> lstProspectosporasignar;
     private List<Gestion> lstProspectosdescar;
@@ -255,6 +255,23 @@ public class ProspectosBean implements Serializable {
         this.lstresultados = lstresultados;
     }
 
+    public String getNewasesor() {
+        return newasesor;
+    }
+
+    public void setNewasesor(String newasesor) {
+        this.newasesor = newasesor;
+    }
+
+    public Gestion getProspectomodal() {
+        return prospectomodal;
+    }
+
+    public void setProspectomodal(Gestion prospectomodal) {
+        this.prospectomodal = prospectomodal;
+    }
+
+    
     public void limpiar() {
         prospectos.setCargo("");
         prospectos.setCodigo("");
@@ -645,7 +662,108 @@ public class ProspectosBean implements Serializable {
         }
 
     }
+    
+    public void cambiar() throws Exception {
 
+        GestionDAO dao;
+        Mensaje mensaje;
+        try {
+            dao = new GestionDAO();
+
+            message = dao.actualizasesor(prospectomodal, newasesor);
+            newasesor = null;
+        } catch (Exception e) {
+            log.info(e.getMessage());
+
+            message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
+            throw e;
+        }
+
+    }
+    
+    public void pasaProspecto(Gestion prospecto) throws Exception, IOException {
+        GestionDAO dao;
+        AsesoresDAO daoasesor;
+
+        try {
+            dao = new GestionDAO();
+            daoasesor = new AsesoresDAO();
+            prospectomodal = dao.consultagestion(prospecto.getCodigo());
+
+            lstasesores = daoasesor.listarporasignar(prospectomodal.getCod_asesor());
+        } catch (Exception e) {
+            log.info(e.getMessage());
+
+            throw e;
+        }
+
+    }
+    
+    
+     public void checkok(Gestion prospecto) throws Exception {
+
+        GestionDAO dao;
+        Mensaje mensaje;
+        try {
+            dao = new GestionDAO();
+
+            message = dao.checkokasesor(prospecto);
+            newasesor = null;
+        } catch (Exception e) {
+            log.info(e.getMessage());
+
+            message = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
+            throw e;
+        }
+
+    }
+     
+    public void leerIdtoGestion(Gestion prospecto, HttpSession session) throws Exception, IOException {
+        GestionDAO dao;
+        AsesoresDAO daoAse;
+        FacesContext contex = FacesContext.getCurrentInstance();
+        Gestion gestion;
+        try {
+            dao = new GestionDAO();
+            daoAse = new AsesoresDAO();
+            gestion = dao.consultagestion(prospecto.getCodigo());
+
+            session.setAttribute("prospectodeasesor", daoAse.buscasesor(gestion.getCod_asesor()));
+
+            session.setAttribute("lstcaptura", lstProspectos);
+            session.setAttribute("gestionparam", gestion);
+            session.setAttribute("viene", "subeprospectos");
+            contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath() + "/template/gestion.xhtml");
+        } catch (Exception e) {
+            log.info(e.getMessage());
+
+            throw e;
+        }
+
+    } 
+
+    public void listaradmin() throws Exception {
+        DistribucionDAO dao;
+        FacesContext contex = FacesContext.getCurrentInstance();
+        Object objeto = contex.getExternalContext().getSessionMap().get("usuariosBean");
+        UsuariosBean usuariosBean = null;
+        if (objeto != null) {
+            usuariosBean = (UsuariosBean) objeto;
+
+            try {
+                dao = new DistribucionDAO();
+                
+               // lstprospectosrepetidos = dao.listarrepetidos();
+            } catch (Exception e) {
+                log.info(e.getMessage());
+
+                throw e;
+            }
+        } else {
+            this.finalSession();
+        }
+    }
+    
     public void listarmisProspectos() throws Exception {
         /*ProspectosDAO dao;
         OrigenesDAO daori;

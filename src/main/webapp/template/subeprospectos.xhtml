@@ -34,12 +34,12 @@
                 <f:event type="preRenderView" listener="#{subeprospectosBean.listaradmin()}"/>
                 <div class="row">
                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 grid-margin" style="margin-bottom: 10px;">
-                         <div class="media" style="padding: 0.5rem 1.5rem !important;">
-                                    <i class="mdi mdi-cloud-upload icon-md text-primary d-flex align-self-start mr-2"></i>
-                                    <div class="media-body">
-                                        <p class="card-text"><h2 class="card-title">Carga de Prospectos</h2></p>
-                                    </div>
-                                </div>
+                        <div class="media" style="padding: 0.5rem 1.5rem !important;">
+                            <i class="mdi mdi-cloud-upload icon-md text-primary d-flex align-self-start mr-2"></i>
+                            <div class="media-body">
+                                <p class="card-text"><h2 class="card-title">Carga de Prospectos</h2></p>
+                            </div>
+                        </div>
                         <!--<div class="card">
                             <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
                                 <div class="media">
@@ -53,11 +53,11 @@
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 grid-margin" style="margin-bottom: 10px;">
                         <div class="media" style="padding: 0.5rem 1.5rem !important;">
-                                    <i class="mdi mdi-account-multiple-plus icon-md text-primary d-flex align-self-start mr-2"></i>
-                                    <div class="media-body">
-                                        <p class="card-text"><h3 class="card-title">Asignación a Supervisores</h3></p>
-                                    </div>
-                                </div>
+                            <i class="mdi mdi-account-multiple-plus icon-md text-primary d-flex align-self-start mr-2"></i>
+                            <div class="media-body">
+                                <p class="card-text"><h3 class="card-title">Asignación a Supervisores</h3></p>
+                            </div>
+                        </div>
                         <!--<div class="card">
                             <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
                                 <div class="media">
@@ -197,11 +197,11 @@
                     </div>
                     <div class="col-12 grid-margin">
                         <div class="media" style="padding: 0.5rem 1.5rem !important;">
-                                    <i class="mdi mdi-repeat icon-md text-primary d-flex align-self-start mr-2"></i>
-                                    <div class="media-body">
-                                        <p class="card-text"><h2 class="card-title">Leads Repetidos</h2></p>
-                                    </div>
-                                </div>
+                            <i class="mdi mdi-repeat icon-md text-primary d-flex align-self-start mr-2"></i>
+                            <div class="media-body">
+                                <p class="card-text"><h2 class="card-title">Leads Repetidos</h2></p>
+                            </div>
+                        </div>
                         <!--<div class="card">
                             <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
                                 <div class="media">
@@ -454,15 +454,15 @@
                                                 var msj = $.parseJSON(result);
 
                                                 $("#mensaje").show();
-                                                var clase= "alert-"+msj.clase;
-                                                var text = "text-"+msj.clase;
+                                                var clase = "alert-" + msj.clase;
+                                                var text = "text-" + msj.clase;
                                                 $("#mensaje").toggleClass(clase);
                                                 $("#mensaje div i").toggleClass(text);
                                                 $("#mensaje div i").toggleClass(msj.ico);
                                                 $("#mensaje div span").html(msj.mensaje);
                                                 setTimeout(function () {
-                                                                            $("#mensaje").fadeOut(5500);
-                                                                        }, 15000);
+                                                    $("#mensaje").fadeOut(5500);
+                                                }, 15000);
                                                 $(".registros").html(result);
                                                 $(".registros").after().hide();
                                             },
@@ -558,233 +558,233 @@
                                     });
 
                                     //]]>
-                                                                </script>
-                                                                <script>
-                                                                    function validar_formulario() {
-                                                                        if ($('#asesormodel\\:asesores').val() === "")
-                                                                        {
-                                                                            $("#mesagevalidation").show();
-                                                                            setTimeout(function () {
-                                                                                $("#mesagevalidation").fadeOut(5500);
-                                                                            }, 15000);
-                                                                            return false;
-                                                                        } else
-                                                                        if ($('#asesormodel\\:asesores').val() === "")
-                                                                        {
-                                                                            $("#mesagevalidation").show();
-                                                                            setTimeout(function () {
-                                                                                $("#mesagevalidation").fadeOut(5500);
-                                                                            }, 15000);
-                                                                            return false;
-                                                                        } else
-                                                                            return true;
+                </script>
+                <script>
+                    function validar_formulario() {
+                        if ($('#asesormodel\\:asesores').val() === "")
+                        {
+                            $("#mesagevalidation").show();
+                            setTimeout(function () {
+                                $("#mesagevalidation").fadeOut(5500);
+                            }, 15000);
+                            return false;
+                        } else
+                        if ($('#asesormodel\\:asesores').val() === "")
+                        {
+                            $("#mesagevalidation").show();
+                            setTimeout(function () {
+                                $("#mesagevalidation").fadeOut(5500);
+                            }, 15000);
+                            return false;
+                        } else
+                            return true;
 
 
-                                                                    }
-                                                                </script>
+                    }
+                </script>
 
-           <script>
-                                                                    $(document).ready(function () {
-                                                                        $('.dataTable').DataTable({
-                                                                            responsive: true,
-                                                                            language: {
-                                                                                "decimal": "",
-                                                                                "emptyTable": "No hay datos",
-                                                                                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                                                                                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                                                                                "infoFiltered": "(Filtro de _MAX_ total registros)",
-                                                                                "infoPostFix": "",
-                                                                                "thousands": ",",
-                                                                                "lengthMenu": "Mostrar _MENU_ registros",
-                                                                                "loadingRecords": "Cargando...",
-                                                                                "processing": "Procesando...",
-                                                                                "search": "Buscar:",
-                                                                                "zeroRecords": "No se encontraron coincidencias",
-                                                                                "paginate": {
-                                                                                    "first": "Primero",
-                                                                                    "last": "Ultimo",
-                                                                                    "next": "Próximo",
-                                                                                    "previous": "Anterior"
-                                                                                },
-                                                                                "aria": {
-                                                                                    "sortAscending": ": Activar orden de columna ascendente",
-                                                                                    "sortDescending": ": Activar orden de columna desendente"
-                                                                                }
-                                                                            },
-                                                                            stateSave: true
-                                                                        });
+                <script>
+                    $(document).ready(function () {
+                        $('.dataTable').DataTable({
+                            responsive: true,
+                            language: {
+                                "decimal": "",
+                                "emptyTable": "No hay datos",
+                                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                "infoFiltered": "(Filtro de _MAX_ total registros)",
+                                "infoPostFix": "",
+                                "thousands": ",",
+                                "lengthMenu": "Mostrar _MENU_ registros",
+                                "loadingRecords": "Cargando...",
+                                "processing": "Procesando...",
+                                "search": "Buscar:",
+                                "zeroRecords": "No se encontraron coincidencias",
+                                "paginate": {
+                                    "first": "Primero",
+                                    "last": "Ultimo",
+                                    "next": "Próximo",
+                                    "previous": "Anterior"
+                                },
+                                "aria": {
+                                    "sortAscending": ": Activar orden de columna ascendente",
+                                    "sortDescending": ": Activar orden de columna desendente"
+                                }
+                            },
+                            stateSave: true
+                        });
 
-                                                                    });
-                                                                </script> 
-                                                                <script>
+                    });
+                </script> 
+                <script>
 
-                                                                    $(document).ready(function () {
+                    $(document).ready(function () {
 
-                                                                        setTimeout(function () {
-                                                                            $("#mensaje").fadeOut(5500);
-                                                                        }, 15000);
-                                                                    });
-                                                                </script>
-                                                                <script>
-                                                                    $(function () {
+                        setTimeout(function () {
+                            $("#mensaje").fadeOut(5500);
+                        }, 15000);
+                    });
+                </script>
+                <script>
+                    $(function () {
 
-                                                                        // We can attach the `fileselect` event to all file inputs on the page
-                                                                        $(document).on('change', ':file', function () {
-                                                                            var input = $(this),
-                                                                                    numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                                                                                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                                                                            input.trigger('fileselect', [numFiles, label]);
-                                                                        });
+                        // We can attach the `fileselect` event to all file inputs on the page
+                        $(document).on('change', ':file', function () {
+                            var input = $(this),
+                                    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                            input.trigger('fileselect', [numFiles, label]);
+                        });
 
-                                                                        // We can watch for our custom `fileselect` event like this
-                                                                        $(document).ready(function () {
-                                                                            $(':file').on('fileselect', function (event, numFiles, label) {
+                        // We can watch for our custom `fileselect` event like this
+                        $(document).ready(function () {
+                            $(':file').on('fileselect', function (event, numFiles, label) {
 
-                                                                                var input = $(this).parents('.input-group').find(':text'),
-                                                                                        log = numFiles > 1 ? numFiles + ' files selected' : label;
-                                                                                if (input.length) {
-                                                                                    input.val(log);
+                                var input = $(this).parents('.input-group').find(':text'),
+                                        log = numFiles > 1 ? numFiles + ' files selected' : label;
+                                if (input.length) {
+                                    input.val(log);
+                                } else {
+                                    if (log)
+                                        alert(log);
+                                }
+
+                            });
+                        });
+
+                    });
+                </script>
+                <script>
+                    function validate() {
+                        $("#text-error").html("");
+                        var archivo = $("#file").val();
+                        var extensiones = archivo.substring(archivo.lastIndexOf("."));
+                        var file_size = $('#file')[0].files[0].size;
+                        var extensiones = archivo.substring(archivo.lastIndexOf("."));
+                        if (file_size > 2097152) {
+                            $("#modalchange").modal();
+                            $("#text-error").html("El Archivo es mayor a <b>2Mb</b>.");
+                            return false;
+                        } else if (extensiones !== ".xlsx") {
+                            $("#modalchange").modal();
+                            $("#text-error").html("Debe Introducir un archivo con el formato correcto (<b>.xls</b>)");
+                            return false;
+                        }
+                        return true;
+                    }
+
+                </script>
+                <script>
+                    $(function () {
+                        $('.cantidad').keypress(function (e) {
+                            if (isNaN(this.value + String.fromCharCode(e.charCode)))
+                                return false;
+                        }).on("cut copy paste", function (e) {
+                            e.preventDefault();
+                        });
+                    });
+                </script>
+                <script>
+                    $(function () {
+                        $('.porcentaje').keypress(function (e) {
+                            if (isNaN(this.value + String.fromCharCode(e.charCode)))
+                                return false;
+                        }).on("cut copy paste", function (e) {
+                            e.preventDefault();
+                        });
+                    });
+                </script>
+                <script>
+                                                                    var disponibles = #{subeprospectosBean.prospectospAsignar};
+                                                                    var cantidad;
+                                                                    var porcentaje;
+
+                                                                    $('.porcentaje').focusin(function () {
+                                                                        porcentaje = $(this).val();
+                                                                    })
+                                                                            .focusout(function () {
+                                                                                nwporcentaje = $(this).val();
+                                                                                cantidad = (nwporcentaje * disponibles) / 100;
+                                                                                if (validaporcentajes() > 100) {
+                                                                                    $(this).val(porcentaje);
+                                                                                    console.log($(this).val());
                                                                                 } else {
-                                                                                    if (log)
-                                                                                        alert(log);
+                                                                                    $(this).val(nwporcentaje);
+                                                                                    console.log($(this).val());
+                                                                                    console.log(cantidad);
+                                                                                    $(this).closest('tr').find(".cantidad").each(function () {
+                                                                                        $(this).val(cantidad);
+                                                                                    });
+                                                                                    $("label[for='asig']").html(validacantidad());
+                                                                                    $("label[for='parasig']").html(disponibles - validacantidad());
+
                                                                                 }
-
                                                                             });
+                                                                    function validaporcentajes() {
+                                                                        var totalDeuda = 0;
+                                                                        $(".porcentaje").each(function () {
+                                                                            totalDeuda += parseFloat($(this).val()) || 0;
                                                                         });
-
-                                                                    });
-                                                                </script>
-                                                                <script>
-                                                                    function validate() {
-                                                                        $("#text-error").html("");
-                                                                        var archivo = $("#file").val();
-                                                                        var extensiones = archivo.substring(archivo.lastIndexOf("."));
-                                                                        var file_size = $('#file')[0].files[0].size;
-                                                                        var extensiones = archivo.substring(archivo.lastIndexOf("."));
-                                                                        if (file_size > 2097152) {
-                                                                            $("#modalchange").modal();
-                                                                            $("#text-error").html("El Archivo es mayor a <b>2Mb</b>.");
-                                                                            return false;
-                                                                        } else if (extensiones !== ".xlsx") {
-                                                                            $("#modalchange").modal();
-                                                                            $("#text-error").html("Debe Introducir un archivo con el formato correcto (<b>.xls</b>)");
-                                                                            return false;
-                                                                        }
-                                                                        return true;
+                                                                        console.log(totalDeuda);
+                                                                        return totalDeuda;
                                                                     }
-
-                                                                </script>
-                                                                <script>
-                                                                    $(function () {
-                                                                        $('.cantidad').keypress(function (e) {
-                                                                            if (isNaN(this.value + String.fromCharCode(e.charCode)))
-                                                                                return false;
-                                                                        }).on("cut copy paste", function (e) {
-                                                                            e.preventDefault();
+                                                                    function validacantidad() {
+                                                                        var totalDeuda = 0;
+                                                                        $(".cantidad").each(function () {
+                                                                            totalDeuda += parseFloat($(this).val()) || 0;
                                                                         });
+                                                                        return totalDeuda;
+                                                                    }
+                </script>
+                <script>
+                                                            var disponibles = #{subeprospectosBean.prospectospAsignar};
+                                                            var cantidad;
+                                                            var porcentaje;
+                                                            var psa = 0, pa = 0;
+
+                                                            $('.cantidad').focusin(function () {
+                                                                cantidad = $(this).val();
+                                                            })
+                                                                    .focusout(function () {
+                                                                        nwcantidad = $(this).val();
+                                                                        porcentaje = (nwcantidad * 100) / disponibles;
+                                                                        if (validacantidad() > disponibles) {
+                                                                            $(this).val(cantidad);
+                                                                        } else {
+                                                                            $(this).val(nwcantidad);
+                                                                            $(this).closest('tr').find(".porcentaje").each(function () {
+                                                                                $(this).val(porcentaje.toFixed(2));
+                                                                            });
+                                                                            $("label[for='asig']").html(validacantidad());
+                                                                            $("label[for='parasig']").html(disponibles - validacantidad());
+                                                                        }
                                                                     });
-                                                                </script>
-                                                                <script>
-                                                                    $(function () {
-                                                                        $('.porcentaje').keypress(function (e) {
-                                                                            if (isNaN(this.value + String.fromCharCode(e.charCode)))
-                                                                                return false;
-                                                                        }).on("cut copy paste", function (e) {
-                                                                            e.preventDefault();
-                                                                        });
-                                                                    });
-                                                                </script>
-                                                                <script>
-                    var disponibles = #{subeprospectosBean.prospectospAsignar};
-                    var cantidad;
-                    var porcentaje;
 
-                    $('.porcentaje').focusin(function () {
-                        porcentaje = $(this).val();
-                    })
-                            .focusout(function () {
-                                nwporcentaje = $(this).val();
-                                cantidad = (nwporcentaje * disponibles) / 100;
-                                if (validaporcentajes() > 100) {
-                                    $(this).val(porcentaje);
-                                    console.log($(this).val());
-                                } else {
-                                    $(this).val(nwporcentaje);
-                                    console.log($(this).val());
-                                    console.log(cantidad);
-                                    $(this).closest('tr').find(".cantidad").each(function () {
-                                        $(this).val(cantidad);
-                                    });
-                                    $("label[for='asig']").html(validacantidad());
-                                    $("label[for='parasig']").html(disponibles - validacantidad());
-
-                                }
-                            });
-                    function validaporcentajes() {
-                        var totalDeuda = 0;
-                        $(".porcentaje").each(function () {
-                            totalDeuda += parseFloat($(this).val()) || 0;
-                        });
-                        console.log(totalDeuda);
-                        return totalDeuda;
-                    }
-                    function validacantidad() {
-                        var totalDeuda = 0;
-                        $(".cantidad").each(function () {
-                            totalDeuda += parseFloat($(this).val()) || 0;
-                        });
-                        return totalDeuda;
-                    }
-                                                        </script>
-                                                        <script>
-                    var disponibles = #{subeprospectosBean.prospectospAsignar};
-                    var cantidad;
-                    var porcentaje;
-                    var psa = 0, pa = 0;
-
-                    $('.cantidad').focusin(function () {
-                        cantidad = $(this).val();
-                    })
-                            .focusout(function () {
-                                nwcantidad = $(this).val();
-                                porcentaje = (nwcantidad * 100) / disponibles;
-                                if (validacantidad() > disponibles) {
-                                    $(this).val(cantidad);
-                                } else {
-                                    $(this).val(nwcantidad);
-                                    $(this).closest('tr').find(".porcentaje").each(function () {
-                                        $(this).val(porcentaje.toFixed(2));
-                                    });
-                                    $("label[for='asig']").html(validacantidad());
-                                    $("label[for='parasig']").html(disponibles - validacantidad());
-                                }
-                            });
-
-                    function validacantidad() {
-                        var totalDeuda = 0;
-                        $(".cantidad").each(function () {
-                            totalDeuda += parseFloat($(this).val()) || 0;
-                        });
-                        return totalDeuda;
-                    }
+                                                            function validacantidad() {
+                                                                var totalDeuda = 0;
+                                                                $(".cantidad").each(function () {
+                                                                    totalDeuda += parseFloat($(this).val()) || 0;
+                                                                });
+                                                                return totalDeuda;
+                                                            }
 
 
-                                                        </script>
-                                                        <script>
-                    var disponibles = #{subeprospectosBean.prospectospAsignar};
-                    var total = 0;
-                    $(".cantidad").each(function () {
-                        total += parseFloat($(this).val()) || 0;
-                    }
-                    );
-                    $("label[for='asig']").html(total);
-                    $("label[for='parasig']").html(disponibles - total);
+                </script>
+                <script>
+                                                            var disponibles = #{subeprospectosBean.prospectospAsignar};
+                                                            var total = 0;
+                                                            $(".cantidad").each(function () {
+                                                                total += parseFloat($(this).val()) || 0;
+                                                            }
+                                                            );
+                                                            $("label[for='asig']").html(total);
+                                                            $("label[for='parasig']").html(disponibles - total);
 
-                                                        </script>
+                </script>
 
-                                                        </ui:define>
+            </ui:define>
 
-                                                        </ui:composition>
+        </ui:composition>
 
-                                                        </body>
-                                                        </html>
+    </body>
+</html>

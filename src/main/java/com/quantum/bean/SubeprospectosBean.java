@@ -389,7 +389,8 @@ public class SubeprospectosBean {
             for (String consulta : query) {
                 querys.append(consulta);
             }
-
+            log.info(headerString2);
+            log.info(querys.toString());
             mensaje = dao.registrar(headerString2, querys);
             
             if (mensaje.getClase().equals("success")) {

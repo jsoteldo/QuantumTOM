@@ -3,14 +3,25 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:j="http://xmlns.jcp.org/jsf"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-    <head j:id="head">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" href="../resources/css/default.css"/>
 
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../resources/css/default.css" rel="stylesheet"/>
+        <link href="../resources/css/dataTables.bootstrap4.css" rel="stylesheet"/>
+        <link href="../resources/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="../resources/css/sb-admin.css" rel="stylesheet"/>
+        <link href="../resources/fontawesome-free/css/all.min.css" rel="stylesheet"/>
         <title>Quantum - Flamencos</title>
+        <style>
+            a:not([href]):not([tabindex]):hover, a:not([href]):not([tabindex]):focus {
+                color: #0056b3 !important;
+                text-decoration: none;
+            }
+        </style>
     </head>
 
     <body>
@@ -18,58 +29,205 @@
         <ui:composition template="./plantilla.xhtml">
 
             <ui:define name="content">
-                <script src="../resources/js/jquery-3.3.1.min.js" ></script>
-                <script src="../resources/js/jquery.min.js" ></script>
-                <script src="../resources/js/jquery.dataTables.min.js" ></script>
+                <c:set var = "fprospecto" value = "${fn:replace(prospecto.fecha_prospecto, 'T', '&#160; &#160;')}" />
+                <c:set var = "fretiro" value = "${fn:replace(prospecto.fecharetiro, 'T', '&#160; &#160;')}" />
+                <f:event type="preRenderView" listener="#{prospectosBean.listardeInicioRepeat(session)}"/>
+                <div class="row">
+                    <div class="col-md-12 grid-margin ">
+                        <div class="from-group">
+                            <div id="mensaje" style="display: #{prospectosBean.message.display}" class="mt-3 alert alert-#{prospectosBean.message.clase} form-row">
+                                <div class="col-3">
+                                    <i class="mdi #{prospectosBean.message.ico} text-#{prospectosBean.message.clase} icon-md "></i>
+                                </div>
+                                <div class="col-8">
+                                    <span class="font-weight-medium text-right">#{prospectosBean.message.mensaje}</span>
+                                </div>
+                            </div>
+                        </div>   
+                    </div>
+                    
+                    <div class="col-12 grid-margin">
+                        <div class="media" style="padding: 0.5rem 1.5rem !important;">
+                            <i class="mdi mdi-repeat icon-md text-primary d-flex align-self-start mr-2"></i>
+                            <div class="media-body">
+                                <p class="card-text"><h2 class="card-title">Leads Repetidos</h2></p>
+                            </div>
+                        </div>
+                        <!--<div class="card">
+                            <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
+                                <div class="media">
+                                    <i class="mdi mdi-repeat icon-md text-primary d-flex align-self-start mr-2"></i>
+                                    <div class="media-body">
+                                        <p class="card-text"><h3 class="card-title">Leads Repetidos</h3></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+
+                    <div class="col-lg-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped dataTable table-sm" style="width:100%">
+                                        <thead>
+                                            <tr >
+                                                <th>Fecha de Prospectos</th>
+                                                <th>Fecha Reiterado</th>
+                                                <th>Prospecto</th>
+                                                <th>Asesor</th>
+                                                <th><i class="mdi mdi-eye-outline  mdi-18px text-center"></i></th>
+                                                <th><i class="mdi mdi-swap-horizontal  mdi-18px text-center"></i></th>
+                                                <th><i class="mdi mdi-check  mdi-18px text-center"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr >
+                                                <th>Fecha de Prospectos</th>
+                                                <th>Fecha Reiterado</th>
+                                                <th>Prospecto</th>
+                                                <th>Asesor</th>
+                                                <th><i class="mdi mdi-eye-outline  mdi-18px text-center"></i></th>
+                                                <th><i class="mdi mdi-swap-horizontal  mdi-18px text-center"></i></th>
+                                                <th><i class="mdi mdi-check  mdi-18px text-center"></i></th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <ui:repeat value="#{prospectosBean.lstProspectos}" var="prospecto">
+                                                <tr>
+                                                    <td>${fprospecto}</td>
+                                                    <td>${fretiro}</td>
+                                                    <td>#{prospecto.nombreapellido}</td>
+                                                    <td>
+                                                        <img class="img-xs rounded-circle mr-2" src="../resources/images/faces/#{prospecto.imgasesor}" alt="Profile image"/>#{prospecto.asesor}
+                                                    </td>
+                                                    <td>
+                                                        <form j:id="formgestion" class="col-sm-2" method="post">  
+                                                            <a class="nav-link" j:action="#{prospectosBean.leerIdtoGestion(prospecto, session)}" title="Ver Gestion">
+                                                                <i class="mdi mdi-eye-outline text-dark mdi-18px"></i>
+                                                            </a>
+                                                        </form>
+                                                    </td>
+                                                    <td>
+                                                        <h:form id="formmodel" class="col-sm-2" >
+                                                            <a class="nav-link " style="cursor: pointer; color:#007bff;" immediate="true" onclick="$('#modalchange').modal('show');" title="Cambiar de Asesor"> 
+                                                                <f:ajax event="click" listener="#{prospectosBean.pasaProspecto(prospecto)}" render="asesormodel" execute="@this"/>
+                                                                <i  class="mdi mdi-swap-horizontal text-dark mdi-18px"></i>
+                                                            </a>
+                                                        </h:form>
+                                                    </td>
+                                                    <td>
+                                                        <form j:id="formcheckok" class="col-sm-2" >
+                                                            <a class="nav-link " style="cursor: pointer; color:#007bff;" j:action="#{prospectosBean.checkok(prospecto)}" title="Guardar a Asesor"> 
+                                                                <i  class="mdi  mdi-check text-dark mdi-18px"></i>
+                                                            </a>
+                                                        </form>
+                                                    </td>
+
+                                                </tr>
+                                            </ui:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="modal fade" id="modalchange" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form method="post" j:id="asesormodel"  onsubmit= "return validar_formulario()">
+                                    <div class="modal-header" style="background: linear-gradient(120deg, #00e4d0, #5983e8); ">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span class="mdi mdi-close text-white" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="padding: 15px 15px 7px 15px !important;">
+                                        <div class="card">
+                                            <div class="card-body" style="padding: 1.25rem !important;">
+                                                <div class="form-group row">
+                                                    <div class="col-md-8">
+                                                        <h6 class="display-5">Cambio de Asesor</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label >Asesor Actual</label><br/>
+                                                        <img class="img-xs rounded-circle mr-2" src="../resources/images/faces/#{prospectosBean.prospectomodal.imgasesor}" alt="Profile image"/><label >#{prospectosBean.prospectomodal.asesor}</label> 
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                        <label for="asesores">Asesor a Asignar</label>
+                                                        <h:selectOneMenu id="asesores" class="form-control"  value="#{prospectosBean.newasesor}" required="true" requiredMessage="Seleccione un Asesor">
+                                                            <f:selectItem itemLabel="Seleccione un Asesor" noSelectionOption="true" itemValue="" />
+                                                            <f:selectItems value="#{prospectosBean.lstasesores}" var="asesores" itemLabel="#{asesores.nombres} #{asesores.apellidos}" itemValue="#{asesores.correo}"/>
+
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div id="mesagevalidation" class="alert alert-warning alert-dismissible fade show" role="alert" style="margin: 0 auto; display: none;">
+                                                        <strong>Debe</strong> colocar el asesor a asignar.
+                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                            <span class="mdi mdi-close text-white" aria-hidden="true"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer" style="padding: 0 15px 15px 0">
 
 
+                                        <button type="submit" id="btn_change" class="btn btn-default btn-success" j:actionListener="#{prospectosBean.cambiar()}" >Cambiar</button>
+
+                                        <p id="demo"></p>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="container">
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+
+                                <div class="modal-header" style="background: linear-gradient(120deg, #00e4d0, #5983e8);">
+                                    <h4 style="margin-top: 0.5rem;" class="modal-title">Informe de Errores</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p id="text-error"></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <script src="../resources/js/jquery-3.3.1.min.js"></script>
+                <script src="../resources/js/jquery.dataTables.min.js"></script>
                 <script>
                     $(document).ready(function () {
-
-
                         $('.dataTable').DataTable({
-
-                            initComplete: function () {
-
-
-
-
-                                this.api().columns([3]).every(function () {
-                                    var column = this;
-                                    var select = $('<select class="form-control form-control-sm" style="height: calc(1.8125rem + -6px) !important; padding: 0.1rem 0.2rem !important;"><option value=""></option></select>')
-                                            .appendTo($(column.header()).empty())
-                                            .on('change', function () {
-                                                var val = $.fn.dataTable.util.escapeRegex(
-                                                        $(this).val()
-                                                        );
-                                                column
-                                                        .search(val ? '^' + val + '$' : '', true, false)
-                                                        .draw();
-                                            });
-                                    column.data().unique().sort().each(function (d, j) {
-                                        var val = $('<div/>').html(d).text();
-                                        select.append('<option value="' + val + '">' + val + '</option>');
-                                    });
-                                });
-
-                                this.api().columns([4]).every(function () {
-                                    var column = this;
-                                    var select = $('<select class="form-control form-control-sm" style="height: calc(1.8125rem + -6px) !important; padding: 0.1rem 0.2rem !important;"><option value=""></option></select>')
-                                            .appendTo($(column.header()).empty())
-                                            .on('change', function () {
-                                                var val = $.fn.dataTable.util.escapeRegex(
-                                                        $(this).val()
-                                                        );
-                                                column
-                                                        .search(val ? '^' + val + '$' : '', true, false)
-                                                        .draw();
-                                            });
-                                    column.data().unique().sort().each(function (d, j) {
-                                        var val = $('<div/>').html(d).text();
-                                        select.append('<option value="' + val + '">' + val + '</option>');
-                                    });
-                                });
-                            },
+                            responsive: true,
                             language: {
                                 "decimal": "",
                                 "emptyTable": "No hay datos",
@@ -94,103 +252,30 @@
                                     "sortDescending": ": Activar orden de columna desendente"
                                 }
                             },
-                            stateSave: true,
+                            stateSave: true
+                        });
 
-                        }
-                        );
                     });
                 </script> 
+                <script>
 
-                <c:set var = "ultimocontacto" value = "${fn:replace(prospecto.fecha_contacto, 'T', '&#160; &#160;')}" />
+                    $(document).ready(function () {
 
-                <f:event type="preRenderView" listener="#{prospectosBean.listardeInicioRepeat(session)}"/>
-                <div class="container-fluid">
-
-                    <div class="row flex-grow">
-                        <div class="media  col-12 d-flex align-items-stretch" style="padding: 0.5rem 1.5rem !important;">
-                                    <i class="mdi mdi-clipboard-account icon-md text-primary d-flex align-self-start mr-2"></i>
-                                    <div class="media-body">
-                                        <p class="card-text"><h2 class="card-title">Listado de Prospectos #{prospectosBean.estado}</h2></p>
-                                    </div>
-                                </div>
-                        
-                        <!--<div class="card col-12 d-flex align-items-stretch" style="margin-bottom: 10px;">
-                            <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
-                                <div class="media">
-                                    <i class="mdi mdi-clipboard-account icon-md text-primary d-flex align-self-start mr-2"></i>
-                                    <div class="media-body">
-                                        <p class="card-text"><h3 class="card-title">Listado de Prospectos #{prospectosBean.estado}</h3></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
-                    </div>
-                    <div class="row flex-grow">
-                        <div class="card col-12 d-flex align-items-stretch grid-margin">
-                            <div class="card-body"  style="padding: 1.88rem 0rem !important;">
-                                <div class="table-responsive-sm table-responsive-md table-responsive-lg">
-                                    <table class="table table-striped dataTable table-sm" style="width:100%">
-                                        <thead>
-                                            <tr class="table-primary">
-                                                <th>Fecha Proximo Contacto</th>
-                                                <th>Nombre y Apellido</th>
-                                                <th>Teléfono</th>
-                                                <th>Estado</th>
-                                                <th>Motivos</th>
-                                                <th>Editar</th>
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                            <tr class="table-primary">
-
-                                                <th>Fecha Proximo Contacto</th>
-                                                <th>Nombre y Apellido</th>
-                                                <th>Teléfono</th>
-                                                <th>Estado</th>
-                                                <th>Motivos</th>
-                                                <th>Editar</th>
-                                            </tr>
-                                        </tfoot>
-                                        <tbody>
-                                            <ui:repeat value="#{prospectosBean.lstProspectos}" var="prospecto">
-                                                <tr >
-                                                    <td>#{ultimocontacto}</td>
-                                                    
-                                                    <td>#{prospecto.nombreapellido}</td>
-                                                    <td>#{prospecto.telefono1}</td>
-                                                    <td><label class="badge badge-#{prospecto.colorestado}">#{prospecto.estado}</label></td>
-                                                    <td>#{prospecto.motivo}</td>
-                                                    <td>
-                                                        <div class="form-group row" style="margin-bottom: 0 !important;">
-                                                            <form j:id="formgestion" class="col-sm-2" method="post" style="padding-left: 0 !important; padding-right: 0 !important;">  
-                                                                <a class="nav-link" j:action="#{prospectosBean.leerIdtoGestionAsesor(prospecto, session,prospectosBean.estado)}">
-                                                                    <i class="mdi mdi-eye-outline text-primary mdi-18px"></i>
-                                                                </a>
-                                                            </form>
-
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </ui:repeat>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-
-
-
-
-                </div>
+                        setTimeout(function () {
+                            $("#mensaje").fadeOut(5500);
+                        }, 15000);
+                    });
+                </script>
+                
+                
+                
+                
+                
 
             </ui:define>
 
         </ui:composition>
 
-
-
     </body>
 </html>
+
