@@ -46,7 +46,7 @@ public class TipocampoBean implements Serializable {
         script = "runNotify({\n" +
 "                                                        type: '"+message.getClase()+"',\n" +
 "                                                        message: '"+message.getMensaje()+"',\n" +
-"                                                        timer: 6000\n" +
+"                                                        type:'fixed'\n" +
 "                                                    });";
     }
 

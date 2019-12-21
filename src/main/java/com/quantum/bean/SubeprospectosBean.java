@@ -36,6 +36,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -346,10 +347,12 @@ public class SubeprospectosBean {
                                 if (DateUtil.isCellDateFormatted(cell)) {
                                     listaFilas.add(sd2.format(cell.getDateCellValue()));
                                 } else {
-                                    listaFilas.add(cell.toString().replace("-","").replace("(", "").replace(")", "").replace(" ", "").replace("+", ""));
+                                    DataFormatter formatter = new DataFormatter();
+                                    String celda = formatter.formatCellValue(cell);
+                                    listaFilas.add(celda.toString().replace("-","").replace("(", "").replace(")", "").replace(" ", "").replace("+", ""));
                                 }
                             }else if(cell.getCellType() == Cell.CELL_TYPE_STRING){
-                                listaFilas.add(cell.toString().replace("'",""));
+                                listaFilas.add(cell.toString().replace("'","").replace("-","").replace("(", "").replace(")", "").replace("+", "").replace("´", "").replace("`", ""));
                             }else if(cell.getCellType() == Cell.CELL_TYPE_BLANK){
                                 listaFilas.add("NULL");
                             }else{

@@ -39,13 +39,15 @@
 
                         <div class="col-md-12 mb-0 pl-1 pr-1 mt-0"  style="display: #{marketingBean.message.display}">
                             <div class="from-group">
-                                <div id="mensaje" class="alert alert-#{marketingBean.message.clase} form-row">
+                                <div id="mensaje" class="alert alert-#{marketingBean.message.clase}  alert-dismissible form-row">
                                     <div class="col-3">
                                         <i class="mdi #{marketingBean.message.ico} text-#{marketingBean.message.clase} icon-md "></i>
                                     </div>
                                     <div class="col-8">
                                         <span class="font-weight-medium text-right">#{marketingBean.message.mensaje}</span>
                                     </div>
+                                    <i class=" close mdi mdi-close text-#{marketingBean.message.clase} icon-sm"  data-dismiss="alert" aria-label="close"></i>
+                                        
                                 </div>
                             </div>   
                         </div>

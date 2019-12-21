@@ -27,11 +27,11 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px;">
                             <div class="media " style="padding: 0.5rem 1.5rem !important;">
-                                        <i class="mdi mdi-account-card-details icon-md text-primary d-flex align-self-start mr-2"></i>
-                                        <div class="media-body">
-                                            <p class="card-text"><h2 class="card-title">Registro de Prospectos</h2></p>
-                                        </div>
-                                    </div>
+                                <i class="mdi mdi-account-card-details icon-md text-primary d-flex align-self-start mr-2"></i>
+                                <div class="media-body">
+                                    <p class="card-text"><h2 class="card-title">Registro de Prospectos</h2></p>
+                                </div>
+                            </div>
                             <!--<div class="card" >
                                 <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
                                     <div class="media">
@@ -101,13 +101,14 @@
                                         </div>
 
 
-                                        <div id="mensaje" style="display: #{prospectosBean.message.display}" class="alert alert-#{prospectosBean.message.clase} form-row">
+                                        <div id="mensaje" style="display: #{prospectosBean.message.display}" class="alert alert-#{prospectosBean.message.clase} alert-dismissible form-row">
                                             <div class="col-3">
                                                 <i class="mdi #{prospectosBean.message.ico} text-#{prospectosBean.message.clase} icon-md "></i>
                                             </div>
                                             <div class="col-8">
                                                 <span class="font-weight-medium text-right">#{prospectosBean.message.mensaje}</span>
                                             </div>
+                                            <i class=" close mdi mdi-close text-#{prospectosBean.message.clase} icon-sm"  data-dismiss="alert" aria-label="close"></i>
                                         </div>
                                     </div>
 
@@ -186,7 +187,7 @@
                                                 <textarea class="form-control" j:id="comentario" rows="3" j:value="#{prospectosBean.prospectos.comentario}" ></textarea>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
 
                                     <div class="card-footer">

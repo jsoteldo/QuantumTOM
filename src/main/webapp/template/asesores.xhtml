@@ -189,13 +189,15 @@
 
 
                                     </div>
-                                    <div id="mensaje" style="display: #{asesoresBean.message.display}" class="alert alert-#{asesoresBean.message.clase} form-row">
+                                    <div id="mensaje" style="display: #{asesoresBean.message.display}" class="alert alert-#{asesoresBean.message.clase} alert-dismissible form-row">
                                         <div class="col-3">
                                             <i class="mdi #{asesoresBean.message.ico} text-#{asesoresBean.message.clase} icon-md "></i>
                                         </div>
                                         <div class="col-8">
                                             <span class="font-weight-medium text-right">#{asesoresBean.message.mensaje}</span>
                                         </div>
+                                        <i class=" close mdi mdi-close text-#{asesoresBean.message.clase} icon-sm"  data-dismiss="alert" aria-label="close"></i>
+                                        
                                     </div>
                                     <div class="template-demo">
                                         <button type="submit" id="registrar" class="btn btn-success mr-2" j:actionListener="#{asesoresBean.operar()}">

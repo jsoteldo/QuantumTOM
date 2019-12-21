@@ -20,14 +20,14 @@
 
                 <f:event type="preRenderView" listener="#{estadosBean.listar()}"/>
                 <div class="row">
-                    
+
                     <div class="col-12 grid-margin" style="margin-bottom: 10px;">
                         <div class="media" style="padding: 0.5rem 1.5rem !important;">
-                                    <i class="mdi mdi-clipboard-text icon-md text-primary d-flex align-self-start mr-2"></i>
-                                    <div class="media-body">
-                                        <p class="card-text"><h2 class="card-title">Listados de Estados y Motivos</h2></p>
-                                    </div>
-                                </div>
+                            <i class="mdi mdi-clipboard-text icon-md text-primary d-flex align-self-start mr-2"></i>
+                            <div class="media-body">
+                                <p class="card-text"><h2 class="card-title">Listados de Estados y Motivos</h2></p>
+                            </div>
+                        </div>
                         <!--<div class="card">
                             <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
                                 <div class="media">
@@ -41,13 +41,15 @@
                     </div> 
 
 
-                    <div id="mensaje" style="display: #{gestionBean.message.display}" class="alert alert-#{gestionBean.message.clase} form-row">
+                    <div id="mensaje" style="display: #{gestionBean.message.display}" class="alert alert-#{gestionBean.message.clase} alert-dismissible form-row">
                         <div class="col-3">
                             <i class="mdi #{gestionBean.message.ico} text-#{gestionBean.message.clase} icon-md "></i>
                         </div>
                         <div class="col-8">
                             <span class="font-weight-medium text-right">#{gestionBean.message.mensaje}</span>
                         </div>
+                        <i class=" close mdi mdi-close text-#{gestionBean.message.clase} icon-sm"  data-dismiss="alert" aria-label="close"></i>
+
                     </div>
 
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6 grid-margin stretch-card">

@@ -22,29 +22,30 @@
                 <div class="row grid-margin">
                     <div class="col-12">
                         <div class="media" style="padding: 0.5rem 1.5rem !important;">
-                                    <i class="mdi mdi-settings icon-md text-primary d-flex align-self-start mr-2"></i>
-                                    <div class="media-body">
-                                        <p class="card-text"><h2 class="card-title">Registro de Roles</h2></p>
-                                    </div>
-                                </div>
-                        
-                       <!-- <div class="card">
-                            <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
-                                <div class="media">
-                                    <i class="mdi mdi-settings icon-md text-primary d-flex align-self-start mr-2"></i>
-                                    <div class="media-body">
-                                        <p class="card-text"><h3 class="card-title">Registro de Roles</h3></p>
-                                    </div>
-                                </div>
+                            <i class="mdi mdi-settings icon-md text-primary d-flex align-self-start mr-2"></i>
+                            <div class="media-body">
+                                <p class="card-text"><h2 class="card-title">Registro de Roles</h2></p>
                             </div>
-                        </div>-->
-                        <div id="mensaje" style="display: #{rolesBean.message.display}" class="alert alert-#{rolesBean.message.clase} form-row">
+                        </div>
+
+                        <!-- <div class="card">
+                             <div class="card-body" style="padding: 0.5rem 0.5rem !important;">
+                                 <div class="media">
+                                     <i class="mdi mdi-settings icon-md text-primary d-flex align-self-start mr-2"></i>
+                                     <div class="media-body">
+                                         <p class="card-text"><h3 class="card-title">Registro de Roles</h3></p>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>-->
+                        <div id="mensaje" style="display: #{rolesBean.message.display}" class="alert alert-#{rolesBean.message.clase} alert-dismissible form-row">
                             <div class="col-3">
                                 <i class="mdi #{rolesBean.message.ico} text-#{rolesBean.message.clase} icon-md "></i>
                             </div>
                             <div class="col-8">
                                 <span class="font-weight-medium text-right">#{rolesBean.message.mensaje}</span>
                             </div>
+                            <i class=" close mdi mdi-close text-#{rolesBean.message.clase} icon-sm"  data-dismiss="alert" aria-label="close"></i>
                         </div>
 
                     </div>

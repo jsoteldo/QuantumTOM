@@ -90,13 +90,15 @@
                                         </div>
                                     </ui:fragment>
 
-                                    <div id="mensaje" style="display: #{menuBean.message.display}" class="alert alert-#{menuBean.message.clase} form-row">
+                                    <div id="mensaje" style="display: #{menuBean.message.display}" class="alert alert-#{menuBean.message.clase} alert-dismissible form-row">
                                         <div class="col-3">
                                             <i class="mdi #{menuBean.message.ico} text-#{menuBean.message.clase} icon-md "></i>
                                         </div>
                                         <div class="col-8">
                                             <span class="font-weight-medium text-right">#{menuBean.message.mensaje}</span>
                                         </div>
+                                        <i class=" close mdi mdi-close text-#{menuBean.message.clase} icon-sm"  data-dismiss="alert" aria-label="close"></i>
+                                        
                                     </div>
                                     <div class="template-demo">
                                         <button type="submit" class="btn btn-success mr-2" j:actionListener="#{menuBean.operar()}"> 

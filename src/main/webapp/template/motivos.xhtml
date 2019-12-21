@@ -60,13 +60,15 @@
                                         <label for="motivo">Nombre del Motivo</label>
                                         <input type="text" class="form-control" j:id="motivo" placeholder="Descripción" j:value="#{estadosBean.motivos.motivo}"/>
                                     </div>
-                                    <div id="mensaje" style="display: #{estadosBean.message.display}" class="alert alert-#{estadosBean.message.clase} form-row">
+                                    <div id="mensaje" style="display: #{estadosBean.message.display}" class="alert alert-#{estadosBean.message.clase} alert-dismissible form-row">
                                         <div class="col-3">
                                             <i class="mdi #{estadosBean.message.ico} text-#{estadosBean.message.clase} icon-md "></i>
                                         </div>
                                         <div class="col-8">
                                             <span class="font-weight-medium text-right">#{estadosBean.message.mensaje}</span>
                                         </div>
+                                        <i class=" close mdi mdi-close text-#{estadosBean.message.clase} icon-sm"  data-dismiss="alert" aria-label="close"></i>
+                                        
                                     </div>
                                     <div class="template-demo">
                                         <button type="submit" class="btn btn-success mr-2" j:actionListener="#{estadosBean.operarmotivos()}">#{estadosBean.boton}

@@ -73,7 +73,7 @@ function runNotify(options) {
 
     if (typeMessage === "fixed") {
       $(notifyNameForJquery).append(
-        '<i class="allertNotifyButton" ><svg viewBox="0 0 25 25" width="15px" height="15px">' +
+        '<i class="allertNotifyButton"><svg viewBox="0 0 25 25" width="10px" height="10px">' +
           '<path fill="currentcolor" d = "M16.043,11.667L22.609,5.1c0.963-0.963,0.963-2.539,0-3.502l-0.875-0.875c-0.963-0.964-2.539-0.964-3.502,0L11.666,7.29  L5.099,0.723c-0.962-0.963-2.538-0.963-3.501,0L0.722,1.598c-0.962,0.963-0.962,2.539,0,3.502l6.566,6.566l-6.566,6.567  c-0.962,0.963-0.962,2.539,0,3.501l0.876,0.875c0.963,0.963,2.539,0.963,3.501,0l6.567-6.565l6.566,6.565  c0.963,0.963,2.539,0.963,3.502,0l0.875-0.875c0.963-0.963,0.963-2.539,0-3.501L16.043,11.667z" />' +
           "Sorry, your browser does not support inline SVG." +
           "</svg ></i>"
@@ -81,7 +81,7 @@ function runNotify(options) {
       $(".allertNotifyButton").attr(
         "onClick",
         "CloseNotifyItem('" + notifyNameForJquery + "');"
-      );
+      ).css({"margin-left":"11%"});
     } else if (typeMessage === "readmore") {
       if (messageTitle == undefined || messageTitle == null) {
         messageTitle = levelMessage; //se il titolo del modal imposto il valore in base al livello impostato dell'utente.

@@ -73,13 +73,14 @@
                 <div class="row">
                     <div class="col-md-12 grid-margin ">
                         <div class="from-group">
-                            <div id="mensaje" style="display: #{subeprospectosBean.message.display}" class="mt-3 alert alert-#{subeprospectosBean.message.clase} form-row">
+                            <div id="mensaje" style="display: #{subeprospectosBean.message.display}" class="mt-3 alert alert-#{subeprospectosBean.message.clase} alert-dismissible form-row">
                                 <div class="col-3">
                                     <i class="mdi #{subeprospectosBean.message.ico} text-#{subeprospectosBean.message.clase} icon-md "></i>
                                 </div>
                                 <div class="col-8">
                                     <span class="font-weight-medium text-right">#{subeprospectosBean.message.mensaje}</span>
                                 </div>
+                                <i class=" close mdi mdi-close text-#{subeprospectosBean.message.clase} icon-sm"  data-dismiss="alert" aria-label="close"></i>
                             </div>
                         </div>   
                     </div>
@@ -695,90 +696,90 @@
                     });
                 </script>
                 <script>
-                                                                    var disponibles = #{subeprospectosBean.prospectospAsignar};
-                                                                    var cantidad;
-                                                                    var porcentaje;
+                    var disponibles = #{subeprospectosBean.prospectospAsignar};
+                    var cantidad;
+                    var porcentaje;
 
-                                                                    $('.porcentaje').focusin(function () {
-                                                                        porcentaje = $(this).val();
-                                                                    })
-                                                                            .focusout(function () {
-                                                                                nwporcentaje = $(this).val();
-                                                                                cantidad = (nwporcentaje * disponibles) / 100;
-                                                                                if (validaporcentajes() > 100) {
-                                                                                    $(this).val(porcentaje);
-                                                                                    console.log($(this).val());
-                                                                                } else {
-                                                                                    $(this).val(nwporcentaje);
-                                                                                    console.log($(this).val());
-                                                                                    console.log(cantidad);
-                                                                                    $(this).closest('tr').find(".cantidad").each(function () {
-                                                                                        $(this).val(cantidad);
-                                                                                    });
-                                                                                    $("label[for='asig']").html(validacantidad());
-                                                                                    $("label[for='parasig']").html(disponibles - validacantidad());
+                    $('.porcentaje').focusin(function () {
+                        porcentaje = $(this).val();
+                    })
+                            .focusout(function () {
+                                nwporcentaje = $(this).val();
+                                cantidad = (nwporcentaje * disponibles) / 100;
+                                if (validaporcentajes() > 100) {
+                                    $(this).val(porcentaje);
+                                    console.log($(this).val());
+                                } else {
+                                    $(this).val(nwporcentaje);
+                                    console.log($(this).val());
+                                    console.log(cantidad);
+                                    $(this).closest('tr').find(".cantidad").each(function () {
+                                        $(this).val(cantidad);
+                                    });
+                                    $("label[for='asig']").html(validacantidad());
+                                    $("label[for='parasig']").html(disponibles - validacantidad());
 
-                                                                                }
-                                                                            });
-                                                                    function validaporcentajes() {
-                                                                        var totalDeuda = 0;
-                                                                        $(".porcentaje").each(function () {
-                                                                            totalDeuda += parseFloat($(this).val()) || 0;
-                                                                        });
-                                                                        console.log(totalDeuda);
-                                                                        return totalDeuda;
-                                                                    }
-                                                                    function validacantidad() {
-                                                                        var totalDeuda = 0;
-                                                                        $(".cantidad").each(function () {
-                                                                            totalDeuda += parseFloat($(this).val()) || 0;
-                                                                        });
-                                                                        return totalDeuda;
-                                                                    }
+                                }
+                            });
+                    function validaporcentajes() {
+                        var totalDeuda = 0;
+                        $(".porcentaje").each(function () {
+                            totalDeuda += parseFloat($(this).val()) || 0;
+                        });
+                        console.log(totalDeuda);
+                        return totalDeuda;
+                    }
+                    function validacantidad() {
+                        var totalDeuda = 0;
+                        $(".cantidad").each(function () {
+                            totalDeuda += parseFloat($(this).val()) || 0;
+                        });
+                        return totalDeuda;
+                    }
                 </script>
                 <script>
-                                                            var disponibles = #{subeprospectosBean.prospectospAsignar};
-                                                            var cantidad;
-                                                            var porcentaje;
-                                                            var psa = 0, pa = 0;
+                    var disponibles = #{subeprospectosBean.prospectospAsignar};
+                    var cantidad;
+                    var porcentaje;
+                    var psa = 0, pa = 0;
 
-                                                            $('.cantidad').focusin(function () {
-                                                                cantidad = $(this).val();
-                                                            })
-                                                                    .focusout(function () {
-                                                                        nwcantidad = $(this).val();
-                                                                        porcentaje = (nwcantidad * 100) / disponibles;
-                                                                        if (validacantidad() > disponibles) {
-                                                                            $(this).val(cantidad);
-                                                                        } else {
-                                                                            $(this).val(nwcantidad);
-                                                                            $(this).closest('tr').find(".porcentaje").each(function () {
-                                                                                $(this).val(porcentaje.toFixed(2));
-                                                                            });
-                                                                            $("label[for='asig']").html(validacantidad());
-                                                                            $("label[for='parasig']").html(disponibles - validacantidad());
-                                                                        }
-                                                                    });
+                    $('.cantidad').focusin(function () {
+                        cantidad = $(this).val();
+                    })
+                            .focusout(function () {
+                                nwcantidad = $(this).val();
+                                porcentaje = (nwcantidad * 100) / disponibles;
+                                if (validacantidad() > disponibles) {
+                                    $(this).val(cantidad);
+                                } else {
+                                    $(this).val(nwcantidad);
+                                    $(this).closest('tr').find(".porcentaje").each(function () {
+                                        $(this).val(porcentaje.toFixed(2));
+                                    });
+                                    $("label[for='asig']").html(validacantidad());
+                                    $("label[for='parasig']").html(disponibles - validacantidad());
+                                }
+                            });
 
-                                                            function validacantidad() {
-                                                                var totalDeuda = 0;
-                                                                $(".cantidad").each(function () {
-                                                                    totalDeuda += parseFloat($(this).val()) || 0;
-                                                                });
-                                                                return totalDeuda;
-                                                            }
+                    function validacantidad() {
+                        var totalDeuda = 0;
+                        $(".cantidad").each(function () {
+                            totalDeuda += parseFloat($(this).val()) || 0;
+                        });
+                        return totalDeuda;
+                    }
 
 
                 </script>
                 <script>
-                                                            var disponibles = #{subeprospectosBean.prospectospAsignar};
-                                                            var total = 0;
-                                                            $(".cantidad").each(function () {
-                                                                total += parseFloat($(this).val()) || 0;
-                                                            }
-                                                            );
-                                                            $("label[for='asig']").html(total);
-                                                            $("label[for='parasig']").html(disponibles - total);
+                    var disponibles = #{subeprospectosBean.prospectospAsignar};
+                    var total = 0;
+                    $(".cantidad").each(function () {
+                        total += parseFloat($(this).val()) || 0;
+                    }
+                    );
+                    $("label[for='asig']").html(total);
+                    $("label[for='parasig']").html(disponibles - total);
 
                 </script>
 

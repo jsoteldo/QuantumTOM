@@ -52,13 +52,14 @@
                                         <label for="origen">Nombre del Origen</label>
                                         <input type="text" class="form-control" j:id="origen" placeholder="Descripción" j:value="#{origenesBean.origenes.origen}"/>
                                     </div>
-                                    <div id="mensaje" style="display: #{origenesBean.message.display}" class="alert alert-#{origenesBean.message.clase} form-row">
+                                    <div id="mensaje" style="display: #{origenesBean.message.display}" class="alert alert-#{origenesBean.message.clase} alert-dismissible form-row">
                                         <div class="col-3">
                                             <i class="mdi #{origenesBean.message.ico} text-#{origenesBean.message.clase} icon-md "></i>
                                         </div>
                                         <div class="col-8">
                                             <span class="font-weight-medium text-right">#{origenesBean.message.mensaje}</span>
                                         </div>
+                                        <i class=" close mdi mdi-close text-#{origenesBean.message.clase} icon-sm"  data-dismiss="alert" aria-label="close"></i>
                                     </div>
                                     <div class="template-demo">
                                         <button type="submit" class="btn btn-success mr-2" j:actionListener="#{origenesBean.operar()}"> 

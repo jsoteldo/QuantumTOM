@@ -48,13 +48,14 @@
                             <div class="card-body" >
                                 <form j:id="formProspectos" class="forms-sample">
 
-                                    <div id="mensaje" style="display: #{prospectocrystalBean.message.display}" class="alert alert-#{prospectocrystalBean.message.clase} mt-2">
+                                    <div id="mensaje" style="display: #{prospectocrystalBean.message.display}" class="alert alert-#{prospectocrystalBean.message.clase}  alert-dismissible mt-2">
                                         <div class="col-3">
                                             <i class="mdi #{prospectocrystalBean.message.ico} text-#{prospectocrystalBean.message.clase} icon-md "></i>
                                         </div>
                                         <div class="col-8">
                                             <span class="font-weight-medium text-right">#{prospectocrystalBean.message.mensaje}</span>
                                         </div>
+                                        <i class=" close mdi mdi-close text-#{prospectocrystalBean.message.clase} icon-sm"  data-dismiss="alert" aria-label="close"></i>
                                     </div>
 
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
