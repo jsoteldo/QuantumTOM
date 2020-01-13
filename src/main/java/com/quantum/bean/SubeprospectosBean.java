@@ -46,12 +46,15 @@ import org.slf4j.LoggerFactory;
 @ManagedBean
 @ViewScoped
 public class SubeprospectosBean {
+
     private org.slf4j.Logger log = LoggerFactory.getLogger(SubeprospectosBean.class);
 
     private Mensaje message = new Mensaje(false, "none !important", "");
     private Part file;
     private String folder = "/tmp";
-    
+    //private String folder = "c:\\tmp";
+    SimpleDateFormat sd2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
     private formatoDeFechas fechas = new formatoDeFechas();
     private List<Distribucion> lstDistribucion;
     private List<Asesores> lstasesores;
@@ -156,7 +159,7 @@ public class SubeprospectosBean {
             Files.copy(input, new File(folder, fileName).toPath());
             //mensaje = this.manejaArchivoTest(folder + "\\" + fileName);
             this.manejaArchivoTest(folder + "/" + fileName);
-
+            //this.manejaArchivoTest(folder + "\\" + fileName);// local
             //message = mensaje;
             this.lstcampos = daocampo.lstcampos();
 
@@ -281,7 +284,7 @@ public class SubeprospectosBean {
             List<String> query = new ArrayList<String>();
             StringBuilder headerString = new StringBuilder();
             StringBuilder querys = new StringBuilder();
-
+            int indexcampoid = 0;
             while (rowIterator.hasNext()) {
                 row = rowIterator.next();
                 // Obtenemos el iterator que permite recorres todas las celdas de una fila	
@@ -300,6 +303,9 @@ public class SubeprospectosBean {
                 if (Lstselectequivalencia.get(i).getCampo().equals("IGNORAR")) {
                     posiciones.add(i);
                 }
+                if(Lstselectequivalencia.get(i).getCampo().equals("id")){
+                    indexcampoid = i;
+                }
             }
 
             String headerString2 = "";
@@ -313,9 +319,7 @@ public class SubeprospectosBean {
                             headerString.append(Lstselectequivalencia.get(i).getCampo() + ", ");
                         }
                         headerString2 = headerString.toString() + "fecha_insert, repite";
-
                     }
-
                 }
             } else {
                 for (int i = 0; i < Lstselectequivalencia.size(); i++) {
@@ -327,325 +331,128 @@ public class SubeprospectosBean {
                         headerString.append(Lstselectequivalencia.get(i).getCampo() + ", ");
                     }
                     headerString2 = headerString.toString();
-
                 }
-
             }
 
             for (Row fila : sheet) {
 
-                // Obtenemos el iterator que permite recorres todas las celdas de una fila	
-                List<String> listaFilas = new ArrayList<String>();
                 String recordString2 = "";
+                int contador = 0;
+                List<String[]> lineadelineas = new ArrayList<String[]>();
                 if (fila.getRowNum() != 0) {
+                    String[] linea = new String[fila.getLastCellNum()];
                     for (int cn = 0; cn < fila.getLastCellNum(); cn++) {
-                        if (!posiciones.contains(cn)) {
-                            // Si falta la celda del archivo, genera una casilla en blanco
-                            // (Funciona especificando un MissingCellPolicy)
-                            Cell cell = fila.getCell(cn, Row.CREATE_NULL_AS_BLANK);
-                            if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-                                if (DateUtil.isCellDateFormatted(cell)) {
-                                    listaFilas.add(sd2.format(cell.getDateCellValue()));
-                                } else {
-                                    DataFormatter formatter = new DataFormatter();
-                                    String celda = formatter.formatCellValue(cell);
-                                    listaFilas.add(celda.toString().replace("-","").replace("(", "").replace(")", "").replace(" ", "").replace("+", ""));
-                                }
-                            }else if(cell.getCellType() == Cell.CELL_TYPE_STRING){
-                                listaFilas.add(cell.toString().replace("'","").replace("-","").replace("(", "").replace(")", "").replace("+", "").replace("´", "").replace("`", ""));
-                            }else if(cell.getCellType() == Cell.CELL_TYPE_BLANK){
-                                listaFilas.add("NULL");
-                            }else{
-                                listaFilas.add("NULL");
-                            }
-                       }
 
-                    }
+                        Cell cell = fila.getCell(cn, Row.CREATE_NULL_AS_BLANK);
 
-                    StringBuilder recordString = new StringBuilder();
-
-                    for (int i = 0; i < listaFilas.size(); i++) {
-                        if (i == listaFilas.size() - 1) {
-                            recordString.append(listaFilas.get(i) + "','" + fechas.convertirFechaString(new Date(), fechas.FORMATO_FECHA_HORA_SIN_SEGUNDOS_NI_T) + "','FALSE') ");
-                        } else if (i == 0) {
-                            recordString.append("('" + listaFilas.get(i) + "','");
+                        if (cn == fila.getLastCellNum() - 1) {
+                            linea[cn] = "'" + this.retornacelda(cell) + "'";
+                            lineadelineas.add(linea);
+                        } else if (cn == 0) {
+                            linea[cn] = "'" + this.retornacelda(cell) + "'";
                         } else {
-                            recordString.append(listaFilas.get(i) + "','");
+                            linea[cn] = "'" + this.retornacelda(cell) + "'";
                         }
-                        recordString2 = recordString.toString().replaceAll("'NULL'", "NULL");
+                    }
+                    
+                    
+                    
+                    for (int i = 0; i < lineadelineas.size(); i++) {
+                        if (lineadelineas.get(i)[indexcampoid].equals("'NULL'")) {
+                            lineadelineas.remove(i);
+                        }else{
+                            contador++;
+                        }
+                    }
+                    
+                    for (int i = 0; i < lineadelineas.size(); i++) {
+                        
+                        StringBuilder recordString = new StringBuilder();
+
+                        for (int j = 0; j < lineadelineas.get(i).length; j++) {
+                            if (j == lineadelineas.get(i).length - 1) {
+                                recordString.append(lineadelineas.get(i)[j] + ",'" + fechas.convertirFechaString(new Date(), fechas.FORMATO_FECHA_HORA_SIN_SEGUNDOS_NI_T) + "','FALSE')");
+                            } else if (j == 0) {
+                                recordString.append("(" + lineadelineas.get(i)[j] + ",");
+                            } else {
+                                recordString.append(lineadelineas.get(i)[j] + ",");
+                            }
+
+                            recordString2 = recordString.toString().replaceAll("'NULL'", "NULL");
+                        }
+                      /*  log.info(""+i);
+                        if (i == lineadelineas.size() - 1) {
+                            query.add(recordString2 + ";");
+                        } else if (i == 0) {
+                            query.add(recordString2);
+                        } else {
+                            query.add(recordString2 + ", ");
+                        }*/
+                      if(i==0){
+                        query.add(recordString2);
+                      }else if(i == lineadelineas.size()){
+                        query.add(recordString2 + ";");
+                      }else{
+                        query.add(recordString2 + ", ");
+                      }
+                              
                     }
                 }
-
-                if (fila.getRowNum() == sheet.getLastRowNum()) {
-                    query.add(recordString2 + ";");
-                } else if (fila.getRowNum() == 0) {
-                    query.add(recordString2);
-                } else {
-                    query.add(recordString2 + ", ");
-                }
-
             }
-
-            
+           
             workbook.close();
 
             for (String consulta : query) {
                 querys.append(consulta);
             }
-            log.info(headerString2);
-            log.info(querys.toString());
-            mensaje = dao.registrar(headerString2, querys);
             
+            String nwquerys = querys.toString().replaceAll("\\)\\(", "),(");
+            
+            mensaje = dao.registrar(headerString2, nwquerys+";");
+
             if (mensaje.getClase().equals("success")) {
                 Mensaje msjanuncio = dao.anunciosfaltantes();
                 Mensaje msjconjunto = dao.conjuntosfaltantes();
-                
+
                 Mensaje msjprospectos = dao.insertaraprospectos(fechas.convertirFechaString(new Date(), fechas.FORMATO_FECHA_HORA_SIN_SEGUNDOS_NI_T));
-                
-                mensaje.setMensaje(mensaje.getMensaje()+ "</br>"+ msjanuncio.getMensaje()+"</br>"+ msjconjunto.getMensaje()+"</br>"+msjprospectos.getMensaje());
-            } 
-            
+
+                mensaje.setMensaje(mensaje.getMensaje() + "</br>" + msjanuncio.getMensaje() + "</br>" + msjconjunto.getMensaje() + "</br>" + msjprospectos.getMensaje());
+            }
+
             Files.deleteIfExists(Paths.get(archivo));
-            
+
         } catch (FileNotFoundException e) {
             log.info(e.getMessage());
 
-            mensaje = new Mensaje("",e.getMessage(), "mdi-close-circle-outline", "danger");
-            
+            mensaje = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
+
         } catch (IOException e) {
             log.info(e.getMessage());
 
-            mensaje = new Mensaje("",e.getMessage(), "mdi-close-circle-outline", "danger");
+            mensaje = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
         }
         return mensaje;
     }
 
-    public Mensaje manejaArchivo(String archivo, List<Selectequivalencias> Lstselectequivalencia) throws Exception {
-        FbleadsDAO dao;
-        Mensaje mensaje;
-        try {
-            dao = new FbleadsDAO();
-            SimpleDateFormat sd1 = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy");
-            SimpleDateFormat sd2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            FileInputStream file = new FileInputStream(archivo);
-            // Crear el objeto que tendra el libro de Excel	
-            XSSFWorkbook workbook = new XSSFWorkbook(file);
-            StringBuilder columns = new StringBuilder();
-            /*	
-	 * Obtenemos la primera pestaña a la que se quiera procesar indicando el indice.	
-	 * Una vez obtenida la hoja excel con las filas que se quieren leer obtenemos el iterator	
-	 * que nos permite recorrer cada una de las filas que contiene.	
-             */
+    public String retornacelda(Cell cell) {
+        String celda;
 
-            XSSFSheet sheet = workbook.getSheetAt(0);
-
-            Iterator<Row> rowIterator = sheet.iterator();
-            Iterator<Row> rowrecorIterator = sheet.iterator();
-            Row row;
-            List<String> headerArry = new ArrayList<String>();
-            List<String> ArregloCabeceraExcel = new ArrayList<String>();
-            List<String> query = new ArrayList<String>();
-            StringBuilder headerString = new StringBuilder();
-            StringBuilder CabeceraExcelString = new StringBuilder();
-            StringBuilder querys = new StringBuilder();
-
-            while (rowIterator.hasNext()) {
-                row = rowIterator.next();
-                // Obtenemos el iterator que permite recorres todas las celdas de una fila	
-                Iterator<Cell> cellIterator = row.cellIterator();
-
-                while (cellIterator.hasNext()) {
-                    Cell cell = cellIterator.next();
-                    if (row.getRowNum() == 0) {
-                        headerArry.add(cell.getStringCellValue());
-                    }
-                }
-            }
-
-            /*     String headerString2 = "";
-            for (int i = 0; i < headerArry.size(); i++) {
-                
-                if (i == headerArry.size() - 1) {
-                    headerString.append(headerArry.get(i) + ", fecha_insert, repite");
-                } else if (i == 0) {
-                    headerString.append(headerArry.get(i) + ", ");
-                } else {
-                    headerString.append(headerArry.get(i) + ", ");
-                }
-                headerString2 = headerString.toString();
-            }*/
-            String cabeceraExcel = "";
-            for (int i = 0; i < ArregloCabeceraExcel.size(); i++) {
-                if (Lstselectequivalencia.contains(ArregloCabeceraExcel.get(i))) {
-                    System.out.println(ArregloCabeceraExcel.get(i) + " Esta en la posicion : " + Lstselectequivalencia.indexOf(ArregloCabeceraExcel.get(i)) + " y continene como equivalente " + Lstselectequivalencia.get(Lstselectequivalencia.indexOf(ArregloCabeceraExcel.get(i))).getCampo());
-
-                }
-
-                if (i == ArregloCabeceraExcel.size() - 1) {
-                    CabeceraExcelString.append(ArregloCabeceraExcel.get(i) + ", fecha_insert, repite");
-                } else if (i == 0) {
-                    CabeceraExcelString.append(ArregloCabeceraExcel.get(i) + ", ");
-                } else {
-                    CabeceraExcelString.append(ArregloCabeceraExcel.get(i) + ", ");
-                }
-                cabeceraExcel = CabeceraExcelString.toString();
-            }
-            /**
-             * ******TEST*********
-             */
-            for (Row roww : sheet) {
-
-                // Obtenemos el iterator que permite recorres todas las celdas de una fila	
-                List<String> recordArrays = new ArrayList<String>();
-                String recordString2 = "";
-                if (roww.getRowNum() != 0) {
-                    for (int cn = 0; cn < roww.getLastCellNum(); cn++) {
-
-                        // Si falta la celda del archivo, genera una casilla en blanco
-                        // (Funciona especificando un MissingCellPolicy)
-                        Cell cell = roww.getCell(cn, Row.CREATE_NULL_AS_BLANK);
-                        if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-                            recordArrays.add(sd2.format(cell.getDateCellValue()));
-                        } else {
-                            recordArrays.add(cell.toString());
-                        }
-                        /*
-                        if (DateUtil.isCellDateFormatted(cell)) {
-                            recordArrays.add(sd2.format(cell.getDateCellValue()));
-                            //  System.out.println(celda.getDateCellValue());
-                        } else {
-                            recordArrays.add(cell.toString());
-                            //  System.out.println(celda.getStringCellValue());
-                        }*/
-                        // Imprimir la celda para depurar
-                        System.out.println("CELL: " + cn + " / " + roww.getLastCellNum() + " --> " + cell.toString() + " typo: " + cell.getCellType());
-
-                    }
-
-                    StringBuilder recordString = new StringBuilder();
-
-                    for (int i = 0; i < recordArrays.size(); i++) {
-                        if (i == recordArrays.size() - 1) {
-                            recordString.append(recordArrays.get(i) + "','" + fechas.convertirFechaString(new Date(), fechas.FORMATO_FECHA_HORA_SIN_SEGUNDOS_NI_T) + "','FALSE') ");
-                        } else if (i == 0) {
-                            recordString.append("('" + recordArrays.get(i) + "','");
-                        } else {
-                            recordString.append(recordArrays.get(i) + "','");
-                        }
-                        recordString2 = recordString.toString().replaceAll("''", "NULL");
-                    }
-
-                }
-
-                if (roww.getRowNum() == sheet.getLastRowNum()) {
-                    query.add(recordString2 + ";");
-                } else if (roww.getRowNum() == 0) {
-                    query.add(recordString2);
-                } else {
-                    query.add(recordString2 + ", ");
-                }
-
-            }
-
-            /**
-             * ******TEST*********
-             */
-            /*
-            while (rowrecorIterator.hasNext()) {
-                row = rowrecorIterator.next();
-
-                // Obtenemos el iterator que permite recorres todas las celdas de una fila	
-                Iterator<Cell> cellIterator = row.cellIterator();
-                Cell celda;
-                String recordString2 = "";
-                if (row.getRowNum() != 0) {
-                    List<String> recordArry = new ArrayList<String>();
-                    System.out.println(row.getRowNum());
-
-                    while (cellIterator.hasNext()) {
-                        celda = cellIterator.next();
-
-                        switch (celda.getCellType()) {
-                            case Cell.CELL_TYPE_NUMERIC:
-                                if (DateUtil.isCellDateFormatted(celda)) {
-                                    //      recordArry.add(sd2.format(celda.getDateCellValue()));
-                                  //  System.out.println(celda.getDateCellValue());
-                                } else {
-                                    celda.setCellType(1);
-                                    //      recordArry.add(celda.getStringCellValue());
-                                  //  System.out.println(celda.getStringCellValue());
-                                }
-                                break;
-                            case Cell.CELL_TYPE_STRING:
-                                if (celda.getStringCellValue() != null) {
-                                    //      recordArry.add("null");
-                                  //  System.out.println(celda.getStringCellValue());
-                                } else {
-                                    //     recordArry.add(celda.getStringCellValue());
-                                  //  System.out.println(celda.getStringCellValue());
-                                }
-
-                                break;
-                            case Cell.CELL_TYPE_BLANK:
-                                System.out.println("Esta en blanco!!!!!!!!!");
-                                break;
-                            default:
-                                recordArry.add("NULL");
-                                System.out.println("Esta en blanco!!!!!!!!!");
-                                break;
-                        }
-                    }
-
-                    StringBuilder recordString = new StringBuilder();
-
-                    for (int i = 0; i < recordArry.size(); i++) {
-                        if (i == recordArry.size() - 1) {
-                            recordString.append(recordArry.get(i) + "','" + fechas.convertirFechaString(new Date(), fechas.FORMATO_FECHA_HORA_SIN_SEGUNDOS_NI_T) + "','FALSE') ");
-                        } else if (i == 0) {
-                            recordString.append("('" + recordArry.get(i) + "','");
-                        } else {
-                            recordString.append(recordArry.get(i) + "','");
-                        }
-                        recordString2 = recordString.toString().replaceAll("'NULL'", "NULL");
-                    }
-                }
-                if (row.getRowNum() == sheet.getLastRowNum()) {
-                    query.add(recordString2 + ";");
-                } else if (row.getRowNum() == 0) {
-                    query.add(recordString2);
-                } else {
-                    query.add(recordString2 + ", ");
-                }
-            }*/
-            workbook.close();
-            for (String consulta : query) {
-                querys.append(consulta);
-            }
-            mensaje = null;
-            //mensaje = dao.registrar(headerString2, querys);
-            dao.anunciosfaltantes();
-            dao.conjuntosfaltantes();
-            if (mensaje.getClase().equals("success")) {
-                mensaje = dao.insertaraprospectos(fechas.convertirFechaString(new Date(), fechas.FORMATO_FECHA_HORA_SIN_SEGUNDOS_NI_T));
+        if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+            if (DateUtil.isCellDateFormatted(cell)) {
+                celda = sd2.format(cell.getDateCellValue());
             } else {
-                Files.deleteIfExists(Paths.get(archivo));
-                return mensaje;
+                DataFormatter formatter = new DataFormatter();
+                String fecha = formatter.formatCellValue(cell);
+                celda = fecha.toString().replace("-", "").replace("(", "").replace(")", "").replace(" ", "").replace("+", "");
             }
-            Files.deleteIfExists(Paths.get(archivo));
-            return mensaje;
-        } catch (FileNotFoundException e) {
-            log.info(e.getMessage());
-
-            mensaje = new Mensaje("", e.toString(), "mdi-close-circle-outline", "danger");
-
-            return mensaje;
-        } catch (IOException e) {
-            log.info(e.getMessage());
-
-            mensaje = new Mensaje("", e.toString(), "mdi-close-circle-outline", "danger");
-            e.printStackTrace();
-            return mensaje;
+        } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+            celda = cell.toString().replace("'", "").replace("´", "").replace("`", "");
+        } else if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+            celda = "NULL";
+        } else {
+            celda = "NULL";
         }
+        return celda;
     }
 
     public void listar() throws Exception {
@@ -794,5 +601,163 @@ public class SubeprospectosBean {
         contex.getExternalContext().invalidateSession();
         contex.getExternalContext().redirect(contex.getExternalContext().getApplicationContextPath());
     }
+    /*public Mensaje procesaArchivo(String archivo, List<Selectequivalencias> Lstselectequivalencia) throws Exception {
+        FbleadsDAO dao;
+        Mensaje mensaje = null;
 
+        try {
+            dao = new FbleadsDAO();
+            SimpleDateFormat sd2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            FileInputStream file = new FileInputStream(archivo);
+            // Crear el objeto que tendra el libro de Excel	
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+           
+            List<Integer> posiciones = new ArrayList<Integer>();
+            XSSFSheet sheet = workbook.getSheetAt(0);
+
+            Iterator<Row> rowIterator = sheet.iterator();
+            Row row;
+            List<String> headerArry = new ArrayList<String>();
+            List<String> ArregloCabeceraExcel = new ArrayList<String>();
+            List<String> query = new ArrayList<String>();
+            StringBuilder headerString = new StringBuilder();
+            StringBuilder querys = new StringBuilder();
+
+            while (rowIterator.hasNext()) {
+                row = rowIterator.next();
+                // Obtenemos el iterator que permite recorres todas las celdas de una fila	
+                Iterator<Cell> cellIterator = row.cellIterator();
+
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    if (row.getRowNum() == 0) {
+                        headerArry.add(cell.getStringCellValue());
+                        ArregloCabeceraExcel.add(cell.getStringCellValue());
+                    }
+                }
+            }
+
+            for (int i = 0; i < Lstselectequivalencia.size(); i++) {
+                if (Lstselectequivalencia.get(i).getCampo().equals("IGNORAR")) {
+                    posiciones.add(i);
+                }
+            }
+
+            String headerString2 = "";
+
+            if (posiciones != null) {
+                for (int i = 0; i < Lstselectequivalencia.size(); i++) {
+                    if (!posiciones.contains(i)) {
+                        if (i == 0) {
+                            headerString.append(Lstselectequivalencia.get(i).getCampo() + ", ");
+                        } else {
+                            headerString.append(Lstselectequivalencia.get(i).getCampo() + ", ");
+                        }
+                        headerString2 = headerString.toString() + "fecha_insert, repite";
+
+                    }
+
+                }
+            } else {
+                for (int i = 0; i < Lstselectequivalencia.size(); i++) {
+                    if (i == Lstselectequivalencia.size() - 1) {
+                        headerString.append(Lstselectequivalencia.get(i).getCampo() + ", fecha_insert, repite");
+                    } else if (i == 0) {
+                        headerString.append(Lstselectequivalencia.get(i).getCampo() + ", ");
+                    } else {
+                        headerString.append(Lstselectequivalencia.get(i).getCampo() + ", ");
+                    }
+                    headerString2 = headerString.toString();
+
+                }
+
+            }
+
+            for (Row fila : sheet) {
+
+                // Obtenemos el iterator que permite recorres todas las celdas de una fila	
+                List<String> listaFilas = new ArrayList<String>();
+                String recordString2 = "";
+                if (fila.getRowNum() != 0) {
+                    for (int cn = 0; cn < fila.getLastCellNum(); cn++) {
+                        if (!posiciones.contains(cn)) {
+                            // Si falta la celda del archivo, genera una casilla en blanco
+                            // (Funciona especificando un MissingCellPolicy)
+                            Cell cell = fila.getCell(cn, Row.CREATE_NULL_AS_BLANK);
+                            if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                                if (DateUtil.isCellDateFormatted(cell)) {
+                                    listaFilas.add(sd2.format(cell.getDateCellValue()));
+                                } else {
+                                    DataFormatter formatter = new DataFormatter();
+                                    String celda = formatter.formatCellValue(cell);
+                                    listaFilas.add(celda.toString().replace("-","").replace("(", "").replace(")", "").replace(" ", "").replace("+", ""));
+                                }
+                            }else if(cell.getCellType() == Cell.CELL_TYPE_STRING){
+                                listaFilas.add(cell.toString().replace("'","").replace("´", "").replace("`", ""));
+                            }else if(cell.getCellType() == Cell.CELL_TYPE_BLANK){
+                                listaFilas.add("NULL");
+                            }else{
+                                listaFilas.add("NULL");
+                            }
+                       }
+
+                    }
+
+                    StringBuilder recordString = new StringBuilder();
+
+                    for (int i = 0; i < listaFilas.size(); i++) {
+                        if (i == listaFilas.size() - 1) {
+                            recordString.append(listaFilas.get(i) + "','" + fechas.convertirFechaString(new Date(), fechas.FORMATO_FECHA_HORA_SIN_SEGUNDOS_NI_T) + "','FALSE') ");
+                        } else if (i == 0) {
+                            recordString.append("('" + listaFilas.get(i) + "','");
+                        } else {
+                            recordString.append(listaFilas.get(i) + "','");
+                        }
+                        recordString2 = recordString.toString().replaceAll("'NULL'", "NULL");
+                    }
+                }
+
+                if (fila.getRowNum() == sheet.getLastRowNum()) {
+                    query.add(recordString2 + ";");
+                } else if (fila.getRowNum() == 0) {
+                    query.add(recordString2);
+                } else {
+                    query.add(recordString2 + ", ");
+                }
+
+            }
+
+            
+            workbook.close();
+
+            for (String consulta : query) {
+                querys.append(consulta);
+            }
+            log.info(headerString2);
+            log.info(querys.toString());
+            mensaje = dao.registrar(headerString2, querys);
+            
+            if (mensaje.getClase().equals("success")) {
+                Mensaje msjanuncio = dao.anunciosfaltantes();
+                Mensaje msjconjunto = dao.conjuntosfaltantes();
+                
+                Mensaje msjprospectos = dao.insertaraprospectos(fechas.convertirFechaString(new Date(), fechas.FORMATO_FECHA_HORA_SIN_SEGUNDOS_NI_T));
+                
+                mensaje.setMensaje(mensaje.getMensaje()+ "</br>"+ msjanuncio.getMensaje()+"</br>"+ msjconjunto.getMensaje()+"</br>"+msjprospectos.getMensaje());
+            } 
+            
+            Files.deleteIfExists(Paths.get(archivo));
+            
+        } catch (FileNotFoundException e) {
+            log.info(e.getMessage());
+
+            mensaje = new Mensaje("",e.getMessage(), "mdi-close-circle-outline", "danger");
+            
+        } catch (IOException e) {
+            log.info(e.getMessage());
+
+            mensaje = new Mensaje("",e.getMessage(), "mdi-close-circle-outline", "danger");
+        }
+        return mensaje;
+    }*/
 }

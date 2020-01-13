@@ -19,12 +19,12 @@ public class FbleadsDAO extends DAO {
 
     private org.slf4j.Logger log = LoggerFactory.getLogger(FbleadsDAO.class);
 
-    public Mensaje registrar(String campos, StringBuilder query) throws Exception {
+    public Mensaje registrar(String campos, String query) throws Exception {
 
         Mensaje validoregistrro;
         try {
             this.Conectar();
-            PreparedStatement declaracion = this.getConexion().prepareStatement("insert into fbleads (" + campos + ") values " + query.toString());
+            PreparedStatement declaracion = this.getConexion().prepareStatement("insert into fbleads (" + campos + ") values " + query);
             declaracion.executeUpdate();
             //declaracion.executeQuery(query.toString());
             validoregistrro = new Mensaje("", "Leads Insertados.", "mdi-checkbox-marked-circle-outline", "success");
@@ -196,9 +196,9 @@ public class FbleadsDAO extends DAO {
 
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement("insert into prospectos(\n"
-                    + "CODIGO, FECHA_PROSPECTO, FECHA_INGRESO, NOMBREAPELLIDO, TELEFONO1, CORREO, ORIGEN, REITERASOLICITUD, ENCOLA) \n"
+                    + "CODIGO, FECHA_PROSPECTO, FECHA_INGRESO, NOMBREAPELLIDO, TELEFONO1, CORREO, ORIGEN, REITERASOLICITUD, ENCOLA, COMENTARIO) \n"
                     + "select id, created_time, fecha_insert, full_name, phone_number, email, \n"
-                    + "'fb', repite, 'FALSE' from fbleads \n"
+                    + "'fb', repite, 'FALSE', nota from fbleads \n"
                     + "where fecha_insert = '" + fecha + "'\n"
                     + "and repite = 'FALSE'");
             declaracion.executeUpdate();
@@ -206,7 +206,7 @@ public class FbleadsDAO extends DAO {
 
         } catch (Exception e) {
             log.info(e.getMessage());
-            validoinsercion = new Mensaje("", e.getMessage(), "mdi-close-circle-outline", "danger");
+            validoinsercion = new Mensaje("", "Insertando prospectos:"+e.getMessage(), "mdi-close-circle-outline", "danger");
 
         } finally {
             this.Cancelar();

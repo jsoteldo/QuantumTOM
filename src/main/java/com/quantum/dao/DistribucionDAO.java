@@ -360,6 +360,10 @@ public class DistribucionDAO extends DAO {
             PreparedStatement declaraciondistribucion = this.getConexion().prepareStatement(
                     "INSERT INTO distribucion (ASESOR, CANT_ASIGNADA, PORC_ASIGNADA,"
                     + " BASEASIG, MES, ANO, FECH_ASIGNADA) VALUES (?,?,?,?,?,?,?)");
+            PreparedStatement actualizarcomentario = this.getConexion().prepareStatement(
+                    "UPDATE gestion SET gestion.comentario = (SELECT prospectos.comentario\n" +
+                            " FROM prospectos\n" +
+                            " WHERE gestion.COD_PROSPECTO = prospectos.CODIGO)");
 
             lstProspectos = this.buscaprospectos(ase);
 
@@ -393,6 +397,7 @@ public class DistribucionDAO extends DAO {
                     }
                 }
             }
+            actualizarcomentario.executeUpdate();
             return msg;
 
         } catch (Exception e) {
@@ -416,7 +421,7 @@ public class DistribucionDAO extends DAO {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(
                     "INSERT INTO gestion (COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, "
-                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, ESTADO, MOTIVO) VALUES (?,?,?,?,?,?,?)");
+                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, ESTADO, MOTIVO, COMENTARIO) VALUES (?,?,?,?,?,?,?,?)");
 
             PreparedStatement declaraciondistribucion = this.getConexion().prepareStatement(
                     "INSERT INTO distribucion (ASESOR, CANT_ASIGNADA, PORC_ASIGNADA,"
@@ -438,6 +443,7 @@ public class DistribucionDAO extends DAO {
             declaracion.setString(5, formatos.convertirFechaString(new Date(), formatos.FORMATO_FECHA));
             declaracion.setString(6, "PEN");
             declaracion.setString(7, "PPC");
+            declaracion.setString(8, prospecto.getComentario());
             declaracion.execute();
             msg = this.modificar(prospecto.getCorreo());
 
