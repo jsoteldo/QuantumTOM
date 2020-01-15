@@ -8,10 +8,13 @@ import com.quantum.modelos.Prospectos;
 import com.quantum.servicios.formatoDeFechas;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -355,15 +358,15 @@ public class DistribucionDAO extends DAO {
             this.Conectar();
             PreparedStatement declaracion = this.getConexion().prepareStatement(
                     "INSERT INTO gestion (COD_PROSPECTO, COD_ASESOR, ESTATUS_VENTA, "
-                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, ESTADO, MOTIVO) VALUES (?,?,?,?,?,?,?)");
+                    + "PROCESO_ESTATUS, FECHA_ASIGNACION, ESTADO, MOTIVO, COMENTARIO) VALUES (?,?,?,?,?,?,?,?)");
 
             PreparedStatement declaraciondistribucion = this.getConexion().prepareStatement(
                     "INSERT INTO distribucion (ASESOR, CANT_ASIGNADA, PORC_ASIGNADA,"
                     + " BASEASIG, MES, ANO, FECH_ASIGNADA) VALUES (?,?,?,?,?,?,?)");
-            PreparedStatement actualizarcomentario = this.getConexion().prepareStatement(
+            /*PreparedStatement actualizarcomentario = this.getConexion().prepareStatement(
                     "UPDATE gestion SET gestion.comentario = (SELECT prospectos.comentario\n" +
                             " FROM prospectos\n" +
-                            " WHERE gestion.COD_PROSPECTO = prospectos.CODIGO)");
+                            " WHERE prospectos.CODIGO = ?)");*/
 
             lstProspectos = this.buscaprospectos(ase);
 
@@ -383,21 +386,26 @@ public class DistribucionDAO extends DAO {
                     declaraciondistribucion.execute();
 
                     for (int contador = 0; contador < limite; contador++) {
-
-                        declaracion.setString(1, lstProspectos.get(i));
+                        String propescto = lstProspectos.get(i);
+                        declaracion.setString(1, propescto);
                         declaracion.setString(2, distribuir.getCorreo());
                         declaracion.setString(3, "PEN");
                         declaracion.setString(4, "PPC");
                         declaracion.setString(5, formatos.convertirFechaString(new Date(), formatos.FORMATO_FECHA));
                         declaracion.setString(6, "PEN");
                         declaracion.setString(7, "PPC");
+                        declaracion.setString(8, this.llamacomentario(propescto));
                         declaracion.execute();
+                         
+                        
                         msg = this.modificar(lstProspectos.get(i));
+                        
+                        
                         i++;
                     }
                 }
             }
-            actualizarcomentario.executeUpdate();
+            
             return msg;
 
         } catch (Exception e) {
@@ -408,6 +416,29 @@ public class DistribucionDAO extends DAO {
             this.Cancelar();
         }
 
+    }
+    
+    public String llamacomentario(String codigoProspecto){
+        ResultSet resultado;
+        String comentario = "NULL";
+        try {
+            
+            PreparedStatement buscacomentario = this.getConexion().prepareStatement(
+                    "select COMENTARIO from prospectos\n" +
+                    " where CODIGO = ?");
+            buscacomentario.setString(1,codigoProspecto);
+            System.out.println(buscacomentario);
+            resultado = buscacomentario.executeQuery();
+            if (resultado.first()) {
+                comentario = resultado.getString("COMENTARIO");
+                
+            } 
+               
+        } catch (SQLException ex) {
+            Logger.getLogger(DistribucionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        return comentario;
     }
 
     public Mensaje distribuirdeprospecto(Prospectos prospecto, Asesores ase) throws Exception {
